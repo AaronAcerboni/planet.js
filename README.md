@@ -4,3 +4,5 @@
 Expect this README to get a bit bulkier as time goes on.
 > ## Dev blog  
 http://planetjs.tumblr.com/
+> ## Research blog  
+http://planetjsresearch.tumblr.com/
