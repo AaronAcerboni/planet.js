@@ -1,0 +1,40 @@
+[
+  {
+    "name" : "social",
+    "feeds" : [
+      {
+        "resource" : "http://planetjs.halfmelt.com/feeds/twitter.json",
+        "pollTime" : 8000,
+        "polling" : true
+      },
+      {
+        "resource" : "http://planetjs.halfmelt.com/feeds/flickr.json",
+        "pollTime" : 620000000,        
+        "polling" : true
+      },
+      {
+        "resource" : "oauth://apikey[]apisecretkey[]",
+        "pollTime" : 620000000,        
+        "polling" : true
+      }
+    ]
+  },
+
+  {
+    "name" : "community",
+    "feeds" : [
+      {
+        "resource" : "$local_resources/friends.xml"
+      }
+    ]
+  },
+
+  {
+    "name" : "food",
+    "feeds" : [
+      {
+        "resource" : "$local_resources/breakfast.rss"
+      }
+    ]
+  }  
+]

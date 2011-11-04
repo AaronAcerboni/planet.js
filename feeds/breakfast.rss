@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+
+<channel>
+  <title>Breakfast world</title>
+  <description>Recipes, articles and general knowledge about breakfast</description>
+  <link>http://www.breakfast.com/link.htm</link>
+  <lastBuildDate>Mon, 28 Aug 2006 11:12:55 -0400 </lastBuildDate>
+  <pubDate>Tue, 29 Aug 2005 09:00:00 -0400</pubDate>
+
+  <item>
+    <title>The perfect crepes</title>
+    <description>You'll make the tastiest crepes with this recipe</description>
+    <link>http://www.breakfast.com/link2.htm</link>
+    <guid isPermaLink="false"> 1102345</guid>
+    <pubDate>Tue, 11 Jan 2006 09:22:00 -0400</pubDate>
+  </item>
+
+  <item>
+    <title>Making pancakes</title>
+    <description>Light, fluffy and help you start you day right!</description>
+    <link>http://www.breakfast.com/link3.htm</link>
+    <guid isPermaLink="false"> 1102346</guid>
+    <pubDate>Tue,  Feb 2007 12:03:04 -0400</pubDate>
+  </item>
+
+  <item>
+    <title>Breakfast makes you smarter</title>
+    <description>
+      Studies show that kids who eat breakfast everyday are more alert in school, less tired, less anxious and do better on tests. They are 10% less likely to experience memory and attention span problems than kids who skip breakfast. In short, kids who eat breakfast are smarter.
+    </description>
+    <link>http://www.mrbreakfast.com/glossary_term.asp?glossaryID=152</link>
+    <guid isPermaLink="false"> 1102347</guid>
+    <pubDate>Tue, 29 Oct 2008 16:40:50 -0400</pubDate>
+  </item>
+</channel>
+</rss>
