@@ -27,22 +27,16 @@ Provided modules:
 
 ###Components / Modules###
 Server : `server.js`  
-> Starts up the planet.js server.
-> This involves the main HTTP listening loop, and code which
-> starts up the polling activities.
+> Starts up the planet.js server. This involves the main HTTP listening loop, and code which starts up the polling activities.
 
 Activities : `core/Activities.js`  
-> Creates Consumer objects. These objects are
-> created using the `aggregations.json` configuration file. Consumer objects
-> follow a routine which involves 1) Fetching data. 2) Checking it for processing.
-> 3) Storing it in the database. All using the appropriate component.
+> Creates Consumer objects. These objects are created using the `aggregations.json` configuration file. Consumer objects follow a routine which involves 1) Fetching data. 2) Checking it for processing.  3) Storing it in the database. All using the appropriate component.
 
 Fetch : `core/Activities.js`  
 > Responsible for getting data. Currently supports HTTP GET.
 
 Parser : `core/Parser.js`  
-> Takes in data and parses it to the requested type. It does this by specific
-> parsing modules found in `/parsers`
+> Takes in data and parses it to the requested type. It does this by specific parsing modules found in `/parsers`
 
 Store : `core/Store.js`  
 > Component responsible for storing data to the MongoDB database.
