@@ -27,6 +27,7 @@ Provided modules:
 
 ###Components / Modules###
 Server : `server.js`  
+
 > Starts up the planet.js server. This involves the main HTTP listening loop, and code which starts up the polling activities.  
 
 Activities : `core/Activities.js`  
