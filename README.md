@@ -21,30 +21,30 @@ Tested on Node v0.4.12 & v0.4.9
 Provided modules:
 
 * [mongoose](https://github.com/LearnBoost/mongoose) v2.3.3
-* [underscore]() v1.2.1
+* [underscore](http://documentcloud.github.com/underscore/) v1.2.1
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) v0.1.11
 * [jasmine-node](https://github.com/pivotal/jasmine) v1.0.12 (unit tests not yet implemented &mdash; sorry!)
 
 ###Components / Modules###
-Server : `server.js`
+Server : `server.js`  
 > Starts up the planet.js server.
 > This involves the main HTTP listening loop, and code which
 > starts up the polling activities.
 
-Activities : `core/Activities.js`
+Activities : `core/Activities.js`  
 > Creates Consumer objects. These objects are
 > created using the `aggregations.json` configuration file. Consumer objects
 > follow a routine which involves 1) Fetching data. 2) Checking it for processing.
 > 3) Storing it in the database. All using the appropriate component.
 
-Fetch : `core/Activities.js`
+Fetch : `core/Activities.js`  
 > Responsible for getting data. Currently supports HTTP GET.
 
-Parser : `core/Parser.js`
+Parser : `core/Parser.js`  
 > Takes in data and parses it to the requested type. It does this by specific
 > parsing modules found in `/parsers`
 
-Store : `core/Store.js`
+Store : `core/Store.js`  
 > Component responsible for storing data to the MongoDB database.
 
 ####Lesser component(s)####
