@@ -32,7 +32,7 @@ Server : `server.js`
 
 Activities : `core/Activities.js`  
 
-> Creates Consumer objects. These objects are created using the `aggregations.json` configuration file. Consumer objects follow a routine which involves 1) Fetching data. 2) Checking it for processing.  3) Storing it in the database. All using the appropriate component.  
+> Creates Polling objects. These objects are derived using the `aggregations.json` configuration file. Polling objects follow a routine which involves 1) Fetching data. 2) Parsing it. 3) Checking it for processing.  4) Storing it in the database. All using the appropriate components.
 
 Fetch : `core/Activities.js`  
 
