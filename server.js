@@ -15,7 +15,7 @@ http.createServer(function(request, response) {
 
 // Start up consumer activities, they fetch data based on aggregations.json
 readConfig();
-function readConfig(){
+function readConfig() {
   fs.readFile("aggregations.json", function(err, data){
     if(err){
       throw err;
@@ -28,10 +28,10 @@ function readConfig(){
         for(j in agg.feeds){
           // For each feed in aggregations.json start up a polling object
           var feed = agg.feeds[j];
-          if( feed.collection.type == "poll"){
+          if( feed.collection.type === "poll"){
             Activities.startPoller(feed, agg.name);
           }
-          if( feed.collection.type == "pushed"){
+          if( feed.collection.type === "pushed"){
             // Activities ...
           }
         }

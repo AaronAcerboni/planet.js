@@ -31,7 +31,7 @@ function Poller(feedObj, aggregation) {
 
   // Internal methods
 
-  var pollingFinished = true; // Flag; prevents stacking of 
+  var pollingFinished = true; // Flag; prevents stacking of the polling routine
 
   function fetchResource() {
     if(pollingFinished){
@@ -64,7 +64,7 @@ function Poller(feedObj, aggregation) {
     if(that.process != undefined){
     //process data - this is important for feed sources like Twitter
     // which carry their data in inconsistent JSON structures
-  }
+    }
     storeResource(res);
   }
 
