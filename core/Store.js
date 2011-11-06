@@ -4,6 +4,7 @@
 */
 
 var mongoose  = require('mongoose'),
+    sys       = require('sys'),
     Schema    = mongoose.Schema;
 
 
@@ -49,7 +50,7 @@ function storeData(data, consumer, callback){
   //Insert into db
   aggregationInstance.save(function(err){
     if(err) throw err;
-    sys.puts('Saved');
+    sys.puts('Store > Saved to db');
     callback();
   });
 

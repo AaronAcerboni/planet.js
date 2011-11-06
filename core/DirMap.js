@@ -12,7 +12,7 @@ var keys = {
 };
 
 // Identifier(s) in the string input must be preconcatinated with a $
-function mapToDirectoy(str){
+function mapToDirectoy(str) {
   for (x in keys){
     str = str.replace(x.toString(), keys[x]);
   }
@@ -20,7 +20,7 @@ function mapToDirectoy(str){
 }
 
 // Identifier in the string input do not need to be preconcatinated with a $
-function getDirectoryFromIdentifier(id){
+function getDirectoryFromIdentifier(id) {
   for (x in keys){
     if(
       id === x ||
@@ -35,7 +35,7 @@ function getDirectoryFromIdentifier(id){
 }
 
 // Lists all identifiers. Output is seperated by a , and a space.
-function listKeys(){
+function listKeys() {
   var list = "";
   for(id in keys){
     list += id+", ";

@@ -1,6 +1,5 @@
 /*
-  A module which is responsible for creating and managing consumer activities.
-  Consumer activities 
+  A module which is responsible for creating and managing polling activities.
 */
 
 
@@ -11,85 +10,86 @@ var Fetcher = require("/planet.js/core/Fetch"),
     _       = require("underscore");
 
 
-// * All activity Consumer objects
+// * All activity Poller objects
 
 
 var all = [];
 
 
-// * Activity Consumer object class
+// * Activity Poller object class
 
-function Consumer(feedObj, name){
+function Poller(feedObj, aggregation) {
+
   var that = this;
 
-  this.id               = name+"/"+feedObj.resource;
-  this.aggregation      = name;
-  this.resource         = feedObj.resource;
-  this.process          = feedObj.process;
-  this.pollTime         = feedObj.pollTime;
-  this.archive          = (feedObj.archive != undefined) ? feedObj.archive : false;
-  this.interval         = undefined; // intervalId kept for destroying a setInterval
-  this.dataType         = undefined; // dataType discovered after fetch
+  this.id               = aggregation + "/" + JSON.stringify(feedObj.resource);
+  this.aggregation      = aggregation; // Aggregation name that the collected data will be under
+  this.resource         = feedObj.resource; // url or url+authkeys
+  this.pollTime         = feedObj.collection.pollTime; // Time (ms) to run a polling routine
+  this.process          = feedObj.process; // associated data process to be ran on the fetched data
+  this.interval         = undefined; // Node 'intervalId' kept for destroying a setInterval
 
   // Internal methods
 
-  var pollingFinished = true; // Routine is skipped until polling is finished
-  //   Fetch data, process it & store it
-  function routine(){
-    console.log("Routine fired - pollingFinished == "+pollingFinished);
+  var pollingFinished = true; // Flag; prevents stacking of 
+
+  function fetchResource() {
     if(pollingFinished){
-
       pollingFinished = false;
-        
-      // Interfacing between fetch probably can probably be cleaner
+      // TODO: OAuth and not just simple GET
       Fetcher.fetch(that.resource, function(data, failed){
-
-        var dataType; //rss atom or json
-
-        try { // assuming data fetched is JSON
-          data = JSON.parse(data);
-        } catch(e) { // Assumption : its a different format or GET failed
-
-          if(failed){
-            Log.put("Activities:Consumer", failed.message, 2);
-          } else {
-            result = Parser.parseSync(data, "json");
-            data = result.data;
-            that.dataType = result.type;
-          }
-
-        } //end try..catch
-
-        if(that.process != undefined){
-          //process data - this is important for 'unusual feed sources' like twitter
-        }
-
-        Storer.store(data, that, function(){
-          pollingFinished = true;
-          console.log(that.id + " data stored in db.");
-        });
-      });
+        parseResource(data);
+      })
     }
-
-  };
-
-  function manageInterval(action){
-    if(action==="destroy") clearInterval(that.interval);        
-    if(action=== "create") return setInterval(routine, that.pollTime);
   }
 
-  function init(){ // runs at bottom of class definition
-    if(feedObj.polling != undefined){
-      console.log("init")
-      that.interval = manageInterval("create");
+  function parseResource(res) {
+    var data;
+    // parse
+    try {
+      data = JSON.parse(res); // Assuming it's JSON
+      processResource(res);
+    } catch (e) {
+      if(failed){ // Assuming failed GET request
+        Log.put("Activities:Poller", failed.message, 2);
+      } else {
+        var result = Parser.parse(res, "json", function(res){
+          processResource(res);
+        });
+      }
     }
-  } 
+  }
+
+  function processResource(res) {
+    if(that.process != undefined){
+    //process data - this is important for feed sources like Twitter
+    // which carry their data in inconsistent JSON structures
+  }
+    storeResource(res);
+  }
+
+  function storeResource(res) {
+    Storer.store(res, that, function(){
+      pollingFinished = true;
+      console.log("Activities > Routine has finished !");
+    });
+  }
+
+  function pollingInterval(action) {
+    if(action === "destroy") clearInterval(that.interval);        
+    if(action === "create")  console.log(that.pollTime); return setInterval(fetchResource, that.pollTime);
+  }
 
   // Public methods
 
-  this.updateProperties = function(feedObj, name){
-    that.id             = name+"/"+feedObj.resource;
-    that.aggregation    = name;
+  this.init = function() { // runs at bottom of class definition
+    console.log("Activities > " + that.id + " init")
+    that.interval = pollingInterval("create");
+  } 
+
+  this.updateProperties = function(feedObj, aggregation) {
+    that.id             = aggregation + "/" + JSON.stringify(feedObj.resource);
+    that.aggregation    = aggregation;
     that.resource       = feedObj.resource;
     that.process        = feedObj.process;
     that.archive        = feedObj.archive;
@@ -101,40 +101,39 @@ function Consumer(feedObj, name){
     }
   };
 
-  this.pollNow          = function(){
-    manageInterval("destroy");
+  this.pollNow = function() {
+    pollingInterval("destroy");
     routine();
-    manageInterval("create");
+    pollingInterval("create");
   };
-
-  init();
 }
 
 // * Public Methods
 
-function startConsumer(feedObj, name, canPollNow){
-  var c = new Consumer(feedObj, name);
-  all.push(c);
-  // return c;
+function startPoller(feedObj, name) {
+  var poller = new Poller(feedObj, name);
+  poller.init();
+  all.push(poller);
 }
 
 function pollAll(){ //might be too heavy
-  _.each(all, function(i){
+  _.each(all, function(i) {
     i.pollNow();
   })
 }
 
-function get(id){
-  _.find(all, function(i){
+function get(id) {
+  _.find(all, function(i) {
     return (i.id == id);
   })
 }
 
+
 // * Interface
 
 
-exports.startConsumer  = startConsumer;
-exports.Consumer      = Consumer;
+exports.startPoller   = startPoller;
+exports.Poller        = Poller;
 exports.all           = all;
 exports.get           = get;
 exports.pollAll       = pollAll;

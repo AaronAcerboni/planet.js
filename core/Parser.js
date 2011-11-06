@@ -15,7 +15,7 @@ var dirmap    = require('/planet.js/core/DirMap'),
 // * Private
 
 
-function commitParse(action){
+function commitParse(action) {
   var prsData;
   switch(action){
     case "xml>json" : prsData = xml2json.parse(data); break;
@@ -29,27 +29,37 @@ function commitParse(action){
 // * Public
 
 
-function parse(data, to, callback){
+function parse(data, to, callback) {
   var parsedData;
       dataType;
 
   // understand the fed data type (this is probably not secure and should be revised)
-  if( data.search("<rss version=\"2.0\">") >= 0 ) dataType = "rss";
-  if( data.search("<feed xmlns=")          >= 0 ) dataType = "atom";
-  if( dataType == undefined )                     dataType = "json";
+  if( data.search("<rss version=\"2.0\">") >= 0 )
+    dataType = "rss";
+
+  if( data.search("<feed xmlns=") >= 0 )
+    dataType = "atom";
+
+  if( dataType == undefined )
+    dataType = "json";
 
   var returnData = commitParse(dataType+">"+to);
   callback({ data : returnData , type: dataType });
 }
 
-function parseSync(data, to){
+function parseSync(data, to) {
   var parsedData,
       dataType;
 
   // understand the fed data type (this is probably not secure and should be revised)
-  if( data.search("<rss version=\"2.0\">") >= 0 ) dataType = "rss";
-  if( data.search("<feed xmlns=")          >= 0 ) dataType = "atom";
-  if( dataType == undefined )                     dataType = "json";
+  if( data.search("<rss version=\"2.0\">") >= 0 )
+    dataType = "rss";
+
+  if( data.search("<feed xmlns=") >= 0 )
+    dataType = "atom";
+
+  if( dataType == undefined )
+    dataType = "json";
 
   var returnData = commitParse(dataType+">"+to);
   return { data : returnData , type: dataType };

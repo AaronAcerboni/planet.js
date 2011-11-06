@@ -3,19 +3,22 @@
     "name" : "social",
     "feeds" : [
       {
-        "resource" : "http://planetjs.halfmelt.com/feeds/twitter.json",
-        "pollTime" : 8000,
-        "polling" : true
+        "resource" : "http://planetjs.halfmelt.com/feeds/twitter.jso",
+        "collection" : {"type" : "poll", "pollTime" : 6800000 }
       },
       {
         "resource" : "http://planetjs.halfmelt.com/feeds/flickr.json",
-        "pollTime" : 620000000,        
-        "polling" : true
+        "collection" : {"type" : "poll", "pollTime" : 7000 }
       },
       {
-        "resource" : "oauth://apikey[]apisecretkey[]",
-        "pollTime" : 620000000,        
-        "polling" : true
+        "resource" : {"service" : "twitter", "apikey": 123 , "apisecret" : 456},
+        "collection" : {"type" : "pushed"},
+        "process" : "$processes/social/twitter:trimTweet"
+      },
+      {
+        "resource" : {"service" : "flickr", "apikey": 654 , "apisecret" : 321},
+        "collection" : {"type" : "poll", "pollTime" : 6800000 },
+        "process" : "$processes/social/flickr:trimPhoto"
       }
     ]
   },
@@ -24,7 +27,8 @@
     "name" : "community",
     "feeds" : [
       {
-        "resource" : "$local_resources/friends.xml"
+        "resource" : "$local_resources/friends.xml",
+        "collection" : {"type" : "local" }
       }
     ]
   },
@@ -33,7 +37,8 @@
     "name" : "food",
     "feeds" : [
       {
-        "resource" : "$local_resources/breakfast.rss"
+        "resource" : "$local_resources/breakfast.rss",
+        "collection" : {"type" : "local" }
       }
     ]
   }  

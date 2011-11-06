@@ -5,17 +5,13 @@ var sys        = require('sys'),
     Activities = require('/planet.js/core/Activities');
 
 
-// * Start main loop
+// Start main loop
 
 http.createServer(function(request, response) {
   
 }).listen(8888);
 
-// * Server init
-
-// Define database structure
-
-// ... code here which creates or checks for pre existing schemas ...
+// Server init
 
 // Start up consumer activities, they fetch data based on aggregations.json
 readConfig();
@@ -30,12 +26,17 @@ function readConfig(){
       for(i in all){
         var agg = all[i];
         for(j in agg.feeds){
-          // For each feed in aggregations.json start up an activity
+          // For each feed in aggregations.json start up a polling object
           var feed = agg.feeds[j];
-          Activities.startConsumer(feed, agg.name);
+          if( feed.collection.type == "poll"){
+            Activities.startPoller(feed, agg.name);
+          }
+          if( feed.collection.type == "pushed"){
+            // Activities ...
+          }
         }
       }
-      console.log(Activities.all.length + " Consumer objects created.");
+      console.log("server.js > " + Activities.all.length + " Consumer objects created.");
     } 
   });
 }

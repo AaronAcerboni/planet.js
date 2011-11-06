@@ -6,7 +6,7 @@
 
 var http  = require('http');
 
-function httpGET(url, callback){
+function httpGET(url, callback) {
 
   // Validate URL and split it up by hostname and path
   // It's ok with both http:// prepending or without
@@ -20,7 +20,7 @@ function httpGET(url, callback){
   }
 
   var path = '';
-  for(var i = start; i < urlParts.length; i++) {
+  for(var i = start; i < urlParts.length; i++){
     path += '/' + urlParts[i];
   }
 
@@ -36,11 +36,11 @@ function httpGET(url, callback){
     console.log ( "-STARTING");
     res.setEncoding('utf8');
     var raw = "";
-    res.on('data', function(chunk){
+    res.on('data', function(chunk) {
       console.log(" += CHUNK");
       raw += chunk;
     })
-    res.on('end',function(){
+    res.on('end',function() {
       console.log("-END");
       callback(raw, undefined);
     })
