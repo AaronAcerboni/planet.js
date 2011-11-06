@@ -7,7 +7,7 @@ In time Planet.js will aim to provide plugins and themes to enhance websites bui
 
 Current development aim:
 
-* Derive storing procedure and data structure.  
+* Derive storing procedure and data structure. Keep an eye out on the research blog.
 
 ##Getting started##
 Please note directories set in planet.js start from the system root `/planetjs` (This is just for my testing environment) 
