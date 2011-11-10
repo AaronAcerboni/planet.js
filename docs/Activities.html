@@ -1,0 +1,117 @@
+<!DOCTYPE html>  <html> <head>   <title>Activities.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               Activities.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>A module which is responsible for creating and managing polling activities.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">Fetcher</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;/planet.js/core/Fetch&quot;</span><span class="p">),</span>
+    <span class="nx">Parser</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;/planet.js/core/Parser&quot;</span><span class="p">),</span>
+    <span class="nx">Storer</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;/planet.js/core/Store&quot;</span><span class="p">),</span>
+    <span class="nx">Log</span>     <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;/planet.js/core/Log&quot;</span><span class="p">),</span>
+    <span class="nx">_</span>       <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;underscore&quot;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>All activity Poller objects</h2>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">all</span> <span class="o">=</span> <span class="p">[];</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h2>Activity Poller object class</h2>
+
+<p>Parameters :
+- <code>feedObj</code> , a singular resource taken from <code>aggregations.json</code>
+- <code>aggregation</code>, the name of the aggregation.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">Poller</span><span class="p">(</span><span class="nx">feedObj</span><span class="p">,</span> <span class="nx">aggregation</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">id</span>               <span class="o">=</span> <span class="nx">aggregation</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">feedObj</span><span class="p">.</span><span class="nx">resource</span><span class="p">);</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">aggregation</span>      <span class="o">=</span> <span class="nx">aggregation</span><span class="p">;</span> <span class="c1">// Aggregation name that the collected data will be under</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">resource</span>         <span class="o">=</span> <span class="nx">feedObj</span><span class="p">.</span><span class="nx">resource</span><span class="p">;</span> <span class="c1">// url or url+authkeys</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">pollTime</span>         <span class="o">=</span> <span class="nx">feedObj</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">pollTime</span><span class="p">;</span> <span class="c1">// Time (ms) to run a polling routine</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">process</span>          <span class="o">=</span> <span class="nx">feedObj</span><span class="p">.</span><span class="nx">process</span><span class="p">;</span> <span class="c1">// associated data process to be ran on the fetched data</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">interval</span>         <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span> <span class="c1">// Node &#39;intervalId&#39; kept for destroying a setInterval</span>
+
+  <span class="cm">/* Internal methods */</span>
+
+  <span class="kd">var</span> <span class="nx">pollingFinished</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span> <span class="c1">// Flag; prevents stacking of the polling routine</span>
+
+  <span class="kd">function</span> <span class="nx">fetchResource</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">pollingFinished</span><span class="p">){</span>
+      <span class="nx">pollingFinished</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>TODO: OAuth and not just simple GET</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">Fetcher</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">resource</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">err</span><span class="p">){</span> <span class="c1">// Assuming failed GET request</span>
+          <span class="nx">Log</span><span class="p">.</span><span class="nx">report</span><span class="p">(</span><span class="s2">&quot;Activities:Poller&quot;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="c1">// Success</span>
+          <span class="nx">parseResource</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+        <span class="p">}</span>
+      <span class="p">})</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">parseResource</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">data</span><span class="p">;</span>
+    <span class="k">try</span> <span class="p">{</span>
+      <span class="nx">data</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span> <span class="c1">// Assuming it&#39;s JSON</span>
+      <span class="nx">processResource</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">Parser</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">res</span><span class="p">){</span>
+        <span class="nx">processResource</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+      <span class="p">});</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">processResource</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">process</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">){</span>
+
+    <span class="p">}</span>
+    <span class="nx">storeResource</span><span class="p">(</span><span class="nx">res</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">storeResource</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Storer</span><span class="p">.</span><span class="nx">store</span><span class="p">(</span><span class="nx">res</span><span class="p">,</span> <span class="nx">that</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+      <span class="nx">pollingFinished</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Activities.js &gt; Routine has finished !&quot;</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kd">function</span> <span class="nx">pollingInterval</span><span class="p">(</span><span class="nx">action</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">action</span> <span class="o">===</span> <span class="s2">&quot;destroy&quot;</span><span class="p">)</span> <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">interval</span><span class="p">);</span>        
+    <span class="k">if</span><span class="p">(</span><span class="nx">action</span> <span class="o">===</span> <span class="s2">&quot;create&quot;</span><span class="p">)</span>  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">pollTime</span><span class="p">);</span> <span class="k">return</span> <span class="nx">setInterval</span><span class="p">(</span><span class="nx">fetchResource</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">pollTime</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="cm">/* Public methods */</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">init</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// runs at bottom of class definition</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;Activities.js &gt; &quot;</span> <span class="o">+</span> <span class="nx">that</span><span class="p">.</span><span class="nx">id</span> <span class="o">+</span> <span class="s2">&quot; init&quot;</span><span class="p">)</span>
+    <span class="nx">that</span><span class="p">.</span><span class="nx">interval</span> <span class="o">=</span> <span class="nx">pollingInterval</span><span class="p">(</span><span class="s2">&quot;create&quot;</span><span class="p">);</span>
+  <span class="p">}</span> 
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">updateProperties</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">feedObj</span><span class="p">,</span> <span class="nx">aggregation</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">that</span><span class="p">.</span><span class="nx">id</span>             <span class="o">=</span> <span class="nx">aggregation</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">feedObj</span><span class="p">.</span><span class="nx">resource</span><span class="p">);</span>
+    <span class="nx">that</span><span class="p">.</span><span class="nx">aggregation</span>    <span class="o">=</span> <span class="nx">aggregation</span><span class="p">;</span>
+    <span class="nx">that</span><span class="p">.</span><span class="nx">resource</span>       <span class="o">=</span> <span class="nx">feedObj</span><span class="p">.</span><span class="nx">resource</span><span class="p">;</span>
+    <span class="nx">that</span><span class="p">.</span><span class="nx">process</span>        <span class="o">=</span> <span class="nx">feedObj</span><span class="p">.</span><span class="nx">process</span><span class="p">;</span>
+    <span class="nx">that</span><span class="p">.</span><span class="nx">archive</span>        <span class="o">=</span> <span class="nx">feedObj</span><span class="p">.</span><span class="nx">archive</span><span class="p">;</span>
+
+    <span class="k">if</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">pollTime</span> <span class="o">!=</span> <span class="nx">feedObj</span><span class="p">.</span><span class="nx">pollTime</span><span class="p">){</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">pollTime</span>     <span class="o">=</span> <span class="nx">feedObj</span><span class="p">.</span><span class="nx">pollTime</span><span class="p">;</span>
+      <span class="nx">clearInterval</span><span class="p">(</span><span class="nx">that</span><span class="p">.</span><span class="nx">interval</span><span class="p">);</span>
+      <span class="nx">that</span><span class="p">.</span><span class="nx">interval</span>     <span class="o">=</span> <span class="nx">setInterval</span><span class="p">(</span><span class="nx">routine</span><span class="p">,</span> <span class="nx">that</span><span class="p">.</span><span class="nx">pollTime</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">};</span>
+
+  <span class="k">this</span><span class="p">.</span><span class="nx">pollNow</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">pollingInterval</span><span class="p">(</span><span class="s2">&quot;destroy&quot;</span><span class="p">);</span>
+    <span class="nx">routine</span><span class="p">();</span>
+    <span class="nx">pollingInterval</span><span class="p">(</span><span class="s2">&quot;create&quot;</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <ul>
+<li>Public Methods</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">startPoller</span><span class="p">(</span><span class="nx">feedObj</span><span class="p">,</span> <span class="nx">name</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">poller</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Poller</span><span class="p">(</span><span class="nx">feedObj</span><span class="p">,</span> <span class="nx">name</span><span class="p">);</span>
+  <span class="nx">poller</span><span class="p">.</span><span class="nx">init</span><span class="p">();</span>
+  <span class="nx">all</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">poller</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">pollAll</span><span class="p">(){</span>
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">all</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">i</span><span class="p">.</span><span class="nx">pollNow</span><span class="p">();</span>
+  <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">get</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">_</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">all</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nx">i</span><span class="p">.</span><span class="nx">id</span> <span class="o">==</span> <span class="nx">id</span><span class="p">);</span>
+  <span class="p">})</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <h2>Interface</h2>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">exports</span><span class="p">.</span><span class="nx">startPoller</span>   <span class="o">=</span> <span class="nx">startPoller</span><span class="p">;</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">Poller</span>        <span class="o">=</span> <span class="nx">Poller</span><span class="p">;</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">all</span>           <span class="o">=</span> <span class="nx">all</span><span class="p">;</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">get</span>           <span class="o">=</span> <span class="nx">get</span><span class="p">;</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">pollAll</span>       <span class="o">=</span> <span class="nx">pollAll</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
