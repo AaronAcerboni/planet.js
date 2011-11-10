@@ -1,7 +1,4 @@
-/*
-  A module which is responsible for creating and managing polling activities.
-*/
-
+// A module which is responsible for creating and managing polling activities.
 
 var Fetcher = require("/planet.js/core/Fetch"),
     Parser  = require("/planet.js/core/Parser"),
@@ -10,13 +7,16 @@ var Fetcher = require("/planet.js/core/Fetch"),
     _       = require("underscore");
 
 
-// * All activity Poller objects
+// ## All activity Poller objects
 
 
 var all = [];
 
 
-// * Activity Poller object class
+// ## Activity Poller object class
+// Parameters :
+// - `feedObj` , a singular resource taken from `aggregations.json`
+// - `aggregation`, the name of the aggregation.
 
 function Poller(feedObj, aggregation) {
 
@@ -29,7 +29,7 @@ function Poller(feedObj, aggregation) {
   this.process          = feedObj.process; // associated data process to be ran on the fetched data
   this.interval         = undefined; // Node 'intervalId' kept for destroying a setInterval
 
-  // Internal methods
+  /* Internal methods */
 
   var pollingFinished = true; // Flag; prevents stacking of the polling routine
 
@@ -37,33 +37,31 @@ function Poller(feedObj, aggregation) {
     if(pollingFinished){
       pollingFinished = false;
       // TODO: OAuth and not just simple GET
-      Fetcher.fetch(that.resource, function(data, failed){
-        parseResource(data);
+      Fetcher.fetch(that.resource, function(err, data){
+        if(err){ // Assuming failed GET request
+          Log.report("Activities:Poller", err.message, 2);
+        } else { // Success
+          parseResource(data);
+        }
       })
     }
   }
 
   function parseResource(res) {
     var data;
-    // parse
     try {
       data = JSON.parse(res); // Assuming it's JSON
       processResource(res);
     } catch (e) {
-      if(failed){ // Assuming failed GET request
-        Log.put("Activities:Poller", failed.message, 2);
-      } else {
-        var result = Parser.parse(res, "json", function(res){
-          processResource(res);
-        });
-      }
+      var result = Parser.parse(res, "json", function(res){
+        processResource(res);
+      });
     }
   }
 
   function processResource(res) {
     if(that.process != undefined){
-    //process data - this is important for feed sources like Twitter
-    // which carry their data in inconsistent JSON structures
+
     }
     storeResource(res);
   }
@@ -71,7 +69,7 @@ function Poller(feedObj, aggregation) {
   function storeResource(res) {
     Storer.store(res, that, function(){
       pollingFinished = true;
-      console.log("Activities > Routine has finished !");
+      console.log("Activities.js > Routine has finished !");
     });
   }
 
@@ -80,10 +78,10 @@ function Poller(feedObj, aggregation) {
     if(action === "create")  console.log(that.pollTime); return setInterval(fetchResource, that.pollTime);
   }
 
-  // Public methods
+  /* Public methods */
 
   this.init = function() { // runs at bottom of class definition
-    console.log("Activities > " + that.id + " init")
+    console.log("Activities.js > " + that.id + " init")
     that.interval = pollingInterval("create");
   } 
 
@@ -116,7 +114,7 @@ function startPoller(feedObj, name) {
   all.push(poller);
 }
 
-function pollAll(){ //might be too heavy
+function pollAll(){
   _.each(all, function(i) {
     i.pollNow();
   })
@@ -129,7 +127,7 @@ function get(id) {
 }
 
 
-// * Interface
+// ## Interface
 
 
 exports.startPoller   = startPoller;

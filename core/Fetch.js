@@ -1,16 +1,20 @@
-/*
-  Module for retrieving data. 
-
-  Supports HTTP
-*/
+// Module for retrieving data.
+// Supports :
+// - HTTP
 
 var http  = require('http');
 
+// # httpGET
+// A function which makes a GET request and passes the response to the callback.
+// Parameters :
+// - `url` , a string url.
+// - `callback` , passed back the requested data or an Error.
+
 function httpGET(url, callback) {
 
-  // Validate URL and split it up by hostname and path
-  // It's ok with both http:// prepending or without
-  // Doesn't account for port numbers yet
+  /* Validate URL and split it up by hostname and path
+     It's ok with both http:// prepending or without
+     Doesn't account for port numbers yet */
 
   var urlParts = url.split('/');
   var start = 3;
@@ -24,7 +28,7 @@ function httpGET(url, callback) {
     path += '/' + urlParts[i];
   }
 
-  // Go get the resource
+  /* Go get the resource */
 
   var options = {
     host: urlParts[start-1],
@@ -42,15 +46,14 @@ function httpGET(url, callback) {
     })
     res.on('end',function() {
       console.log("-END");
-      callback(raw, undefined);
+      callback(undefined, raw);
     })
   }).on('error', function(e) {
-    callback(undefined, e)
+    callback(e, undefined)
   });
   
 }
 
-// * Interface
-
+// # Interface
 
 exports.fetch = httpGET;

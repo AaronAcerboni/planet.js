@@ -1,62 +1,50 @@
-/*
-  Module responsible for storing data.
-  Relies on Mongoose but not set in stone.
-*/
+// Responsible for storing data.
 
-var mongoose  = require('mongoose'),
-    sys       = require('sys'),
-    Schema    = mongoose.Schema;
+var mongous = require("mongous").Mongous;
 
+// ##Storing data
+// Stores data collected by an [activity](Activies.html) into MongoDB  
+// Parameter :
+// - `data` , the data which was processed.
+// - `activity`, the `activity_id` responsible for that data.
+// - `callback`
 
-// Define schemas
+function storeData(data, activity, callback){
 
-var schemaFeeds = {
-  id : String,
-  data : String
-};
+  var comment = {
+    date : undefined,
+    commenter : undefined,
+    commenter_contact : undefined,
+    body : undefined
+  }
 
-var schemaAggregations = {
-  name : String,
-  feeds : [schemaFeeds]
-};
+  var data = {
+    title : undefined,
+    author : undefined,
+    text_summary : undefined,
+    text_full : undefined,
+    main_image : undefined,
+    other_images : [undefined],
+    location : [undefined,undefined],
+    other : undefined
+  }
 
-// * Public
+  var entry = {
+    date : undefined,
+    resourceLink : undefined,
+    data : data,
+    aggregation : activity.aggregation,
+    activity_id : activity.id,
+    pinned : false,
+    comments : [comment]
+  };
+  console.log(entry);
+  mongous("test.entries").save(entry);
 
-// Data storing procedure could radically change !
-function storeData(data, consumer, callback){
-
-  //Connection using mongo url scheme
-  mongoose.connect('mongodb://localhost/test');
-
-  var consumerId = consumer.id;
-  var aggName = consumer.aggregation;
-
-  // Set up schemas
-
-  var Feeds = new Schema(schemaFeeds);
-
-  var Feed = mongoose.model("Feeds", Feeds);
-  var feedInstance = new Feed();
-  feedInstance.id = consumerId;
-  feedInstance.data = JSON.stringify(data);
-
-  var Aggregations = new Schema(schemaAggregations);
-
-  var Aggregation = mongoose.model("Aggregations", Aggregations);
-  var aggregationInstance = new Aggregation();
-  aggregationInstance.name = aggName;
-  aggregationInstance.feeds.push( {id : consumerId, data : JSON.stringify(data)} );
-
-  //Insert into db
-  aggregationInstance.save(function(err){
-    if(err) throw err;
-    sys.puts('Store > Saved to db');
-    callback();
-  });
-
+  callback();
 }
 
-// * Interface
+// ## Interface
 
 
 exports.store = storeData;

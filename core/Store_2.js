@@ -4,39 +4,50 @@
 */
 
 var mongoose  = require('mongoose'),
+    sys       = require('sys'),
     Schema    = mongoose.Schema;
 
-// Schema types
 
-var schemaRSS = {};
-var schemaATOM = {};
-var schemaLoose = {any : {}};
+// Define schemas
 
+var schemaEntry = {
+  date : Date,
+  aggregation : String,
+  data : String,
+  activity : String
+};
 
 // * Public
 
 // Data storing procedure could radically change !
-function storeData(data, consumer, callback){
+function storeData(data, activity, callback){
 
-  //defined schema
-  var AggregationSchema = {};
-  var aggName = consumer.aggregation;
-  AggregationSchema[name] = { "rss" : undefined }; // rss structures go here
-  AggregationSchema[name] = { "atom" : undefined }; // atom structures go here
-  AggregationSchema[name] = { "rest" : undefined }; // json goes here?
+  //Connection using mongo url scheme
+  mongoose.connect('mongodb://localhost/test');
 
-  var schema;
+  var consumerId = activity.id;
+  var aggName = activity.aggregation;
 
-  //Decide what schema structure to use
-  switch(consumer.dataType){
-    case "rss" : schema = new Schema(schemaRSS); break;
-    case "atom" : schema = new Schema(schemaATOM); break;
-    case "json" : schema = new Schema(schemaLoose); break;
-    default : throw new Error();
-  }
+  // Set up schema
 
-  console.log(AggregationSchema);
-  callback();
+  var Entries = new Schema(schemaEntry);
+
+  var Entry = mongoose.model("Entries", Entries);
+  var entry = new Entry();
+
+  entry.date = new Date();
+  entry.aggregation = activity.aggregation;
+  entry.data = JSON.stringify(data);
+  entry.activity = activity.id;
+
+
+  //Insert into db
+  entry.save(function(err){
+    if(err) throw err;
+    sys.puts('Store.js > Saved to db');
+    callback();
+  });
+
 }
 
 // * Interface
