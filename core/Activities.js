@@ -1,4 +1,9 @@
-// A module which is responsible for creating and managing polling activities.
+// A module which is responsible for creating activities. Activities
+// are responsible for the primary routine of aggregation.
+//  
+// Types of activities :
+//
+// - Poller
 
 var Fetcher = require("/planet.js/core/Fetch"),
     Parser  = require("/planet.js/core/Parser"),
@@ -7,16 +12,19 @@ var Fetcher = require("/planet.js/core/Fetch"),
     _       = require("underscore");
 
 
-// ## All activity Poller objects
+/* All activity objects */
+
+var pollers = [];
+var subscribers = [];
 
 
-var all = [];
-
-
-// ## Activity Poller object class
-// Parameters :
-// - `feedObj` , a singular resource taken from `aggregations.json`
-// - `aggregation`, the name of the aggregation.
+// ## Poller
+// > Poller is activity which gets its data by polling a resource.
+// > 
+// > Parameters :  
+// > 
+// > - `feedObj` : a singular feed taken from `aggregations.json`
+// > - `aggregation` : the name representing the related feeds.
 
 function Poller(feedObj, aggregation) {
 
@@ -28,15 +36,16 @@ function Poller(feedObj, aggregation) {
   this.pollTime         = feedObj.collection.pollTime; // Time (ms) to run a polling routine
   this.process          = feedObj.process; // associated data process to be ran on the fetched data
   this.interval         = undefined; // Node 'intervalId' kept for destroying a setInterval
+  
+  // `pollingFinished` is a flag which prevents stacking of polling routines. For example :
+  // `fetchResource` may fire before the previous poll is finished due to factors like web latency. 
+  var pollingFinished = true;
 
-  /* Internal methods */
-
-  var pollingFinished = true; // Flag; prevents stacking of the polling routine
-
+  // `fetchResource` is responsible for getting data by using the [Fetch](Fetch.html) module
   function fetchResource() {
     if(pollingFinished){
       pollingFinished = false;
-      // TODO: OAuth and not just simple GET
+      /* TODO: OAuth and not just simple GET */
       Fetcher.fetch(that.resource, function(err, data){
         if(err){ // Assuming failed GET request
           Log.report("Activities:Poller", err.message, 2);
@@ -47,18 +56,21 @@ function Poller(feedObj, aggregation) {
     }
   }
 
+  // `parseResource` is responsible for parsing the data to JSON using the [Parser](Parser.html)
   function parseResource(res) {
     var data;
     try {
       data = JSON.parse(res); // Assuming it's JSON
       processResource(res);
     } catch (e) {
-      var result = Parser.parse(res, "json", function(res){
+      Parser.parse(res, "json", function(res){
         processResource(res);
       });
     }
   }
 
+  // `processResource` is responsible for passing the JSON data to any associated 
+  // processing.
   function processResource(res) {
     if(that.process != undefined){
 
@@ -66,6 +78,8 @@ function Poller(feedObj, aggregation) {
     storeResource(res);
   }
 
+  // `storeResource` is responsible for storing the data using the [Store](Store.html)
+  // module.
   function storeResource(res) {
     Storer.store(res, that, function(){
       pollingFinished = true;
@@ -73,18 +87,14 @@ function Poller(feedObj, aggregation) {
     });
   }
 
+  // `pollingInterval` is used for creating or destroying the JavaScript
+  // `interval` object which facilitates the aggregation loop.
   function pollingInterval(action) {
     if(action === "destroy") clearInterval(that.interval);        
-    if(action === "create")  console.log(that.pollTime); return setInterval(fetchResource, that.pollTime);
+    if(action === "create")  return setInterval(fetchResource, that.pollTime);
   }
 
-  /* Public methods */
-
-  this.init = function() { // runs at bottom of class definition
-    console.log("Activities.js > " + that.id + " init")
-    that.interval = pollingInterval("create");
-  } 
-
+  // `updateProperties` is a function used for updating a `Poller` object
   this.updateProperties = function(feedObj, aggregation) {
     that.id             = aggregation + "/" + JSON.stringify(feedObj.resource);
     that.aggregation    = aggregation;
@@ -99,39 +109,64 @@ function Poller(feedObj, aggregation) {
     }
   };
 
+  // ### pollNow
+  // > Forces the Polling object's polling routine to happen.
   this.pollNow = function() {
     pollingInterval("destroy");
     routine();
     pollingInterval("create");
   };
+
+  // ### start
+  // > Starts the polling routine.
+  this.start = function() {
+    console.log("Activities.js > " + that.id + " start")
+    that.interval = pollingInterval("create");
+  } 
 }
 
-// * Public Methods
+// ## startPoller  
+// >  Begins the polling loop.
+// >  
+// > Parameters :  
+// >  
+// > - `feedObj` : a singular feed taken from `aggregations.json`
+// > - `aggregation` : the name representing the related feeds.
 
 function startPoller(feedObj, name) {
   var poller = new Poller(feedObj, name);
-  poller.init();
-  all.push(poller);
+  poller.start();
+  pollers.push(poller);
 }
 
+// ## pollAll
+// > Forces a polling routine on all existing polling objects.
+// > **May be too intensive**
+
 function pollAll(){
-  _.each(all, function(i) {
+  _.each(pollers, function(i) {
     i.pollNow();
   })
 }
 
+// ## get
+// > Returns a `Poller` object by its `id`
+// >
+// > Parameters:
+// > 
+// > - `id` : A string id unique to the desired `Poller`
+
 function get(id) {
-  _.find(all, function(i) {
+  _.find(pollers, function(i) {
+    return (i.id == id);
+  })
+  _.find(subscribers, function(i) {
     return (i.id == id);
   })
 }
 
-
-// ## Interface
-
-
 exports.startPoller   = startPoller;
 exports.Poller        = Poller;
-exports.all           = all;
+exports.pollers       = pollers;
 exports.get           = get;
 exports.pollAll       = pollAll;

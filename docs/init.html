@@ -1,0 +1,41 @@
+<!DOCTYPE html>  <html> <head>   <title>init.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               init.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>A module containing functions needed for the server to start.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">Activities</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;/planet.js/core/Activities&quot;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h3>startActivties</h3>
+
+<blockquote>
+  <p>Starts up <a href="Activities.html">activities</a> based on what aggregations are defined
+  in <code>aggregations.json</code>.</p>
+  
+  <p>Parameters :</p>
+  
+  <ul>
+  <li><code>aggLocation</code> : Location of <code>aggregations.json</code> file (optional)</li>
+  </ul>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">startActivities</span><span class="p">(</span><span class="nx">aggLocation</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="nx">aggLocation</span> <span class="o">!=</span> <span class="kc">undefined</span><span class="p">)</span>
+    <span class="kd">var</span> <span class="nx">aggregations</span> <span class="o">=</span> <span class="nx">aggLocation</span><span class="p">;</span>
+  <span class="k">else</span>
+    <span class="kd">var</span> <span class="nx">aggregations</span> <span class="o">=</span> <span class="s2">&quot;/planet.js/aggregations.json&quot;</span><span class="p">;</span>
+
+  <span class="nx">fs</span><span class="p">.</span><span class="nx">readFile</span><span class="p">(</span><span class="nx">aggLocation</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">data</span><span class="p">){</span>
+      <span class="kd">var</span> <span class="nx">all</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+
+      <span class="k">for</span><span class="p">(</span><span class="nx">i</span> <span class="k">in</span> <span class="nx">all</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">agg</span> <span class="o">=</span> <span class="nx">all</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="k">for</span><span class="p">(</span><span class="nx">j</span> <span class="k">in</span> <span class="nx">agg</span><span class="p">.</span><span class="nx">feeds</span><span class="p">){</span>
+          <span class="kd">var</span> <span class="nx">feed</span> <span class="o">=</span> <span class="nx">agg</span><span class="p">.</span><span class="nx">feeds</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
+          <span class="k">switch</span><span class="p">(</span><span class="nx">feed</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">type</span><span class="p">){</span>
+            <span class="k">case</span> <span class="s2">&quot;poll&quot;</span> <span class="o">:</span>
+              <span class="nx">Activities</span><span class="p">.</span><span class="nx">startPoller</span><span class="p">(</span><span class="nx">feed</span><span class="p">,</span> <span class="nx">agg</span><span class="p">.</span><span class="nx">name</span><span class="p">);</span>
+              <span class="k">break</span><span class="p">;</span>
+            <span class="k">case</span> <span class="s2">&quot;pushed&quot;</span> <span class="o">:</span>
+              <span class="k">break</span><span class="p">;</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+  <span class="p">});</span>
+
+<span class="p">}</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">startActivities</span> <span class="o">=</span> <span class="nx">startActivities</span><span class="p">;</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

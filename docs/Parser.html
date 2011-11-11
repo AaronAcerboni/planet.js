@@ -1,12 +1,23 @@
 <!DOCTYPE html>  <html> <head>   <title>Parser.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               Parser.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>Module for accessing parsers. Pass in data and it will understand what format it is.
-Supply just what it must be converted to.
-Available parsers :
-- XML > JSON</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">xml2json</span>    <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;/planet.js/parsers/XMLtoJSON&#39;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>Parsing</h2>
+One must supply just what it must be converted to.  </p>
 
-<p>Parameters :
-- <code>data</code> , the data which has to be parsed.
-- <code>to</code> , the desired format.
-- <code>callback</code></p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+<p>Available parsers :</p>
+
+<ul>
+<li>XML > JSON</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">xml2json</span>    <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;/planet.js/parsers/XMLtoJSON&#39;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>parse</h2>
+
+<blockquote>
+  <p>Returns parsed data of a desired format.</p>
+  
+  <p>Parameters :  </p>
+  
+  <ul>
+  <li><code>data</code> : the data which has to be parsed.</li>
+  <li><code>to</code> : the desired format.</li>
+  <li><code>callback</code></li>
+  </ul>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
   <span class="kd">var</span> <span class="nx">parsedData</span><span class="p">,</span>
       <span class="nx">dataType</span><span class="p">;</span>
 
@@ -28,6 +39,9 @@ Available parsers :
   <span class="nx">callback</span><span class="p">(</span>
     <span class="p">{</span> <span class="nx">data</span> <span class="o">:</span> <span class="nx">parsedData</span> <span class="p">,</span> <span class="nx">type</span><span class="o">:</span> <span class="nx">dataType</span> <span class="p">}</span>
   <span class="p">);</span>
-<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <h2>Interface</h2>             </td>             <td class="code">               <div class="highlight"><pre><span class="nx">exports</span><span class="p">.</span><span class="nx">parse</span> <span class="o">=</span> <span class="nx">parse</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">parse</span> <span class="o">=</span> <span class="nx">parse</span><span class="p">;</span>
 
 </pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

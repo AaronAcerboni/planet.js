@@ -3,11 +3,13 @@
 var fs = require("fs");
 
 // ## toLog
-// Outputs a message to the console and will also output to a log.  
-// Parameters :
-// - `where`, a string describing the source of the problem.
-// - `what` , a string describing what the problem is.
-// - `danger`, an int representing scale of severity.
+// > Outputs a message to the console.
+// >  
+// > Parameters :  
+// > 
+// > - `where` : a string describing the source of the problem.
+// > - `what` : a string describing what the problem is.
+// > - `danger` : an int representing scale of severity.
 
 function toLog(where, what, danger) {
 
@@ -29,7 +31,5 @@ function toLog(where, what, danger) {
   entry += (" @ " + where + " - " + what);
   console.log(entry);
 }
-
-// # Interface
 
 exports.report = toLog;

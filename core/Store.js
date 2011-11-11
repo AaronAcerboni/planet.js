@@ -1,13 +1,15 @@
-// Responsible for storing data.
+// The module responsible for storing data.
 
 var mongous = require("mongous").Mongous;
 
 // ##Storing data
-// Stores data collected by an [activity](Activies.html) into MongoDB  
-// Parameter :
-// - `data` , the data which was processed.
-// - `activity`, the `activity_id` responsible for that data.
-// - `callback`
+// > Stores data collected by an [activity](Activies.html) into MongoDB  
+// > 
+// > Parameter : 
+// > 
+// > - `data` : the data which was processed.
+// > - `activity` : the `activity_id` responsible for that data.
+// > - `callback`
 
 function storeData(data, activity, callback){
 
@@ -43,8 +45,6 @@ function storeData(data, activity, callback){
 
   callback();
 }
-
-// ## Interface
 
 
 exports.store = storeData;

@@ -1,39 +1,18 @@
-// where it all begins.
+// Server houses the main HTTP listener and also uses the Init module starting up 
+// activities which loop the aggregation process.
 
-var sys        = require('sys'),
-    u          = require('util'),
-    fs         = require('fs'),
+var fs         = require('fs'),
     http       = require('http'),
-    Activities = require('/planet.js/core/Activities');
+    init       = require('init');
 
 
-// ## HTTP listening loop
+// ### HTTP listening loop
+// A routing module is planned.
 
 http.createServer(function(request, response) {
   
 }).listen(8888);
 
-// ## Activity initialization
-// For each resource found in `aggregations.json` create an associated [activity](Activies.html)
-
-readConfig();
-
-function readConfig() {
-  fs.readFile("aggregations.json", function(err, data){
-      var all = JSON.parse(data);
-
-      for(i in all){
-        var agg = all[i];
-        for(j in agg.feeds){
-          var feed = agg.feeds[j];
-          switch(feed.collection.type){
-            case "poll" :
-              Activities.startPoller(feed, agg.name);
-              break;
-            case "pushed" :
-              break;
-          }
-        }
-      }
-  });
-}
+// ### Server initialization
+// Utilizes the init module
+init.startActivities("/planet.js/aggregations.json");
