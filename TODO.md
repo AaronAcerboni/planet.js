@@ -14,7 +14,7 @@
 
 - Create a `Subscriber` activity. It will have similar behaviour to the `Poller` but perhaps it could have a listening socket open for data.
 
-- The Polling object's routine should be seperated out with pub/sub.
+- The Polling object's routine should be seperated out using pub/sub.
 
 ## Fetch
 
