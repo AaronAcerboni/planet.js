@@ -1,6 +1,7 @@
 // A module containing functions needed for the server to start.
 
-var Activities = require("/planet.js/core/Activities");
+var Activities = require("/planet.js/core/Activities"),
+    fs         = require("fs");
 
 // ### startActivties
 // > Starts up [activities](Activities.html) based on what aggregations are defined
