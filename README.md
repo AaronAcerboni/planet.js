@@ -20,7 +20,7 @@ Tested on Node v0.4.12 & v0.4.9
 
 Provided modules:
 
-* [mongoose](https://github.com/LearnBoost/mongoose) v2.3.3
+* [mongouse](https://github.com/amark/mongous) v0.1.0
 * [underscore](http://documentcloud.github.com/underscore/) v1.2.1
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) v0.1.11
 * [jasmine-node](https://github.com/pivotal/jasmine) v1.0.12 (unit tests not yet implemented &mdash; sorry!)
