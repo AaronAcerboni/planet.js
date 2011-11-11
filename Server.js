@@ -3,7 +3,7 @@
 
 var fs         = require('fs'),
     http       = require('http'),
-    init       = require('init');
+    init       = require('/planet.js/core/init');
 
 
 // ### HTTP listening loop
