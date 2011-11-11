@@ -48,9 +48,9 @@ Store : `core/Store.js`
 
 ####Lesser component(s)####
 
-DirMap : `core/DirMap.js`  
+Log : `core/Log.js`  
 
-> Component for mapping string identifiers to a directory within planet.js. Will probably be depricated and functionality moved to a standard `router` component.  
+> Component for logging to the console with associated error levels.  
 
 
 ##Developer blogs##
