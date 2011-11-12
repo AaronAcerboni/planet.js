@@ -1,7 +1,10 @@
 #Planet.js#
-Planet.js is a JavaScript feed aggregator based of Planet software. Planet.js aims to be an easy to use server framework for websites which are data-driven or similar to Planet sites.  
 
-In time Planet.js will aim to provide plugins and themes to enhance websites built with Planet JS. All accessible from an admin/configuration panel.  
+Planet.js is a JavaScript data aggregator in the spirit of Planet software. It aims to be a server environment for creating and managing sites which are data driven.
+
+The magic of planet.js is the ability to synchronise a variety of data ranging from standard RSS to any old web service. Possible use cases are for community sites, sticking your blogs together or anything else you want to hack together with data sources.
+
+Versatility is a philosophy planet.js wants to abide by. This means various ways of getting hold of data, various ways of manipulating it and various ways of outputting it.
 
 ##Development##
 
@@ -34,7 +37,7 @@ Activities : `core/Activities.js`
 
 > Creates Polling objects. These objects are derived using the `aggregations.json` configuration file. Polling objects follow a routine which involves 1) Fetching data. 2) Parsing it. 3) Checking it for processing.  4) Storing it in the database. All using the appropriate components.
 
-Fetch : `core/Activities.js`  
+Fetch : `core/Fetcher.js`  
 
 > Responsible for getting data. Currently supports HTTP GET.  
 
