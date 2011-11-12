@@ -15,6 +15,8 @@ Current development aim:
 ##Getting started##
 Please note directories set in planet.js start from the system root `/planetjs` (This is just for my testing environment) 
 
+`node Server.js`
+
 ###Versions and Dependencies###
 Tested on Node v0.4.12 & v0.4.9
 
