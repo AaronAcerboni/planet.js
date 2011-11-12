@@ -23,7 +23,7 @@
 
 - The Polling object's routine should be seperated out using pub/sub.
 
-- Find common procedure between the `Subscriber` and `Poller` and trim the code with some inheritance.
+- Give `Poller` and `Subscriber` activities a common parent object and diversify them using some inheritance.
 
 ## Fetch
 
