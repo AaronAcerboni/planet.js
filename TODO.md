@@ -7,12 +7,12 @@
 
 ## Processing
 
-A processing module can be registered with a data source from `aggregations.json` and when that data
-is recieved it will be channelled to the associated processing.
-
-Processing is just some unique step you can do with a specific set of data.
-
-For example, retrieving Twitter data gives you a lot fields which you may not be interested in. A Twitter processing module can get rid of this data and funnel the rest of the data in a JSON structure which suits common data structure.
+> A processing module can be registered with a data source from `aggregations.json` and when that data
+> is recieved it will be channelled to the associated processing.
+> 
+> Processing is just some unique step you can do with a specific set of data.
+> 
+> For example, retrieving Twitter data gives you a lot fields which you may not be interested in. A Twitter processing module can get rid of this data and funnel the rest of the data in a JSON structure which suits common data structure.
 
 - Create an architechture for allowing custom Processing modules to be assigned to a data entry.
 - Processing modules for flickr, twitter etc.
