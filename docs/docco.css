@@ -7,9 +7,11 @@ body {
   margin: 0; padding: 0;
 }
 a {
-  text-decoration: none;
-  color: #FF4245;
+  color: #261a3b;
 }
+  a:visited {
+    color: #261a3b;
+  }
 p {
   margin: 0 0 15px 0;
 }
@@ -19,12 +21,6 @@ h1, h2, h3, h4, h5, h6 {
   h1 {
     margin-top: 40px;
   }
-blockquote{
-  padding:0.5em;
-  border-right: 2px solid #EEE;
-  border-bottom: 2px solid #EEE;
-  margin: 0;
-}
 #container {
   position: relative;
 }
@@ -88,7 +84,7 @@ table td {
       margin: 15px 0 15px;
       padding-left: 15px;
     }
-    .docs p tt, .docs p code, .docs li code, .docs p tt{
+    .docs p tt, .docs p code {
       background: #f8f8ff;
       border: 1px solid #dedede;
       font-size: 12px;
