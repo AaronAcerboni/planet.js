@@ -41,7 +41,7 @@ function storeData(data, activity, callback){
     comments : [comment]
   };
   console.log(entry);
-  mongous("test.entries").save(entry);
+  mongous("test.entries").insert(entry);
 
   callback();
 }
