@@ -3,7 +3,7 @@
 ## General
 
 - `Activities` should be able to read the OAuth syntax from `aggregations.json` and act appropriately.
-- Duplicate data check for data entries taken by a Poller activity (a.k.a only add if its new data)
+- Duplicate data check for data entries taken by an activity (a.k.a only add if its new data)
 
 ## Processing
 
