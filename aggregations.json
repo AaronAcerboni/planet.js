@@ -1,45 +1,41 @@
 [
   {
-    "name" : "social",
+    "name" : "Community",
     "feeds" : [
       {
-        "resource" : "http://planetjs.halfmelt.com/feeds/twitter.json",
-        "collection" : {"type" : "poll", "pollTime" : 6800000 }
-      },
-      {
-        "resource" : "http://planetjs.halfmelt.com/feeds/flickr.json",
-        "collection" : {"type" : "poll", "pollTime" : 7000 }
-      },
-      {
-        "resource" : {"service" : "twitter", "apikey": 123 , "apisecret" : 456},
-        "collection" : {"type" : "pushed"},
-        "process" : "processes/social/twitter:getTweet"
-      },
-      {
-        "resource" : {"service" : "flickr", "apikey": 654 , "apisecret" : 321},
-        "collection" : {"type" : "poll", "pollTime" : 6800000 },
-        "process" : "processes/social/flickr:getPhoto"
+        "resources" : {
+          "username" : "planetjstest",
+          "userpass" : "helloplanet",
+          "follow" : [418151670, 192896004, 15922959]
+        },
+        "activity" : {"type" : "subscriber"},
+        "process" : "planetjs.twitter_tweets"
       }
     ]
   },
-
   {
-    "name" : "community",
+    "name" : "General",
     "feeds" : [
       {
-        "resource" : "local_sources/friends.xml",
-        "collection" : {"type" : "local" }
+        "resources" : {"url" : "feeds.gawker.com/gizmodo/full"},
+        "activity" : {"type" : "poller", "time" : 6800000},
+        "process" : "planetjs.rss"
       }
     ]
   },
-
   {
-    "name" : "food",
+    "name" : "Planet.js",
     "feeds" : [
       {
-        "resource" : "local_sources/breakfast.rss",
-        "collection" : {"type" : "local" }
+        "resources" : { "url" : "http://planetjs.tumblr.com/rss" },
+        "activity" : {"type" : "poller", "time" : 6800000 },
+        "process" : "planetjs.rss"
+      },
+      {
+        "resources" : { "url" : "http://planetjsresearch.tumblr.com/rss" },
+        "activity" : {"type" : "poller", "time" : 6800000 },
+        "process" : "planetjs.rss"
       }
     ]
-  }  
+  }
 ]
