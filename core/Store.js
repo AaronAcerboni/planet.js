@@ -1,21 +1,18 @@
-// The module responsible for storing data.
+// The module is responsible for storing data retrieved by planet.js processes.
 
 var mongous = require("mongous").Mongous,
     _       = require("underscore");
 
-// ##Storing data
-// > Stores data collected by an [activity](Activies.html) into MongoDB  
+// ##storeData
+// > Stores data collected by an [activity](Activies.html)'s associated process into a MongoDB database.
 // > 
 // > Parameter : 
 // > 
-// > - `data` : the data which was processed.
-// > - `activity` : the `activity_id` responsible for that data.
+// > - `data` : the data which was processed in the form of an Entry schema.
+// > - `activity` : the `activity_id` responsible for creating that data.
 // > - `callback`
 
 function storeData(process, data, callback){
-
-  // TODO: Check for duplicates using the date and another unique field. Process id
-  // is considered but can easily fall over if the process id make up is changed.
 
   // If there are multiple entries (array) ...
   if(typeof data.length == "number"){
@@ -44,18 +41,36 @@ function storeData(process, data, callback){
   callback();
 }
 
-function duplicateCheck(entry, insertCallback){
+// ##duplicateCheck
+// > This function checks to see if the entry is already in the database. A duplicate is found using
+// > its `activity_id` and its `date`.
+// >  
+// > Parameter :
+// >  
+// > - entry : A schema appropriate object ready to be stored in the database. 
+// > - callback
+
+function duplicateCheck(entry, callback){
   mongous("test.entries").find({date : entry.date, activity_id : entry.activity_id}, function(reply){
     if(reply.documents.length == 0){
-      insertCallback(entry);
+      callback(entry);
     }
   });
 }
 
+// ##insertIntoDB
+// > This function stores the entry into the database.
+// >  
+// > Parameter :
+// >  
+// > - entry : A schema appropraite object ready to be stored in the database.
+
 function insertIntoDB(entry) {
   mongous("test.entries").insert(entry);
-  console.log("inserted entry");
 }
+
+// ##getSchema
+// > This function returns a skeletal object representing the full schema of an `entry`.
 
 function getSchema() {
 
@@ -67,8 +82,7 @@ function getSchema() {
     text_full : undefined,
     main_image : undefined,
     other_images : [undefined],
-    location : [undefined,undefined],
-    other : undefined
+    location : [undefined,undefined]
   };
 
   var entry = {
