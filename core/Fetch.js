@@ -2,7 +2,8 @@
 //
 // - HTTP
 
-var http  = require('http');
+var http  = require('http'),
+    _     = require('underscore');
 
 // ## fetch
 // >  
@@ -13,7 +14,7 @@ var http  = require('http');
 // > - `url` : a string url.
 // > - `callback` : passes back the requested data or an Error.
 
-function fetch(url, callback) {
+function get(url, callback) {
 
   // Validate URL and split it up by hostname and path.
   // It's ok with both `http://` prepending or without.
@@ -52,11 +53,11 @@ function fetch(url, callback) {
       console.log("-END");
       callback(undefined, raw);
     })
-  }).on('error', function(e) {
-    callback(e, undefined)
+  }).on('error', function(error) {
+    callback(error);
   });
   
 }
 
 
-exports.fetch = fetch;
+exports.get = get;
