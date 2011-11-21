@@ -2,7 +2,8 @@
 
 <ul>
 <li>HTTP</li>
-</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">http</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>fetch</h2>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">http</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;http&#39;</span><span class="p">),</span>
+    <span class="nx">_</span>     <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;underscore&#39;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>fetch</h2>
 
 <blockquote>
   <p>A function which makes a GET request and passes the response to the callback.</p>
@@ -13,7 +14,7 @@
   <li><code>url</code> : a string url.</li>
   <li><code>callback</code> : passes back the requested data or an Error.</li>
   </ul>
-</blockquote>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">fetch</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Validate URL and split it up by hostname and path.
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Validate URL and split it up by hostname and path.
 It's ok with both <code>http://</code> prepending or without.
 <strong>Doesn't</strong> account for port numbers yet.</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="kd">var</span> <span class="nx">urlParts</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">);</span>
   <span class="kd">var</span> <span class="nx">start</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
@@ -44,13 +45,13 @@ Pass optional error and data to callback.</p>             </td>             <td 
       <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;-END&quot;</span><span class="p">);</span>
       <span class="nx">callback</span><span class="p">(</span><span class="kc">undefined</span><span class="p">,</span> <span class="nx">raw</span><span class="p">);</span>
     <span class="p">})</span>
-  <span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">callback</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="kc">undefined</span><span class="p">)</span>
+  <span class="p">}).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">callback</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
   <span class="p">});</span>
   
 <span class="p">}</span>
 
 
-<span class="nx">exports</span><span class="p">.</span><span class="nx">fetch</span> <span class="o">=</span> <span class="nx">fetch</span><span class="p">;</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">get</span> <span class="o">=</span> <span class="nx">get</span><span class="p">;</span>
 
 </pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

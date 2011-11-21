@@ -18,27 +18,28 @@ One must supply just what it must be converted to.  </p>
   <li><code>callback</code></li>
   </ul>
 </blockquote>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">to</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">parsedData</span><span class="p">,</span>
-      <span class="nx">dataType</span><span class="p">;</span>
-
-  <span class="k">if</span><span class="p">(</span> <span class="nx">data</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s2">&quot;&lt;rss version=\&quot;2.0\&quot;&gt;&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">)</span>
-    <span class="nx">dataType</span> <span class="o">=</span> <span class="s2">&quot;rss&quot;</span><span class="p">;</span>
-
-  <span class="k">if</span><span class="p">(</span> <span class="nx">data</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s2">&quot;&lt;feed xmlns=&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">)</span>
-    <span class="nx">dataType</span> <span class="o">=</span> <span class="s2">&quot;atom&quot;</span><span class="p">;</span>
-
-  <span class="k">if</span><span class="p">(</span> <span class="nx">dataType</span> <span class="o">==</span> <span class="kc">undefined</span> <span class="p">)</span>
-    <span class="nx">dataType</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">dataType</span> <span class="o">=</span> <span class="nx">getDatasType</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
 
   <span class="k">switch</span><span class="p">(</span><span class="nx">dataType</span> <span class="o">+</span> <span class="s2">&quot;&gt;&quot;</span> <span class="o">+</span> <span class="nx">to</span><span class="p">){</span>
     <span class="k">case</span> <span class="s2">&quot;xml&gt;json&quot;</span> <span class="o">:</span>
-      <span class="nx">parsedData</span> <span class="o">=</span> <span class="nx">xml2json</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+      <span class="nx">xml2json</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">returnedData</span><span class="p">){</span>
+        <span class="nx">callback</span><span class="p">(</span><span class="nx">returnedData</span><span class="p">);</span>
+      <span class="p">});</span>
       <span class="k">break</span><span class="p">;</span>
   <span class="p">}</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Figures out what sort of data format the data is in and therefore what parser
+to use.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">getDatasType</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">type</span><span class="p">;</span>
+  <span class="k">if</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="s2">&quot;&lt;?xml version=\&quot;1.0\&quot;&quot;</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">){</span>
+    <span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;xml&quot;</span><span class="p">;</span>
+  <span class="p">}</span>
 
-  <span class="nx">callback</span><span class="p">(</span>
-    <span class="p">{</span> <span class="nx">data</span> <span class="o">:</span> <span class="nx">parsedData</span> <span class="p">,</span> <span class="nx">type</span><span class="o">:</span> <span class="nx">dataType</span> <span class="p">}</span>
-  <span class="p">);</span>
+  <span class="k">try</span><span class="p">{</span>
+    <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span>
+    <span class="nx">type</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">e</span><span class="p">){}</span>
+
+  <span class="k">return</span> <span class="nx">type</span><span class="p">;</span>
 <span class="p">}</span>
 
 

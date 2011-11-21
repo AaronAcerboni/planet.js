@@ -1,50 +1,93 @@
-<!DOCTYPE html>  <html> <head>   <title>Store.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               Store.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>The module responsible for storing data.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">mongous</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;mongous&quot;</span><span class="p">).</span><span class="nx">Mongous</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>Storing data</h2>
+<!DOCTYPE html>  <html> <head>   <title>Store.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               Store.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>               <p>The module is responsible for storing data retrieved by planet.js processes.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">mongous</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;mongous&quot;</span><span class="p">).</span><span class="nx">Mongous</span><span class="p">,</span>
+    <span class="nx">_</span>       <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">&quot;underscore&quot;</span><span class="p">);</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h2>storeData</h2>
 
 <blockquote>
-  <p>Stores data collected by an <a href="Activies.html">activity</a> into MongoDB  </p>
+  <p>Stores data collected by an <a href="Activies.html">activity</a>'s associated process into a MongoDB database.</p>
   
   <p>Parameter : </p>
   
   <ul>
-  <li><code>data</code> : the data which was processed.</li>
-  <li><code>activity</code> : the <code>activity_id</code> responsible for that data.</li>
+  <li><code>data</code> : the data which was processed in the form of an Entry schema.</li>
+  <li><code>activity</code> : the <code>activity_id</code> responsible for creating that data.</li>
   <li><code>callback</code></li>
   </ul>
-</blockquote>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">storeData</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">activity</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">storeData</span><span class="p">(</span><span class="nx">process</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>If there are multiple entries (array) ...</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">if</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">data</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="s2">&quot;number&quot;</span><span class="p">){</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">data</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>create full entry object</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="kd">var</span> <span class="nx">entry</span> <span class="o">=</span> <span class="nx">getSchema</span><span class="p">();</span>
+      <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">entry</span><span class="p">,</span> <span class="nx">data</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+      <span class="nx">entry</span><span class="p">.</span><span class="nx">activity_id</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+      <span class="nx">entry</span><span class="p">.</span><span class="nx">aggregation</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">aggregation</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>if not dupicate insert into DB</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">duplicateCheck</span><span class="p">(</span><span class="nx">entry</span> <span class="p">,</span> <span class="nx">insertIntoDB</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span> <span class="c1">// If there is only one entry</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">entry</span> <span class="o">=</span> <span class="nx">getSchema</span><span class="p">();</span>
+    <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="nx">entry</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span>
+    <span class="nx">entry</span><span class="p">.</span><span class="nx">activity_id</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">id</span><span class="p">;</span>
+    <span class="nx">entry</span><span class="p">.</span><span class="nx">aggregation</span> <span class="o">=</span> <span class="nx">process</span><span class="p">.</span><span class="nx">aggregation</span><span class="p">;</span>
 
-  <span class="kd">var</span> <span class="nx">comment</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="nx">date</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
-    <span class="nx">commenter</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
-    <span class="nx">commenter_contact</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
-    <span class="nx">body</span> <span class="o">:</span> <span class="kc">undefined</span>
-  <span class="p">}</span>
+    <span class="nx">duplicateCheck</span><span class="p">(</span><span class="nx">entry</span><span class="p">,</span> <span class="nx">insertIntoDB</span><span class="p">);</span>
+  <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Storing procedure completed</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nx">callback</span><span class="p">();</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <h2>duplicateCheck</h2>
+
+<blockquote>
+  <p>This function checks to see if the entry is already in the database. A duplicate is found using
+  its <code>activity_id</code> and its <code>date</code>.</p>
+  
+  <p>Parameter :</p>
+  
+  <ul>
+  <li>entry : A schema appropriate object ready to be stored in the database. </li>
+  <li>callback</li>
+  </ul>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">duplicateCheck</span><span class="p">(</span><span class="nx">entry</span><span class="p">,</span> <span class="nx">callback</span><span class="p">){</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">entry</span><span class="p">);</span>
+  <span class="nx">mongous</span><span class="p">(</span><span class="s2">&quot;test.entries&quot;</span><span class="p">).</span><span class="nx">find</span><span class="p">({</span><span class="nx">date</span> <span class="o">:</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">date</span><span class="p">,</span> <span class="nx">activity_id</span> <span class="o">:</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">activity_id</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">reply</span><span class="p">){</span>
+    
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">reply</span><span class="p">.</span><span class="nx">documents</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+      <span class="nx">callback</span><span class="p">(</span><span class="nx">entry</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <h2>insertIntoDB</h2>
+
+<blockquote>
+  <p>This function stores the entry into the database.</p>
+  
+  <p>Parameter :</p>
+  
+  <ul>
+  <li>entry : A schema appropraite object ready to be stored in the database.</li>
+  </ul>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">insertIntoDB</span><span class="p">(</span><span class="nx">entry</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">mongous</span><span class="p">(</span><span class="s2">&quot;test.entries&quot;</span><span class="p">).</span><span class="nx">insert</span><span class="p">(</span><span class="nx">entry</span><span class="p">);</span>
+<span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <h2>getSchema</h2>
+
+<blockquote>
+  <p>This function returns a skeletal object representing the full schema of an <code>entry</code>.</p>
+</blockquote>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">function</span> <span class="nx">getSchema</span><span class="p">()</span> <span class="p">{</span>
 
   <span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">title</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
     <span class="nx">author</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
+    <span class="nx">link</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
     <span class="nx">text_summary</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
     <span class="nx">text_full</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
     <span class="nx">main_image</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
     <span class="nx">other_images</span> <span class="o">:</span> <span class="p">[</span><span class="kc">undefined</span><span class="p">],</span>
-    <span class="nx">location</span> <span class="o">:</span> <span class="p">[</span><span class="kc">undefined</span><span class="p">,</span><span class="kc">undefined</span><span class="p">],</span>
-    <span class="nx">other</span> <span class="o">:</span> <span class="kc">undefined</span>
-  <span class="p">}</span>
+    <span class="nx">location</span> <span class="o">:</span> <span class="p">[</span><span class="kc">undefined</span><span class="p">,</span><span class="kc">undefined</span><span class="p">]</span>
+  <span class="p">};</span>
 
   <span class="kd">var</span> <span class="nx">entry</span> <span class="o">=</span> <span class="p">{</span>
     <span class="nx">date</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
-    <span class="nx">resourceLink</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
-    <span class="nx">data</span> <span class="o">:</span> <span class="nx">data</span><span class="p">,</span>
-    <span class="nx">aggregation</span> <span class="o">:</span> <span class="nx">activity</span><span class="p">.</span><span class="nx">aggregation</span><span class="p">,</span>
-    <span class="nx">activity_id</span> <span class="o">:</span> <span class="nx">activity</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span>
+    <span class="nx">source_link</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
+    <span class="nx">aggregation</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
+    <span class="nx">activity_id</span> <span class="o">:</span> <span class="kc">undefined</span><span class="p">,</span>
     <span class="nx">pinned</span> <span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
-    <span class="nx">comments</span> <span class="o">:</span> <span class="p">[</span><span class="nx">comment</span><span class="p">]</span>
+    <span class="nx">data</span> <span class="o">:</span> <span class="nx">data</span>
   <span class="p">};</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">entry</span><span class="p">);</span>
-  <span class="nx">mongous</span><span class="p">(</span><span class="s2">&quot;test.entries&quot;</span><span class="p">).</span><span class="nx">save</span><span class="p">(</span><span class="nx">entry</span><span class="p">);</span>
 
-  <span class="nx">callback</span><span class="p">();</span>
+  <span class="k">return</span> <span class="nx">entry</span><span class="p">;</span>
 <span class="p">}</span>
-
 
 <span class="nx">exports</span><span class="p">.</span><span class="nx">store</span> <span class="o">=</span> <span class="nx">storeData</span><span class="p">;</span>
 
