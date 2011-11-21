@@ -6,14 +6,13 @@
 var xml2js = require('/planet.js/node_modules/xml2js');
 
 
-function parseXMLtoJSON( data ){
-  (new xml2js.Parser())
-  .parseString( data, function (err, result){
+function parse(data, callback){
+  (new xml2js.Parser()).parseString( data, function(err, result){
     if (err) throw err;
-    return result;
+    callback(result);
   });
 }
 
 // Interface
 
-exports.XMLtoJSON = parseXMLtoJSON;
+exports.parse = parse;
