@@ -12,32 +12,37 @@ var xml2json    = require('/planet.js/parsers/XMLtoJSON');
 // >  
 // > Parameters :  
 // > 
-// > + `data` : the data which has to be parsed.
-// > + `to` : the desired format.
-// > + `callback`
+// > - `data` : the data which has to be parsed.
+// > - `to` : the desired format.
+// > - `callback`
 
 function parse(data, to, callback) {
-  var parsedData,
-      dataType;
-
-  if( data.search("<rss version=\"2.0\">") >= 0 )
-    dataType = "rss";
-
-  if( data.search("<feed xmlns=") >= 0 )
-    dataType = "atom";
-
-  if( dataType == undefined )
-    dataType = "json";
+  var dataType = getDatasType(data);
 
   switch(dataType + ">" + to){
     case "xml>json" :
-      parsedData = xml2json.parse(data);
+      xml2json.parse(data, function(returnedData){
+        callback(returnedData);
+      });
       break;
   }
+}
 
-  callback(
-    { data : parsedData , type: dataType }
-  );
+// Figures out what sort of data format the data is in and therefore what parser
+// to use.
+
+function getDatasType(data) {
+  var type;
+  if(data.search("<?xml version=\"1.0\"") >= 0){
+    type = "xml";
+  }
+
+  try{
+    JSON.parse(data);
+    type = "json";
+  } catch(e){}
+
+  return type;
 }
 
 
