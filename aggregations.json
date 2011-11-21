@@ -6,7 +6,7 @@
         "resources" : {
           "username" : "planetjstest",
           "userpass" : "helloplanet",
-          "follow" : [418151670, 192896004, 15922959]
+          "follow" : [418151670, 6253282]
         },
         "activity" : {"type" : "subscriber"},
         "process" : "planetjs.twitter_tweets"
