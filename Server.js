@@ -9,7 +9,7 @@ var fs         = require('fs'),
 // ### HTTP listening loop
 // A routing module is planned.
 
-http.createServer(function(request, response) {
+http.createServer(function(req, res) {
   
 }).listen(8888);
 
