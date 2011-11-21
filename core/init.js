@@ -24,12 +24,11 @@ function startActivities(aggLocation) {
         var agg = all[i];
         for(j in agg.feeds){
           var feed = agg.feeds[j];
-          switch(feed.collection.type){
-            case "poll" :
-              Activities.startPoller(feed, agg.name);
-              break;
-            case "pushed" :
-              break;
+          switch(feed.activity.type){
+            case "poller" :
+              Activities.startPoller(feed, agg.name); break;
+            case "subscriber" :
+              Activities.startSubscriber(feed, agg.name);
           }
         }
       }
