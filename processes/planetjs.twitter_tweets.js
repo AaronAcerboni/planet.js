@@ -15,14 +15,12 @@ function main(resources, callback) {
   tw = new Twitter({
     user : resources.username,
     password : resources.userpass,
-    track : ["football"],
     follow : resources.follow
   });
   listen();
 }
 
 function listen(){
-  console.log("!! subscribing...");
   tw.addListener('Error', function(err){
     console.log( err.message );
   })
@@ -30,22 +28,13 @@ function listen(){
     console.log("HERE!");
     mapTweetToCommon(tweet);
   })
-  .addListener('limit', function(limit) {
-    console.log("LIMIT: " + sys.inspect(limit));
-  })
-  .addListener('delete', function(del) {
-    console.log("DELETE: " + sys.inspect(del));
-  })
-  .addListener('end', function(resp) {
-    console.log("wave goodbye... " + resp.statusCode);
-  })
   .stream();
 }
 
 function mapTweetToCommon(tweet){
   var entry = {};
   
-  // TODO : Explore Twitter entities to populate the other_images schema property
+  // TODO : Explore Twitter entities to populate the other_images schema field
 
   entry.date = tweet.created_at;
   entry.source_link = "http://twitter.com";
