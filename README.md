@@ -30,37 +30,9 @@ Provided modules:
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) v0.1.11
 * [jasmine-node](https://github.com/pivotal/jasmine) v1.0.12 (unit tests not yet implemented &mdash; sorry!)
 
-###Components / Modules###
-Server : `server.js`  
+###API Docs###
 
-> Starts up the planet.js server. This involves the main HTTP listening loop, and code which starts up the polling activities.  
-
-Init : `core/init.js`
-
-> First module run. Currently manifests the aggregation sets in `aggregations.json` into running Activities.
-
-Activities : `core/Activities.js`  
-
-> Creates Polling and Subscriber objects. These objects are derived using the `aggregations.json` configuration file. Polling objects call upon their associated process every n milliseconds as defined in `aggregations.json`. Subscriber objects are not polled and assume their associated process sets up a listening connection.
-
-Fetch : `core/Fetcher.js`  
-
-> Responsible for getting data. Currently supports HTTP GET.  
-
-Parser : `core/Parser.js`  
-
-> Takes in data and parses it to JSON. It does this by specific parsing modules found in `/parsers`. Currently only converts data to JSON.  
-
-Store : `core/Store.js`  
-
-> Component responsible for storing data to the MongoDB database.  
-
-####Lesser component(s)####
-
-Log : `core/Log.js`  
-
-> Component for logging to the console with associated error levels.  
-
+[Planet.js API Documentation](http://aaronacerboni.github.com/planet.js/docs/)
 
 ##Developer blogs##
 * [http://planetjs.tumblr.com/](http://planetjs.tumblr.com) &mdash; Development blog
