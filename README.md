@@ -38,3 +38,7 @@ Provided modules:
 * [http://planetjs.tumblr.com/](http://planetjs.tumblr.com) &mdash; Development blog
 
 * [http://planetjsresearch.tumblr.com/](http://planetjsresearch.tumblr.com) &mdash; Research blog
+
+##Other links##
+
+- [Github page](http://aaronacerboni.github.com/planet.js/)
