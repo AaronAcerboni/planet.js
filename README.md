@@ -10,7 +10,11 @@ Versatility is a philosophy planet.js wants to abide by. This means various ways
 
 Current development aim:
 
-* Still to be decided. Consider looking at the TODO list.
+* Still to be decided. Consider looking at the TODO list.  
+
+##API Docs##
+
+[Planet.js API Documentation](http://aaronacerboni.github.com/planet.js/docs/)
 
 ##Getting started##
 Please note directories set in planet.js start from the system root `/planetjs` (This is just for my testing environment) 
@@ -29,10 +33,6 @@ Provided modules:
 * [underscore](http://documentcloud.github.com/underscore/) v1.2.1
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) v0.1.11
 * [jasmine-node](https://github.com/pivotal/jasmine) v1.0.12 (unit tests not yet implemented &mdash; sorry!)
-
-###API Docs###
-
-[Planet.js API Documentation](http://aaronacerboni.github.com/planet.js/docs/)
 
 ##Developer blogs##
 * [http://planetjs.tumblr.com/](http://planetjs.tumblr.com) &mdash; Development blog
