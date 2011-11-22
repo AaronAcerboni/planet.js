@@ -10,7 +10,7 @@ Versatility is a philosophy planet.js wants to abide by. This means various ways
 
 Current development aim:
 
-* Intergrate OAuth and a Twitter processing module
+* Still to be decided. Consider looking at the TODO list.
 
 ##Getting started##
 Please note directories set in planet.js start from the system root `/planetjs` (This is just for my testing environment) 
@@ -35,9 +35,13 @@ Server : `server.js`
 
 > Starts up the planet.js server. This involves the main HTTP listening loop, and code which starts up the polling activities.  
 
+Init : `core/init.js`
+
+> First module run. Currently manifests the aggregation sets in `aggregations.json` into running Activities.
+
 Activities : `core/Activities.js`  
 
-> Creates Polling objects. These objects are derived using the `aggregations.json` configuration file. Polling objects follow a routine which involves 1) Fetching data. 2) Parsing it. 3) Checking it for processing.  4) Storing it in the database. All using the appropriate components.
+> Creates Polling and Subscriber objects. These objects are derived using the `aggregations.json` configuration file. Polling objects call upon their associated process every n milliseconds as defined in `aggregations.json`. Subscriber objects are not polled and assume their associated process sets up a listening connection.
 
 Fetch : `core/Fetcher.js`  
 
@@ -45,7 +49,7 @@ Fetch : `core/Fetcher.js`
 
 Parser : `core/Parser.js`  
 
-> Takes in data and parses it to the requested type. It does this by specific parsing modules found in `/parsers`  
+> Takes in data and parses it to JSON. It does this by specific parsing modules found in `/parsers`. Currently only converts data to JSON.  
 
 Store : `core/Store.js`  
 
