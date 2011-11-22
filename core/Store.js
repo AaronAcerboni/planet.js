@@ -52,10 +52,8 @@ function storeData(process, data, callback){
 
 function duplicateCheck(entry, callback){
 
-  console.log(entry);
   mongous("test.entries").find({date : entry.date, activity_id : entry.activity_id}, function(reply){
     
-  console.log("hello");
     if(reply.documents.length == 0){
       callback(entry);
     }
