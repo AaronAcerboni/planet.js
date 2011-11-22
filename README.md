@@ -17,7 +17,17 @@ Current development aim:
 [Planet.js API Documentation](http://aaronacerboni.github.com/planet.js/docs/)
 
 ##Getting started##
-Please note directories set in planet.js start from the system root `/planetjs` (This is just for my testing environment) 
+
+To get up and running take a look at this checklist:  
+
+**Think about your testing location.** All required statements are written to look for `"/planet.js"`. So stick a `planet.js` directory in your root if you want to get up and running quickly. 
+
+
+**Setup your MongoDB database.** By default planet.js looks for the `test` database. This is defined in `core/Store.js.`
+
+**Prepare your aggregations.** By default the `aggregations.json` config looks at the planet.js research & development blogs and gawker for RSS and listens out for tweets made by the twitter account planetjstest. 
+
+When you think you are ready run` Server.js`. Your console should log the currently active processes. 
 
 `node Server.js`
 
