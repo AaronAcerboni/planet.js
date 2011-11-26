@@ -16,10 +16,10 @@ var Fetcher = require('/planet.js/core/Fetch'),
 // ## Getting started
 
 // Your process will be initiated on every poll or just once if its registered as a Subscriber. As
-// a Subscriber it's up to you to create your own socket connection. A process is initiated by running
+// a Subscriber it's up to you to create your own socket/comet connection. A process is initiated by running
 // a Processes' main function.
 //  
-// The main function will be passed the resource object which should contain a url (`resources.url`) or
+// The main function will be passed the resource object which could contain a url (`resources.url`) or
 // authentication keys (`resources.apikey`, `resources.apisecret`).
 //  
 // Additionally you will be passed a callback which you call when you're ready to store processed 
@@ -28,7 +28,7 @@ var Fetcher = require('/planet.js/core/Fetch'),
 // previous dates alongside a process id.
 
 function whatever(resources, callback){
-
+  
 }
 
 // ## Making it accessible
