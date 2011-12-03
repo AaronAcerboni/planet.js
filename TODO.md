@@ -1,19 +1,49 @@
 # TODO
 
-## General
+## High priority
 
-- Conintue revision planet.js backend before focusing on routing and view components.
-- `Activities` should be able to read the OAuth syntax from `aggregations.json` and act appropriately.
-- Evaluate code in level of asynchronicity.
+### General
 
-## Processing
+- Revise core modules like Fetch, Parse and processing modules to work as 
+class instances. This should prevent errors when more than one processing 
+module utilises the core modules since they overlap. This overlapping also can 
+occur when two activities run the same process.
 
-- Processing modules for flickr.
+- Routers and Request handlers.
 
-## Activities
 
-- Give `Poller` and `Subscriber` activities a common parent object and diversify them using some inheritance.
+## Low priority
 
-## Log
+### General
 
-- Log should output to a file and not just the console. This is low priority.
+- Use better names for describing "Activities" and "Processes".
+
+- Use consistent naming conventions for variables throughout planet.js.
+
+- Detect gathered information as not new before it goes to the Store module.
+
+### Activities
+
+- Give `Poller` and `Subscriber` activites a common parent object.
+
+- Provide an Activity for listeners (thing which need callback/pingback urls).
+
+### Processing
+
+- Processing module for flickr.
+
+- Processing module which reads hAtom.
+
+- Processing module which reads Atom.
+
+### Log
+
+- Log should output to a file and not just the console.
+
+### Other
+
+- Keep API Docs updated.
+
+- Write unit tests.
+
+- Write planet.js as npm package.
