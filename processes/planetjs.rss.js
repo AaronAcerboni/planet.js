@@ -23,7 +23,7 @@ function parseRSStoJSON(err, data) {
 function mapRSStoCommon(json) {
   var channelLink = json.channel.link,
       channelTitle = json.channel.title,
-      channelImg = undefined,
+      channelImg = null,
       entries = [];
 
   try {
