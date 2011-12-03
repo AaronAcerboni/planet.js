@@ -17,7 +17,7 @@
     "name" : "General",
     "feeds" : [
       {
-        "resources" : {"url" : "feeds.gawker.com/gizmodo/full"},
+        "resources" : {"url" : "http://feeds.gawker.com/gizmodo/full"},
         "activity" : {"type" : "poller", "time" : 6800000},
         "process" : "planetjs.rss"
       }
