@@ -6,13 +6,12 @@ var fs         = require('fs'),
     init       = require('/planet.js/core/init');
 
 
+// ### Server initialization
+// Utilizes the init module
+init.startActivities("/planet.js/aggregations.json");
+
 // ### HTTP listening loop
-// A routing module is planned.
 
 http.createServer(function(req, res) {
   
 }).listen(8888);
-
-// ### Server initialization
-// Utilizes the init module
-init.startActivities("/planet.js/aggregations.json");
