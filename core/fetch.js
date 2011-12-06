@@ -5,59 +5,44 @@
 var http  = require('http'),
     _     = require('underscore');
 
-// ## fetch
-// >  
-// > A function which makes a GET request and passes the response to the callback.
-// > 
-// > Parameters :  
-// >  
-// > - `url` : a string url.
-// > - `callback` : passes back the requested data or an Error.
+function Fetcher() {
 
-function get(url, callback) {
+  this.get = function(url, callback){
 
-  // Validate URL and split it up by hostname and path.
-  // It's ok with both `http://` prepending or without.
-  // **Doesn't** account for port numbers yet.
+    var urlParts = url.split('/'),
+        start = 3,
+        path = '',
+        httpOptions = {};
 
-  var urlParts = url.split('/');
-  var start = 3;
+    if(url.indexOf('http') == -1){ // if url does not start with http
+      start = 1;
+    }
 
-  if (url.indexOf('http') == -1) { // if url does not start with http
-    start = 1;
+    for(var i = start; i < urlParts.length; i++){
+      path += '/' + urlParts[i];
+    }
+
+    httpOptions.host = urlParts[start-1];
+    httpOptions.port = 80;
+    httpOptions.path = path;
+
+    http.get(httpOptions, function(res){
+
+      var raw = '';
+      res.setEncoding('utf8');
+
+      res.on('data', function(chunk){
+        raw += chunk;
+      });
+      res.on('end', function(){
+        callback(null, raw);
+      });
+    })
+    .on('error', function(error){
+      callback(error);
+    });
   }
 
-  var path = '';
-  for(var i = start; i < urlParts.length; i++){
-    path += '/' + urlParts[i];
-  }
-
-  // Go and get the resource using Node `http`.
-  // Pass optional error and data to callback.
-
-  var options = {
-    host: urlParts[start-1],
-    port: 80,
-    path: path
-  };
-
-  http.get(options, function(res) {
-    console.log ( "-STARTING");
-    res.setEncoding('utf8');
-    var raw = "";
-    res.on('data', function(chunk) {
-      console.log(" += CHUNK");
-      raw += chunk;
-    })
-    res.on('end',function() {
-      console.log("-END");
-      callback(undefined, raw);
-    })
-  }).on('error', function(error) {
-    callback(error);
-  });
-  
 }
 
-
-exports.get = get;
+exports.Fetcher = Fetcher;
