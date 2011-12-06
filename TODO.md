@@ -46,4 +46,4 @@ occur when two activities run the same process.
 
 - Write unit tests.
 
-- Write planet.js as npm package.
+- Write up planet.js as npm package.
