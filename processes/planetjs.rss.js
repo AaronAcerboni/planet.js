@@ -3,20 +3,21 @@
   to the storage schema.
 */
 
-var Fetcher = require("/planet.js/core/fetch"),
-    Parser = require("/planet.js/core/parser");
+var Fetcher = require("/planet.js/core/fetch").Fetcher,
+    Parser = require("/planet.js/core/parser").Parser;
 
 var store;
 
 function main(resources, callback) {
   store = callback;
-  Fetcher.get(resources.url, parseRSStoJSON);
+  var fetcher = new Fetcher();
+  fetcher.get(resources.url, parseRSStoJSON);
 }
 
 // Parse RSS xml to JSON
 function parseRSStoJSON(err, data) {
-  if(err) throw err;
-  Parser.parse(data, "json", mapRSStoCommon);
+  var parser = new Parser();
+  parser.parse(data, "json", mapRSStoCommon);
 }
 
 // Map the RSS feed data to a structure matching the storage schema
