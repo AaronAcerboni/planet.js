@@ -3,12 +3,10 @@
   to the storage schema.
 */
 
-var Fetcher = require('/planet.js/core/fetch'),
-    Parser = require('/planet.js/core/parser'),
-    Twitter = require('twitter-node').TwitterNode;
+var Twitter = require('twitter-node').TwitterNode;
 
-var store;
-var tw;
+var store,
+    tw;
 
 function main(resources, callback) {
   store = callback;
