@@ -36,7 +36,7 @@ function Poller(feedObj, aggregation) {
 
   // a resource could be a url, authkeys or username/pass etc. Just anything the process needs to use
   // to get its data.
-  this.resources         = feedObj.resources;
+  this.resources        = feedObj.resources;
 
   // the associated process which gets data in its own unique way and maps it to the storage schema
   this.process          = require("/planet.js/processes/" + feedObj.process);
@@ -45,10 +45,10 @@ function Poller(feedObj, aggregation) {
   this.time             = feedObj.activity.time;
 
   // A Node `intervalId` kept for destroying a polling interval
-  this.interval         = undefined;
+  this.interval         = null;
   
   // `pollingFinished` is a flag which prevents stacking of polling routines.
-  var pollingFinished = true;
+  var pollingFinished   = true;
 
   // `onPoll` fired every `this.time` (ms).
   function onPoll() {
@@ -146,7 +146,7 @@ function Subscriber(feedObj, aggregation){
   this.aggregation      = aggregation;
 
   // a resource can be a url, authkeys, username etc. Just anything the process needs to use to get data.
-  this.resources         = feedObj.resources;
+  this.resources        = feedObj.resources;
 
   // the associated process which gets data in a unique way.
   this.process          = require("/planet.js/processes/" + feedObj.process);
