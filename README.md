@@ -6,19 +6,14 @@ The magic of planet.js is the ability to synchronise a variety of data ranging f
 
 Versatility is a philosophy planet.js wants to abide by. This means various ways of getting hold of data, various ways of manipulating it and various ways of outputting it.
 
-##Development##
-
-Current development aim:
-
-* Still to be decided. Consider looking at the TODO list.  
-
 ##API Docs##
 
 [Planet.js API Documentation](http://aaronacerboni.github.com/planet.js/docs/)
 
 ##Getting started##
 
-To get up and running take a look at this checklist:  
+Currently planet.js just sticks data into a mongodb database but If you'd like to get up and running
+anyay, take a look at this checklist:  
 
 - **Think about your testing location.** All required statements are written to look for `"/planet.js"`. So stick a `planet.js` directory in your root if you want to get up and running quickly. 
 
@@ -27,9 +22,9 @@ To get up and running take a look at this checklist:
 
 - **Prepare your aggregations.** By default the `aggregations.json` config looks at the planet.js research & development blogs and gawker for RSS and listens out for tweets made by the twitter account planetjstest. 
 
-When you think you are ready run` Server.js`. Your console should log the currently active processes. 
+When you think you are ready run `server.js`. Your console should log the currently active processes. 
 
-`node Server.js`
+`node server.js`
 
 ###Versions and Dependencies###
 Tested on Node v0.4.12 & v0.4.9
@@ -43,6 +38,13 @@ Provided modules:
 * [underscore](http://documentcloud.github.com/underscore/) v1.2.1
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) v0.1.11
 * [jasmine-node](https://github.com/pivotal/jasmine) v1.0.12 (unit tests not yet implemented &mdash; sorry!)
+
+
+##Development##
+
+Current development aims:
+
+See [TODO](https://github.com/AaronAcerboni/planet.js/blob/master/TODO.md)
 
 ##Developer blogs##
 * [http://planetjs.tumblr.com/](http://planetjs.tumblr.com) &mdash; Development blog
