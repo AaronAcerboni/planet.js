@@ -11,6 +11,8 @@ occur when two activities run the same process.
 
 - Routers and Request handlers.
 
+- Change the planet.js standard schema to be a superset of the Google Feed API schema.
+
 
 ## Low priority
 
