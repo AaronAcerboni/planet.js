@@ -4,14 +4,14 @@
 
 ### General
 
-- Revise core modules like Fetch, Parse and processing modules to work as 
-class instances. This should prevent errors when more than one processing 
-module utilises the core modules since they overlap. This overlapping also can 
-occur when two activities run the same process.
 
-- Routers and Request handlers.
+- Router and Methods (aka Request handlers).
 
-- Change the planet.js standard schema to be a superset of the Google Feed API schema.
+- Make router work as a object instance since resources are made dynamically
+based on `aggregations.json`
+
+- Change the planet.js standard schema to be a superset of the Google Feed API schema. This
+should hopefully increase compatability with pre-existing software.
 
 
 ## Low priority
