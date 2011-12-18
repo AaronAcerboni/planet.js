@@ -2,41 +2,32 @@
   Module for routing pathnames sent over HTTP and assigning them to methods.
 */
 
-var handlers = require('/planet.js/core/methods'),
+var methods = require('/planet.js/core/methods'),
     url = require('url');
 
-function route(request, methods) {
+function route(request, response) {
+
   var path = url.parse(request.url).pathname,
-      verb = request.method.toLowerCase();
+      verb = request.method,
+      type = request.headers["content-type"];
 
-  // Path finding
+  // Was verb specified or does the system support it
+  if(typeof methods[verb] == "function"){
 
-  var dirs = path.split("/").slice(1);
+    // Path finding
 
-  if(dirs.length == 1){
-    // should be "" or "feeds"
-    if(dirs[0] == "feeds" || dirs[0] == ""){
-      console.log("return primary page");
+    if (path.match("^/$|^/feeds$")){
+      methods[verb](null, null, type, response); 
+    } else if (path.match("^/feeds/")){
+      methods[verb](null, path.split("/")[2], type, response);
+    } else {
+      methods[verb](path.split("/")[1], path.split("/")[2], type, response);
     }
-  } else if(dirs.length == 2 && dirs[0] == "feeds"){
-    // match dir[1] with existing aggregation sets
-    console.log("returns existing aggregation set");
+
+  } else {
+    // No http verb specified.
   }
 
-  return {
-    responseCode : "404",
-    mimeType :  {"Content-Type": "text/plain"},
-    data : "planet.js doesn't route yet, but here is your path: " + path
-  };
-
-}
-
-function pathInvalid(){
-  return {
-    responseCode : "404",
-    mimeType :  {"Content-Type": "text/plain"},
-    data : "404 Resource not found"
-  };  
 }
 
 exports.route = route;
