@@ -25,7 +25,7 @@ function storeData(process, data, callback){
       entry.aggregation = process.aggregation;
 
       // if not dupicate insert into DB
-      duplicateCheck(entry , insertIntoDB);
+      duplicateCheck(entry, insertIntoDB);
     }
   } // If there is only one entry
   else {
