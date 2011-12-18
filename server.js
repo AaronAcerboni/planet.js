@@ -3,21 +3,14 @@
 
 var init       = require('/planet.js/core/init'),
     router     = require('/planet.js/core/router'),
-    methods    = require('/planet.js/core/methods'),
     http       = require('http');
 
 // ### Server initialization
-// Utilizes the init module
+// Used to start activities.
 
 init.startActivities("/planet.js/aggregations.json");
 
 // ### HTTP listening loop
-// Utilizes the router module
+// Utilizes the router module to route http requests
 
-http.createServer(function(req, res){
-  
-  var content = router.route(req, methods);
-  res.writeHead(content.responseCode, content.mimeType);
-  res.end(content.data);
-
-}).listen(8888);
+http.createServer(router.route).listen(8888);
