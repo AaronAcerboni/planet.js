@@ -23,7 +23,7 @@ function listen(){
     console.log( err.message );
   })
   .addListener('tweet', function(tweet){
-    console.log("HERE!");
+    console.log("A new tweet entry has been recieved.");
     mapTweetToCommon(tweet);
   })
   .stream();
