@@ -1,46 +1,87 @@
 var mongous = require("mongous").Mongous,
-    parser  = require("/planet.js/core/parser");
+    Parser  = require("/planet.js/core/parser").Parser;
 
-// Todo :
-// 1. Decide on the url structures order
-// 2. Have parser.js read mime types so I don't need all these conditions
-// 3. Make this method less http opinionated.
+// Replies
 
-function GET(resource, filter, type, response) {
-  
-  var search = {};
+function resourceNotFound(response, resource) {
+  response.writeHead( 400, {"Content-type" : "text/plain"});
+  response.write("Resource not found: " + resource);
+  response.end();
+}
 
-  if(resource != null) search.aggregation = resource;
-  if(filter != null) search.aggregation ;
+function unsupportedMediaType(response, type) {
+  response.writeHead( 415, {"Content-type" : "text/plain"});
+  response.write("Unsupported media type: " + type);
+  response.end();
+}
+
+function unsupportedVerb(response, verb) {
+  response.writeHead( 405, {"Content-type" : "text/plain"});
+  response.write("Unsupported http verb or no verb supplied: " + verb);
+  response.end();
+}
+
+function OK(response, content, type){
+  response.writeHead( 200, {"Content-type" : type});
+  response.write(content);
+  response.end();
+}
+
+// Methods
+
+function GET(aggregation, year, month, type, response) {
+    
+  var parser = new Parser(),
+      search = {};
+
+  // Prepare search criteria
+
+  // Specific aggregation
+  if(aggregation != "feeds"){
+    search.aggregation = aggregation;
+  }
+
+  // Specific Year or Month
+  if(year != null && month != null){
+    var year = parseInt(year),
+        month = (parseInt(month)) - 1,
+        end = new Date();
+
+    var start = new Date(year, month, 31);
+
+    search.created_on = {$gte : start, $lt : end };
+  } else if (year != null){
+    var year = parseInt(year),
+        end = new Date();
+
+    var start = new Date(year, 0, 1);
+
+    search.created_on = {$gte : start, $lt : end};
+  }
 
   mongous("test.entries").find(search, function(reply){
 
     if(reply.documents.length == 0){
-      response.writeHead(404, {"Content-Type" : "text/plain"});
-      response.write("Resource not found");
-      response.end();
-    } else if (type == "application/json"){
-      entries = JSON.stringify(reply.documents);
-      response.writeHead(200, {"Content-type" : type});
-      response.write(entres);
-      response.end();
+      resourceNotFound(response, aggregation);
+    } else if (type == "text/html" || type == undefined){
+      console.log("Someone has asked for a html representation of " + aggregation);
+      OK(response, "HTML not ready yet", "text/html");
     } else {
-      response.writeHead(200, {"Content-type" : "text/html"});
-      response.write("A html representation of the requested data");
-      response.end();
+      parser.parse(reply.documents, "application/json", type, function(data){
+        if(data){
+          OK(response, data, type);
+        } else{
+          unsupportedMediaType(response, type);
+        }
+      });
     }
 
   });
 
 }
 
-function POST() {}
-
-function PUT() {}
-
-function DELETE() {}
-
 exports.GET = GET;
-exports.POST = POST;
-exports.PUT = PUT;
-exports.DELETE = DELETE;
+
+exports.resourceNotFound = resourceNotFound;
+exports.unsupportedMediaType = unsupportedMediaType;
+exports.OK = OK;
