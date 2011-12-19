@@ -13,6 +13,4 @@ function parse(data, callback){
   });
 }
 
-// Interface
-
 exports.parse = parse;
