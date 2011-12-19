@@ -1,7 +1,3 @@
-/*
-  Module for routing pathnames sent over HTTP and assigning them to methods.
-*/
-
 var methods = require('/planet.js/core/methods'),
     url = require('url');
 
@@ -9,23 +5,35 @@ function route(request, response) {
 
   var path = url.parse(request.url).pathname,
       verb = request.method,
-      type = request.headers["content-type"];
+      type = request.headers["content-type"],
+      tokens = path.split("/");
 
   // Was verb specified or does the system support it
   if(typeof methods[verb] == "function"){
 
     // Path finding
+    if (path.match("^/$")){
 
-    if (path.match("^/$|^/feeds$")){
-      methods[verb](null, null, type, response); 
-    } else if (path.match("^/feeds/")){
-      methods[verb](null, path.split("/")[2], type, response);
+      methods[verb] ("feeds", null, null, type, response);
+
+    } else if (path.match("^/[a-zA-Z]*/*$")){
+      
+      methods[verb] (tokens[1], null, null, type, response);
+
+    } else if (path.match("^/[a-zA-Z]*/[0-9]{4}/*$")){
+
+      methods[verb] (tokens[1], tokens[2], null, type, response);
+
+    } else if (path.match("^/[a-zA-Z]*/[0-9]{4}/(0[1-9]|1[012])/*$")){
+
+      methods[verb] (tokens[1], tokens[2], tokens[3], type, response);
+
     } else {
-      methods[verb](path.split("/")[1], path.split("/")[2], type, response);
+      methods.resourceNotFound(response, path);
     }
 
   } else {
-    // No http verb specified.
+    methods.unsupportedVerb(response, verb);
   }
 
 }
