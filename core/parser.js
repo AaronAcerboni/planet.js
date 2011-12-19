@@ -9,25 +9,20 @@ var xml2json = require('/planet.js/parsers/xml-to-json');
 
 function Parser() {
 
-  this.parse = function(data, to, callback) {
-    var dataType = getDatasType(data);
-    switch(dataType + ">" + to){
-      case "xml>json" :
+  this.parse = function(data, type, to, callback) {
+
+    switch(type + " > " + to){
+      case "text/xml > application/json" :
+      case "application/rss+xml > application/json" :
+      case "application/xml > application/json" :
         xml2json.parse(data, callback);
         break;
+        
+      default :
+        callback(null);
+        break;
     }
-  };
 
-  function getDatasType(data) {
-    var type;
-    if(data.search("<?xml version=\"1.0\"") >= 0){
-      type = "xml";
-    }
-    try{
-      JSON.parse(data);
-      type = "json";
-    } catch (e) {}
-    return type;
   };
 
 }
