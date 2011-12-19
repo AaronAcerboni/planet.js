@@ -99,7 +99,7 @@ function Poller(feedObj, aggregation) {
   // > Starts the polling routine.
   this.start = function() {
     that.interval = pollingInterval("create");
-    console.log(that.id);
+    console.log(" Activity running : " + that.id);
   } 
 } // end Poller object
 
@@ -155,6 +155,7 @@ function Subscriber(feedObj, aggregation){
     that.process.main(that.resources, function(data){
       Storer.store(that, data, function(){});
     });
+    console.log(" Activity running : " + that.id);
   };
 
   this.updateProperties = function(feedObj, aggregation) {
