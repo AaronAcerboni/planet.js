@@ -17,7 +17,7 @@ function main(resources, callback) {
 // Parse RSS xml to JSON
 function parseRSStoJSON(err, data) {
   var parser = new Parser();
-  parser.parse(data, "json", mapRSStoCommon);
+  parser.parse(data, "application/rss+xml", "application/json", mapRSStoCommon);
 }
 
 // Map the RSS feed data to a structure matching the storage schema
