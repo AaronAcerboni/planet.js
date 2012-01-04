@@ -27,11 +27,7 @@ function mapRSStoCommon(json) {
       channelImg = null,
       entries = [];
 
-  try {
-    channelImg = json.channel.image.url;
-  } catch (e) {
-    /* couldn't find an image in this rss */
-  }
+  if(json.channel.image) channelImg = json.channel.image;
 
   for (var i = 0; i < json.channel.item.length; i++) {
     entries.push({
@@ -43,7 +39,8 @@ function mapRSStoCommon(json) {
         text_summary : json.channel.item[i].description.substring(0,140) + "...",
         text_full : json.channel.item[i].description,
         link : json.channel.item[i].link,
-        main_image : channelImg
+        main_image : channelImg,
+        location : null
       }
     });
   };
