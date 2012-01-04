@@ -18,11 +18,13 @@ should hopefully increase compatability with pre-existing software.
 
 ### General
 
-- Use better names for describing "Activities" and "Processes".
+- Revise names for describing "Activities" and "Processes".
 
 - Use consistent naming conventions for variables throughout planet.js.
 
 - Detect gathered information as not new before it goes to the Store module.
+
+- Explore instances were underscore is used and consider Ecma 5th edition functions.
 
 ### Activities
 
@@ -32,11 +34,7 @@ should hopefully increase compatability with pre-existing software.
 
 ### Processing
 
-- Processing module for flickr.
-
-- Processing module which reads hAtom.
-
-- Processing module which reads Atom.
+- Processing modules for flickr, hAtom & Atom.
 
 ### Log
 
