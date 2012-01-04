@@ -34,7 +34,7 @@ function mapTweetToCommon(tweet){
   
   // Explore : Twitter's rich meta data in relation to planet.js schema
   
-  entry.date = tweet.created_at;
+  entry.date = new Date(tweet.created_at);
   entry.source_link = "http://twitter.com";
 
   entry.data = {
@@ -46,7 +46,7 @@ function mapTweetToCommon(tweet){
     main_image : tweet.user.profile_image_url_https
   };
 
-  // If tweet.place exists apply it to the planet.js location field
+  // If tweet.place exists apply it to the schema location field
    
   if(tweet.place){
     entry.data.location = tweet.place.full_name;
