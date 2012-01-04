@@ -31,7 +31,7 @@ function mapRSStoCommon(json) {
 
   for (var i = 0; i < json.channel.item.length; i++) {
     entries.push({
-      date : json.channel.item[i].pubDate,
+      date : new Date(json.channel.item[i].pubDate),
       source_link : channelLink,
       data : {
         title : json.channel.item[i].title,
