@@ -1,6 +1,6 @@
 [
   {
-    "name" : "Community",
+    "name" : "community",
     "feeds" : [
       {
         "resources" : {
@@ -14,7 +14,7 @@
     ]
   },
   {
-    "name" : "General",
+    "name" : "general",
     "feeds" : [
       {
         "resources" : {"url" : "http://feeds.gawker.com/gizmodo/full"},
@@ -24,16 +24,16 @@
     ]
   },
   {
-    "name" : "Planet.js",
+    "name" : "planetjs",
     "feeds" : [
       {
         "resources" : { "url" : "http://planetjs.tumblr.com/rss" },
-        "activity" : {"type" : "poller", "time" : 6800000 },
+        "activity" : {"type" : "poller", "time" : 680000 },
         "process" : "planetjs.rss"
       },
       {
         "resources" : { "url" : "http://planetjsresearch.tumblr.com/rss" },
-        "activity" : {"type" : "poller", "time" : 6800000 },
+        "activity" : {"type" : "poller", "time" : 680000 },
         "process" : "planetjs.rss"
       }
     ]
