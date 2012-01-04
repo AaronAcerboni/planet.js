@@ -4,15 +4,10 @@
 
 ### General
 
-
-- Router and Methods (aka Request handlers).
-
-- Make router work as a object instance since resources are made dynamically
-based on `aggregations.json`
+- HTML templating
 
 - Change the planet.js standard schema to be a superset of the Google Feed API schema. This
 should hopefully increase compatability with pre-existing software.
-
 
 ## Low priority
 
@@ -25,6 +20,13 @@ should hopefully increase compatability with pre-existing software.
 - Detect gathered information as not new before it goes to the Store module.
 
 - Explore instances were underscore is used and consider Ecma 5th edition functions.
+
+### Router
+
+- Make router work as a object instance since resources are made dynamically
+based on `aggregations.json`.
+
+- Routed URLs should probably be case insensitive.
 
 ### Activities
 
