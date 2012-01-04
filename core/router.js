@@ -12,7 +12,6 @@ function route(request, response) {
   if(typeof methods[verb] == "function"){
 
     // Path finding
-    console.log(tokens);
     if (path.match("^/$")){
 
       methods[verb] ("feeds", null, null, type, response);
