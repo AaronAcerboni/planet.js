@@ -4,52 +4,63 @@ var mongous = require("mongous").Mongous,
 // Methods
 
 function GET(aggregation, year, month, type, response) {
-    
+  console.log(aggregation, year, month, type);
   var parser = new Parser(),
       search = {};
 
-  // Prepare search criteria
+  // Prepare search criteria ...
 
-  //  by specific aggregation?
-  if(aggregation != "feeds"){
-    search.aggregation = aggregation;
-  }
+  // Specific aggregation (case insensitive)
+  if(aggregation != "feeds") search.aggregation = aggregation;
 
-  //  by Specific Year or Month?
+  // Specific Year or Month
   if(year != null && month != null){
-    var year = parseInt(year),
-        month = (parseInt(month)) - 1,
-        end = new Date();
 
-    var start = new Date(year, month, 31);
+    var start = new Date(parseInt(year), parseInt(month)-1, 1),
+        end = new Date(parseInt(year), parseInt(month)-1, 31);
 
-    search.created_on = {$gte : start, $lt : end };
-  } else if (year != null){
-    var year = parseInt(year),
-        end = new Date();
+    search.date = { $gte : start, $lt : end };
 
-    var start = new Date(year, 0, 1);
+    console.log(start, end);
 
-    search.created_on = {$gte : start, $lt : end};
+  } else if(year != null){
+
+    var start = new Date(parseInt(year), 0, 1),
+        end = new Date(parseInt(year)+1, 0, 1);
+
+    search.date = { $gte : start, $lt : end };
+
   }
 
-  // Carry out MongoDB search and reply accordingly
-  // If not unspecified or text/html then it defaults to JSON (for now)
+  // Perform MongoDB search
 
   mongous("test.entries").find(search, function(reply){
 
     if(reply.documents.length == 0){
+
       resourceNotFound(response, aggregation);
+
     } else if (type == "text/html" || type == undefined){
+
       console.log("Someone has asked for a html representation of " + aggregation);
-      OK(response, "HTML not ready yet", "text/html");
+      // OK(response, "HTML not ready yet", "text/html");
+      var html = "";
+      for (var i = 0; i < reply.documents.length; i++) {
+        html += "</br>" + reply.documents[i].date;
+        html += "<strong>" + reply.documents[i].data.text_summary + "</strong>";
+      };
+
+      OK(response, html, "text/html");
+
     } else {
+
       parser.parse(reply.documents, "application/json", type, function(data){
         if(data){
           OK(response, data, type);
         } else{
           unsupportedMediaType(response, type);
         }
+
       });
     }
 
