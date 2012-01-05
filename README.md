@@ -4,12 +4,6 @@ Planet.js is a JavaScript data aggregator in the spirit of Planet software. It a
 
 ##Getting started##
 
-Currently planet.js can aggregate data and has a simple URL router setup. 
-
-eg. `localhost:8888/[aggregationname]/[year]/[month]`  
-
-When you think you are ready run `server.js`. Your console should log the currently active processes.
-
 `node server.js`
 
 - **Think about your testing location.** All require statements are written to look for `"/planet.js"`. So stick a `planet.js` directory in your root if you want to get up and running quickly. 
@@ -18,7 +12,14 @@ When you think you are ready run `server.js`. Your console should log the curren
 
 - **Prepare your aggregations.** By default the `aggregations.json` config looks at the planet.js research & development blogs, gawker for RSS and listens out for tweets using twitter account planetjstest. 
 
+Currently planet.js can aggregate data and has a simple URL router setup. 
+
+eg. `localhost:8888/feeds or localhost:8888/`
+eg. `localhost:8888/[aggregationname]/[year]/[month]`
+
+
 ###Versions and Dependencies###
+
 Tested on Node v0.4.12 & v0.4.9
 
 * Node v0.4.12 (reccomended)
@@ -29,19 +30,12 @@ Provided modules:
 * [mongouse](https://github.com/amark/mongous) v0.1.0
 * [underscore](http://documentcloud.github.com/underscore/) v1.2.1
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) v0.1.11
-* [jasmine-node](https://github.com/pivotal/jasmine) v1.0.12 (unit tests not yet implemented &mdash; sorry!)
+* [jasmine-node](https://github.com/pivotal/jasmine) v1.0.12
 
 
 ##API Docs##
 
 [Planet.js API Documentation](http://aaronacerboni.github.com/planet.js/docs/)
-
-
-##Development##
-
-Current development aims:
-
-See [TODO](https://github.com/AaronAcerboni/planet.js/blob/master/TODO.md)
 
 ##Project Aim##
 
@@ -49,11 +43,11 @@ The magic of planet.js is the ability to synchronise a variety of data ranging f
 
 Versatility is a philosophy planet.js wants to abide by. This means various ways of getting hold of data, various ways of manipulating it and various ways of outputting it.
 
-##Developer blogs##
+See [TODO](https://github.com/AaronAcerboni/planet.js/blob/master/TODO.md)
+
+##Other links##
 * [http://planetjs.tumblr.com/](http://planetjs.tumblr.com) &mdash; Development blog
 
 * [http://planetjsresearch.tumblr.com/](http://planetjsresearch.tumblr.com) &mdash; Research blog
 
-##Other links##
-
-- [Github page](http://aaronacerboni.github.com/planet.js/)
+* [Github page](http://aaronacerboni.github.com/planet.js/)
