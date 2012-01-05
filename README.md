@@ -14,8 +14,9 @@ Planet.js is a JavaScript data aggregator in the spirit of Planet software. It a
 
 Currently planet.js can aggregate data and has a simple URL router setup. 
 
-eg. `localhost:8888/feeds or localhost:8888/`
-eg. `localhost:8888/[aggregationname]/[year]/[month]`
+eg. `localhost:8888/feeds or localhost:8888/`  
+
+or `localhost:8888/[aggregationname]/[year]/[month]`
 
 
 ###Versions and Dependencies###
