@@ -4,17 +4,19 @@ Planet.js is a JavaScript data aggregator in the spirit of Planet software. It a
 
 `node server.js`
 
-- **Think about your testing location.** All require statements are written to look for `"/planet.js"`. So stick a `planet.js` directory in your root if you want to get up and running quickly. 
-
-- **Setup your MongoDB database.** By default planet.js looks for the `test` database. That is referenced in `core/store.js` & `core/router.js`.
-
-- **Prepare your aggregations.** By default the `aggregations.json` config looks at the planet.js research & development blogs, gawker for RSS and listens out for tweets using twitter account planetjstest. 
-
 Currently planet.js can aggregate data and has a simple URL router setup. 
 
 eg. `localhost:8888/feeds or localhost:8888/`  
 
 or `localhost:8888/[aggregationname]/[year]/[month]`
+
+###Setup###
+
+- **Think about your testing location.** All require statements are written to look for `"/planet.js"`. So stick a `planet.js` directory in your root if you want to get up and running quickly. 
+
+- **Setup your MongoDB database.** By default planet.js looks for the `test` database. That is referenced in `core/store.js` & `core/router.js`.
+
+- **Prepare your aggregations.** By default the `aggregations.json` config looks at the planet.js research & development blogs, gawker for RSS and listens out for tweets using twitter account planetjstest. 
 
 
 ###Versions and Dependencies###
