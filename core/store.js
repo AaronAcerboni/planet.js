@@ -92,7 +92,6 @@ function getSchema() {
     source_link : undefined,
     aggregation : undefined,
     activity_id : undefined,
-    pinned : false,
     data : data
   };
 
