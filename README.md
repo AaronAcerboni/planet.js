@@ -40,9 +40,13 @@ Provided modules:
 
 ##Project Aim##
 
-The magic of planet.js is the ability to synchronise a variety of data ranging from standard RSS to any old web service. Possible use cases are for community sites, sticking your blogs together or anything else you want to hack together with data sources.
+The magic of planet.js is the ability to synchronise a variety of data ranging from the standard RSS to any old web service. 
 
-Versatility is a philosophy planet.js wants to abide by. This means various ways of getting hold of data, various ways of manipulating it and various ways of outputting it.
+Versatility is a philosophy planet.js wants to abide by. This means developing an open environment for ways of getting hold of data, various ways of manipulating it and various ways of outputting it.
+
+Planet.js also doesn't just have to just grab data from the present. Collecting data from web services also gives us the opportunity to aggregate from the past too.
+
+Possible use cases are for community sites, subject interests, sticking your blogs together or anything else you want to hack together with data.
 
 See [TODO](https://github.com/AaronAcerboni/planet.js/blob/master/TODO.md)
 
