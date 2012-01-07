@@ -17,7 +17,7 @@ function startActivities(aggLocation) {
   else
     var aggregations = "/planet.js/aggregations.json";
 
-  fs.readFile(aggLocation, function(err, data){
+  fs.readFile(aggLocation, function(e, data){
       var all = JSON.parse(data);
 
       for(i in all){
