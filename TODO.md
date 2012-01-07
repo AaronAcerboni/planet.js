@@ -13,6 +13,8 @@ should hopefully increase compatability with pre-existing software.
 
 ### General
 
+- Transition planet.js to the latest Node version
+
 - Revise names for describing "Activities" and "Processes".
 
 - Use consistent naming conventions for variables throughout planet.js.
