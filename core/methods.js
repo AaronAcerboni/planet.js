@@ -1,10 +1,13 @@
 var mongous = require("mongous").Mongous,
-    Parser  = require("/planet.js/core/parser").Parser;
+    Parser  = require("/planet.js/core/parser").Parser,
+    build   = require("/planet.js/templates/build");
 
 // Methods
 
 function GET(aggregation, year, month, type, response) {
+
   console.log(aggregation, year, month, type);
+
   var parser = new Parser(),
       search = {};
 
@@ -20,8 +23,6 @@ function GET(aggregation, year, month, type, response) {
         end = new Date(parseInt(year), parseInt(month)-1, 31);
 
     search.date = { $gte : start, $lt : end };
-
-    console.log(start, end);
 
   } else if(year != null){
 
@@ -41,22 +42,16 @@ function GET(aggregation, year, month, type, response) {
       resourceNotFound(response, aggregation);
 
     } else if (type == "text/html" || type == undefined){
-
-      console.log("Someone has asked for a html representation of " + aggregation);
-      // OK(response, "HTML not ready yet", "text/html");
-      var html = "";
-      for (var i = 0; i < reply.documents.length; i++) {
-        html += "</br>" + reply.documents[i].date;
-        html += "<strong>" + reply.documents[i].data.text_summary + "</strong>";
-      };
-
-      OK(response, html, "text/html");
+      
+      build.html(aggregation, reply.documents, function(html){
+        OK(response, html, "text/html");
+      });
 
     } else {
 
       parser.parse(reply.documents, "application/json", type, function(data){
         if(data){
-          OK(response, data, type);
+          httpOK(response, data, type);
         } else{
           unsupportedMediaType(response, type);
         }
@@ -89,6 +84,7 @@ function unsupportedVerb(response, verb) {
 }
 
 function OK(response, content, type){
+  console.log("AA");
   response.writeHead( 200, {"Content-type" : type});
   response.write(content);
   response.end();
