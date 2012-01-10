@@ -30,12 +30,14 @@ function mapRSStoCommon(json) {
   if(json.channel.image) channelImg = json.channel.image;
 
   for (var i = 0; i < json.channel.item.length; i++) {
+
     entries.push({
       date : new Date(json.channel.item[i].pubDate),
       source_link : channelLink,
       data : {
         title : json.channel.item[i].title,
-        author : channelTitle,
+        author_name : channelTitle,
+        author_id : null,
         text_summary : json.channel.item[i].description.substring(0,140) + "...",
         text_full : json.channel.item[i].description,
         link : json.channel.item[i].link,
@@ -43,6 +45,7 @@ function mapRSStoCommon(json) {
         location : null
       }
     });
+
   };
 
   store(entries);
