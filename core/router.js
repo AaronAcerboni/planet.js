@@ -4,36 +4,27 @@ var methods = require('/planet.js/core/methods'),
 function route(request, response) {
 
   var path = url.parse(request.url).pathname,
-      verb = request.method,
+      verb = request.method.toLowerCase(),
       type = request.headers["content-type"],
       tokens = path.split("/");
 
-  // Was verb specified or does the system support it
-  if(typeof methods[verb] == "function"){
+  // If method is supported
+  if(!methods[verb]){
 
-    // Path finding
-    if (path.match("^/$")){
+    methods.unsupportedVerb(response, verb);
 
-      methods[verb] ("feeds", null, null, type, response);
+  } else if(path.match("^/$") || path.match("^/feeds*/*$")){
+    
+    methods[verb]["feeds"] (type, response, "all");
 
-    } else if (path.match("^/[a-zA-Z]*/*$")){
-      
-      methods[verb] (tokens[1], null, null, type, response);
-
-    } else if (path.match("^/[a-zA-Z]*/[0-9]{4}/*$")){
-
-      methods[verb] (tokens[1], tokens[2], null, type, response);
-
-    } else if (path.match("^/[a-zA-Z]*/[0-9]{4}/(0[1-9]|1[012])/*$")){
-
-      methods[verb] (tokens[1], tokens[2], tokens[3], type, response);
-
-    } else {
-      methods.resourceNotFound(response, path);
-    }
+  } else if(methods[verb][tokens[1]]){
+    
+    methods[verb][tokens[1]] (type, response, tokens[2], tokens[3], tokens[4]);
 
   } else {
-    methods.unsupportedVerb(response, verb);
+    
+    methods.resourceNotFound(response, tokens[1]);
+
   }
 
 }
