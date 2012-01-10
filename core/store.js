@@ -76,23 +76,22 @@ function insertIntoDB(entry) {
 
 function getSchema() {
 
-  var data = {
-    title : undefined,
-    author : undefined,
-    link : undefined,
-    text_summary : undefined,
-    text_full : undefined,
-    main_image : undefined,
-    other_images : [undefined],
-    location : [undefined,undefined]
-  };
-
   var entry = {
     date : undefined,
     source_link : undefined,
     aggregation : undefined,
     activity_id : undefined,
-    data : data
+    data : {
+      title : undefined,
+      author_name : undefined,
+      author_id,
+      link : undefined,
+      text_summary : undefined,
+      text_full : undefined,
+      main_image : undefined,
+      other_images : [undefined],
+      location : [undefined, undefined]
+    }
   };
 
   return entry;
