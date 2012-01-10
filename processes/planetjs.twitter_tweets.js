@@ -38,8 +38,9 @@ function mapTweetToCommon(tweet){
   entry.source_link = "http://twitter.com";
 
   entry.data = {
-    title : "@" + tweet.user.screen_name + " says",
-    author : tweet.user.id_str,
+    title : null,
+    author_name : "@" + tweet.user.screen_name,
+    author_id : tweet.user.id_str,
     link : "https://twitter.com/#!/" + tweet.user.screen_name + "/status/" + tweet.id_str,
     text_summary : tweet.text,
     text_full : tweet.text,
@@ -47,7 +48,7 @@ function mapTweetToCommon(tweet){
   };
 
   // If tweet.place exists apply it to the schema location field
-   
+
   if(tweet.place){
     entry.data.location = tweet.place.full_name;
   } else {
