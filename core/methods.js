@@ -2,29 +2,31 @@ var mongous = require("mongous").Mongous,
     Parser  = require("/planet.js/core/parser").Parser,
     build   = require("/planet.js/templates/build");
 
+// Supported verbs
+
+var get = {};
+
 // Methods
 
-function GET(aggregation, year, month, type, response) {
-
-  console.log(aggregation, year, month, type);
+get.feeds = function(type, response, aggregation, year, month) {
 
   var parser = new Parser(),
       search = {};
 
   // Prepare search criteria ...
 
-  // Specific aggregation (case insensitive)
-  if(aggregation != "feeds") search.aggregation = aggregation;
+  // If specific aggregation (case insensitive)
+  if(aggregation != "all") search.aggregation = aggregation;
 
-  // Specific Year or Month
-  if(year != null && month != null){
+  // If specific Year or Month
+  if(year && month){
 
     var start = new Date(parseInt(year), parseInt(month)-1, 1),
         end = new Date(parseInt(year), parseInt(month)-1, 31);
 
     search.date = { $gte : start, $lt : end };
 
-  } else if(year != null){
+  } else if(year){
 
     var start = new Date(parseInt(year), 0, 1),
         end = new Date(parseInt(year)+1, 0, 1);
@@ -65,9 +67,15 @@ function GET(aggregation, year, month, type, response) {
 
 // Replies
 
-function resourceNotFound(response, resource) {
-  response.writeHead( 400, {"Content-type" : "text/plain"});
-  response.write("Resource not found: " + resource);
+function OK(response, content, type){
+  response.writeHead( 200, {"Content-type" : type});
+  response.write(content);
+  response.end();
+}
+
+function resourceNotFound(response) {
+  response.writeHead( 404, {"Content-type" : "text/plain"});
+  response.write("Resource not found");
   response.end();
 }
 
@@ -83,15 +91,10 @@ function unsupportedVerb(response, verb) {
   response.end();
 }
 
-function OK(response, content, type){
-  console.log("AA");
-  response.writeHead( 200, {"Content-type" : type});
-  response.write(content);
-  response.end();
-}
 
-exports.GET = GET;
+exports.get = get;
 
+exports.OK = OK;
 exports.resourceNotFound = resourceNotFound;
 exports.unsupportedMediaType = unsupportedMediaType;
-exports.OK = OK;
+exports.unsupportedVerb = unsupportedVerb;
