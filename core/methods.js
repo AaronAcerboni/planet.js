@@ -2,21 +2,19 @@ var mongous = require("mongous").Mongous,
     Parser  = require("/planet.js/core/parser").Parser,
     build   = require("/planet.js/templates/build");
 
-// Supported verbs
+// Resource methods
 
-var get = {};
-
-// Methods
-
-get.feeds = function(type, response, aggregation, year, month) {
+function feeds(verb, type, response, aggregation, year, month) {
 
   var parser = new Parser(),
       search = {};
 
   // Prepare search criteria ...
 
-  // If specific aggregation (case insensitive)
-  if(aggregation != "all") search.aggregation = aggregation;
+  if(typeof aggregation == "string" && aggregation != "feeds"){
+    search.aggregation = aggregation;
+    aggregation = "feeds";
+  }
 
   // If specific Year or Month
   if(year && month){
@@ -34,7 +32,7 @@ get.feeds = function(type, response, aggregation, year, month) {
     search.date = { $gte : start, $lt : end };
 
   }
-
+  console.log(search);
   // Perform MongoDB search
 
   mongous("test.entries").find(search, function(reply){
@@ -53,7 +51,7 @@ get.feeds = function(type, response, aggregation, year, month) {
 
       parser.parse(reply.documents, "application/json", type, function(data){
         if(data){
-          httpOK(response, data, type);
+          OK(response, data, type);
         } else{
           unsupportedMediaType(response, type);
         }
@@ -91,8 +89,7 @@ function unsupportedVerb(response, verb) {
   response.end();
 }
 
-
-exports.get = get;
+exports.feeds = feeds;
 
 exports.OK = OK;
 exports.resourceNotFound = resourceNotFound;

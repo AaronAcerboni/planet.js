@@ -84,7 +84,7 @@ function getSchema() {
     data : {
       title : undefined,
       author_name : undefined,
-      author_id,
+      author_id : undefined,
       link : undefined,
       text_summary : undefined,
       text_full : undefined,

@@ -1,32 +1,33 @@
 var methods = require('/planet.js/core/methods'),
-    url = require('url');
+    dispatch = require('dispatch');
 
-function route(request, response) {
 
-  var path = url.parse(request.url).pathname,
-      verb = request.method.toLowerCase(),
-      type = request.headers["content-type"],
-      tokens = path.split("/");
+// // Routes
 
-  // If method is supported
-  if(!methods[verb]){
-
-    methods.unsupportedVerb(response, verb);
-
-  } else if(path.match("^/$") || path.match("^/feeds*/*$")){
-    
-    methods[verb]["feeds"] (type, response, "all");
-
-  } else if(methods[verb][tokens[1]]){
-    
-    methods[verb][tokens[1]] (type, response, tokens[2], tokens[3], tokens[4]);
-
-  } else {
-    
-    methods.resourceNotFound(response, tokens[1]);
-
-  }
-
+function handle(req, res, next, token2, token3, token4){
+  // res.write("t1" + token1);
+  res.writeHead(200, {"content-type" : "text/html"});
+  res.write("</br> t2 " + token2);
+  res.write("</br> t3 " + token3);
+  res.write("</br> t4 " + token4);
+  res.end();
 }
 
-exports.route = route;
+exports.route = dispatch({
+  "/" : {
+    ""                          : function(){console.log("/")},
+    ":aggregation"              : function(){console.log("/aggregation")},
+    ":aggregation/:year"        : function(){console.log("/aggregation/year")},
+    ":aggregation/:year/:month" : function(){console.log("/aggregation/year/month")}
+  }
+});
+
+// /         
+// /  }
+
+// /all/2012
+// /all/2012/12
+
+// /custom
+// /custom/2012
+// /custom/2012/12

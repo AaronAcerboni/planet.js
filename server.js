@@ -3,14 +3,14 @@
 
 var init       = require('/planet.js/core/init'),
     router     = require('/planet.js/core/router'),
-    http       = require('http');
+    Connect    = require('connect');
 
 // ### Server initialization
 // Used to start activities.
 
-init.startActivities("/planet.js/aggregations.json");
+// init.startActivities("/planet.js/aggregations.json");
 
 // ### HTTP listening loop
 // Utilizes the router module to route http requests
 
-http.createServer(router.route).listen(8888);
+Connect.createServer(router.route).listen(8888);
