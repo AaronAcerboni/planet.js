@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>planet.js</title>
+  </head>
+  <body>
+
+    <h1>
+    {{aggregation}}
+    </h1>
+
+    {{#feeds}}
+    <article>
+      <h2>{{#data}} {{title}} {{/data}}</h2>
+      <p>{{#data}} {{date}} {{/data}}</p>
+      <cite>{{#data}} {{author}} {{/data}}</cite>
+      <p>{{#data}} {{text_summary}} {{/data}}</p>
+      <img alt="" src="{{#data}} {{main_image}} {{/data}}"></img>
+    </article>
+    {{/feeds}}
+
+  </body>
+</html>
