@@ -2,32 +2,25 @@ var methods = require('/planet.js/core/methods'),
     dispatch = require('dispatch');
 
 
-// // Routes
+function route(request, response){
+  var verb     = request.method,
+      mime     = request.headers["content-type"],
+      tokens   = request.url.substr(1).split("/"),
+      resource = tokens[0];
+      
+  if(request.url.match("^/$")){
 
-function handle(req, res, next, token2, token3, token4){
-  // res.write("t1" + token1);
-  res.writeHead(200, {"content-type" : "text/html"});
-  res.write("</br> t2 " + token2);
-  res.write("</br> t3 " + token3);
-  res.write("</br> t4 " + token4);
-  res.end();
+    methods["feeds"](response, verb, mime, tokens);
+
+  } else if(methods[resource]){
+
+    methods[resource](response, verb, mime, tokens);
+
+  } else {
+
+    methods.resourceNotFound(response, resource);
+
+  }
 }
 
-exports.route = dispatch({
-  "/" : {
-    ""                          : function(){console.log("/")},
-    ":aggregation"              : function(){console.log("/aggregation")},
-    ":aggregation/:year"        : function(){console.log("/aggregation/year")},
-    ":aggregation/:year/:month" : function(){console.log("/aggregation/year/month")}
-  }
-});
-
-// /         
-// /  }
-
-// /all/2012
-// /all/2012/12
-
-// /custom
-// /custom/2012
-// /custom/2012/12
+exports.route = route;
