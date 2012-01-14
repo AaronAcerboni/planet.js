@@ -19,14 +19,11 @@ should hopefully increase compatability with pre-existing software.
 
 - Use consistent naming conventions for variables throughout planet.js.
 
-- Detect gathered information as not new before it goes to the Store module.
+- Detect gathered information if not new before it goes to the Store module.
 
-- Explore instances were underscore is used and consider Ecma 5th edition functions.
+- Explore instances were underscore is used and consider Ecma 5th functions (forEach) instead.
 
 ### Router
-
-- Make router work as a object instance since resources are made dynamically
-based on `aggregations.json`.
 
 - Routed URLs should probably be case insensitive.
 
