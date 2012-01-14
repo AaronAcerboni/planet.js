@@ -52,7 +52,7 @@ function storeData(process, data, callback){
 
 function duplicateCheck(entry, callback){
 
-  mongous("test.entries").find({date : entry.date, activity_id : entry.activity_id}, function(reply){
+  mongous("test.feeds").find({date : entry.date, activity_id : entry.activity_id}, function(reply){
     
     if(reply.documents.length == 0){
       callback(entry);
@@ -68,7 +68,7 @@ function duplicateCheck(entry, callback){
 // > - entry : A schema appropraite object ready to be stored in the database.
 
 function insertIntoDB(entry) {
-  mongous("test.entries").insert(entry);
+  mongous("test.feeds").insert(entry);
 }
 
 // ##getSchema
