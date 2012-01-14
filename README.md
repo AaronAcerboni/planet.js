@@ -8,7 +8,9 @@ Currently planet.js can aggregate data and has a simple URL router setup.
 
 eg. `localhost:8888/feeds or localhost:8888/`  
 
-or `localhost:8888/[aggregationname]/[year]/[month]`
+or `localhost:8888/feeds/[aggregationname]/[year]/[month]`  
+  
+or `localhost:8888/feeds/all/[year][month]`  
 
 ###Setup###
 
@@ -29,6 +31,7 @@ Tested on Node v0.4.12 & v0.4.9
 Provided modules:
 
 * [mongouse](https://github.com/amark/mongous) v0.1.0
+* [mustache](https://github.com/janl/mustache.js/) v0.3.1-dev 
 * [underscore](http://documentcloud.github.com/underscore/) v1.2.1
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) v0.1.11
 * [jasmine-node](https://github.com/pivotal/jasmine) v1.0.12
@@ -46,7 +49,7 @@ Versatility is a philosophy planet.js wants to abide by. This means developing a
 
 Planet.js also doesn't have to just grab data from the present. Collecting data from web services also gives us the opportunity to aggregate from the past too.
 
-Possible use cases are for community sites, subject interests, simply sticking your blogs together or anything else you want to hack together with data.
+Possible use cases are for community sites, subject interests, sticking your blogs together or anything else you want to hack together with data.
 
 See [TODO](https://github.com/AaronAcerboni/planet.js/blob/master/TODO.md)
 
