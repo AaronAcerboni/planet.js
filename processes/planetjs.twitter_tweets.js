@@ -37,6 +37,7 @@ function mapTweetToCommon(tweet){
   
   entry.date = new Date(tweet.created_at);
   entry.source_link = "http://twitter.com";
+  entry.source_name = "Twitter";
 
   entry.data = {
     title : "@" + tweet.user.screen_name + " says",
