@@ -1,6 +1,6 @@
 // The module is responsible for storing data retrieved by planet.js processes.
 
-var mongous = require("mongous").Mongous,
+var db      = require("mongojs").connect("test", ["feeds"]),
     _       = require("underscore");
 
 // ##storeData
@@ -51,11 +51,11 @@ function storeData(process, data, callback){
 // > - callback
 
 function duplicateCheck(entry, callback){
-
-  mongous("test.feeds").find({date : entry.date, activity_id : entry.activity_id}, function(reply){
-    
-    if(reply.documents.length == 0){
+  db.feeds.find({date : entry.date, activity_id : entry.activity_id}, function(e, docs){
+    if(docs.length == 0){
       callback(entry);
+    } else {
+      console.log("duplicate");
     }
   });
 }
@@ -65,14 +65,15 @@ function duplicateCheck(entry, callback){
 // >  
 // > Parameter :
 // >  
-// > - entry : A schema appropraite object ready to be stored in the database.
+// > - entry : A schema conforming object ready to be stored in the database.
 
 function insertIntoDB(entry) {
-  mongous("test.feeds").insert(entry);
+  db.feeds.save(entry);
+
 }
 
 // ##getSchema
-// > This function returns a skeletal object representing the full schema of an `entry`.
+// > This function returns a skeletal object representing the full schema of a `feed`.
 
 function getSchema() {
 
