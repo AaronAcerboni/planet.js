@@ -1,6 +1,7 @@
-var mongous = require("mongous").Mongous,
+var mongojs = require("mongojs"),
     Parser  = require("/planet.js/core/parser").Parser,
     build   = require("/planet.js/templates/build");
+
 
 // Methods
 
@@ -8,22 +9,22 @@ var methods = {};
 
 methods.get = function(response, type, resource, parameters){
 
-  var parser = new Parser();
+  var db = mongojs.connect("test", [resource]);
 
-  mongous("test." + resource).find(parameters, function(reply){
-    if(reply.documents.length == 0){
+  db[resource].find(parameters).sort({date : -1}, function(e, docs){
+    if(docs.length == 0){
 
       resourceNotFound(response, resource)
 
     } else if (type == "text/html" || type == undefined){
       
-      build.html(resource, reply.documents, function(html){
+      build.html(resource, docs, function(html){
         OK(response, html, type);
       })
 
     } else {
       
-      Parser.parse(reply.documents, "application/json", type, function(data){
+      (new Parser()).parse(docs, "application/json", type, function(data){
         if(data){
           OK(response, data, type);
         } else {
