@@ -4,7 +4,7 @@
 
 ### General
 
-- HTML templating
+- HTML templating. Layout currently can't handle large images.
 
 - Change the planet.js standard schema to be a superset of the Google Feed API schema. This
 should hopefully increase compatability with pre-existing software.
@@ -36,10 +36,6 @@ should hopefully increase compatability with pre-existing software.
 ### Processing
 
 - Processing modules for flickr, hAtom & Atom.
-
-### Log
-
-- Log should output to a file and not just the console.
 
 ### Other
 
