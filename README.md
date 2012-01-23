@@ -33,7 +33,7 @@ or `localhost:8888/feeds/[aggregationname]/[year]/[month]`
 **More or less working**  
 - Node v0.6.1 (crashes only sometimes - will transition to this)
 
-Provided modules:
+**Provided modules**
 
 * [mongojs](https://github.com/gett/mongojs) v0.2.6
 * [mustache](https://github.com/janl/mustache.js/) v0.3.1-dev 
