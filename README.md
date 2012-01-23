@@ -26,9 +26,9 @@ or `localhost:8888/feeds/[aggregationname]/[year]/[month]`
 ###Versions and Dependencies###
 
 **Working**  
-- Node v0.4.12 (reccomended but not vital)
-- Node v0.4.9
-- MongoDB v2.0.2
+- Node v0.4.12 (reccomended but not vital)  
+- Node v0.4.9  
+- MongoDB v2.0.2  
 
 **More or less working**  
 - Node v0.6.1 (crashes only sometimes - will transition to this)
