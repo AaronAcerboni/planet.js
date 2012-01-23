@@ -6,11 +6,13 @@ Planet.js is a JavaScript data aggregator in the spirit of Planet software. It a
 
 Currently planet.js can aggregate data and has a simple URL router setup. 
 
-eg. `localhost:8888/feeds or localhost:8888/`  
+eg. `localhost:8888/`  
 
-or `localhost:8888/feeds/[aggregationname]/[year]/[month]`  
+or `localhost:8888/feeds`
   
 or `localhost:8888/feeds/all/[year][month]`  
+
+or `localhost:8888/feeds/[aggregationname]/[year]/[month]`  
 
 ###Setup###
 
@@ -23,14 +25,17 @@ or `localhost:8888/feeds/all/[year][month]`
 
 ###Versions and Dependencies###
 
-Tested on Node v0.4.12 & v0.4.9
+**Working**  
+- Node v0.4.12 (reccomended but not vital)
+- Node v0.4.9
+- MongoDB v2.0.2
 
-* Node v0.4.12 (reccomended)
-* MongoDB
+**More or less working** 
+- Node v0.6.1 (crashes only sometimes - will transition to this)
 
 Provided modules:
 
-* [mongouse](https://github.com/amark/mongous) v0.1.0
+* [mongojs](https://github.com/gett/mongojs) v0.2.6
 * [mustache](https://github.com/janl/mustache.js/) v0.3.1-dev 
 * [underscore](http://documentcloud.github.com/underscore/) v1.2.1
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) v0.1.11
