@@ -9,7 +9,7 @@ function route(request, response){
 
   if(resource == "public"){
     
-    methods["public"](response, mime, request.url);
+    methods["public"](response, request.url);
 
   } else if(request.url.match("^/$")){
 
