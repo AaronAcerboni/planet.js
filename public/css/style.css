@@ -1,17 +1,17 @@
-body{
-	padding-top: 80px;
+.navbar {
+  margin-bottom: 40px;
 }
 
-h2, h3{
-	padding-bottom: 1em;
+h2, h3 {
+  padding-bottom: 1em;
 }
 
-div.row div{
-	margin-bottom: 1em;
-}
-
-.blurb{
+.blurb {
 	padding: 0.8em 0 1.4em 0;
 	font-size:18px;
 	color:#999999;
+}
+
+hr {
+  margin: 40px 0 40px 0;
 }
