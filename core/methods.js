@@ -9,7 +9,6 @@ var mongojs = require("mongojs"),
 var methods = {};
 
 methods.get = function(response, type, resource, parameters){
-
   var db = mongojs.connect("test", [resource]);
 
   db[resource].find(parameters).sort({date : -1}, function(e, docs){
@@ -20,7 +19,7 @@ methods.get = function(response, type, resource, parameters){
     } else if (type == "text/html" || type == undefined){
       
       build.html(resource, docs, function(html){
-        OK(response, html, type);
+        OK(response, html, "text/html");
       })
 
     } else {
@@ -94,23 +93,32 @@ function feeds(response, verb, type, tokens) {
 
 // Public assets handler
 
-function public(response, path){
+function public(response, path) {
   var read = null,
-      type = null;
+      type = null,
+      dir  = path.substr(1).split('/')[1];
 
-  if(path.search('images') > 0){
+  if(dir == 'images'){
     type = 'binary';
   } else {
     read = 'utf-8';
+    switch(dir){
+      case 'css': type = 'text/css'; break;
+      case 'js' : type = 'text/javascript'; break;
+    }
   }
 
-  fs.readFile("/planet.js" + path, read, function(e, data){
+  fs.readFile('/planet.js' + path, read, function(e, data){
     if(e){
-      resourceNotFound(response, path);
+      if(e.errno == 34){
+        resourceNotFound(response, path);
+      } else {
+        error(response, path);
+      }
     } else {
       OK(response, data, type);
     }
-  });
+  }); 
 
 }
 
@@ -122,9 +130,9 @@ function OK(response, content, type){
   response.end();
 }
 
-function resourceNotFound(response, tokens) {
+function resourceNotFound(response, path) {
   response.writeHead( 404, {"Content-type" : "text/plain"});
-  response.write("Resource not found:" + tokens);
+  response.write("Resource not found:" + path);
   response.end();
 }
 
@@ -140,10 +148,19 @@ function unsupportedVerb(response, verb) {
   response.end();
 }
 
+function forbidden(response, path) {
+  response.writeHead( 403, {"Content-type" : "text/plain"});
+  response.write("Forbidden: " + path);
+  response.end();
+}
+
+function error(response, path) {
+  response.writeHead( 500, {"Content-type" : "text/plain"});
+  response.write("The server encounter a problem relating to the path: " + path);
+  response.end();
+}
+
+// Interface
+
 exports.feeds = feeds;
 exports.public = public;
-
-exports.OK = OK;
-exports.resourceNotFound = resourceNotFound;
-exports.unsupportedMediaType = unsupportedMediaType;
-exports.unsupportedVerb = unsupportedVerb;
