@@ -1,6 +1,7 @@
 var mongojs = require("mongojs"),
     Parser  = require("/planet.js/core/parser").Parser,
-    build   = require("/planet.js/templates/build");
+    build   = require("/planet.js/templates/build"),
+    fs      = require("fs");
 
 
 // Methods
@@ -91,6 +92,22 @@ function feeds(response, verb, type, tokens) {
 
 }
 
+// Public assets handler
+
+function public(response, type, path){
+  console.log("here");
+  fs.readFile("/planet.js/" + path, 'utf-8', function(e, data){
+    
+    if(e){
+      resourceNotFound(response, path);
+    } else {
+      OK(response, data, type);
+    }
+
+  });
+
+}
+
 // Replies
 
 function OK(response, content, type){
@@ -118,6 +135,7 @@ function unsupportedVerb(response, verb) {
 }
 
 exports.feeds = feeds;
+exports.public = public;
 
 exports.OK = OK;
 exports.resourceNotFound = resourceNotFound;
