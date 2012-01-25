@@ -6,8 +6,12 @@ function route(request, response){
       mime     = request.headers["content-type"],
       tokens   = request.url.substr(1).split("/"),
       resource = tokens[0];
-      
-  if(request.url.match("^/$")){
+
+  if(resource == "public"){
+    
+    methods["public"](response, mime, request.url);
+
+  } else if(request.url.match("^/$")){
 
     methods["feeds"](response, verb, mime, tokens);
 
