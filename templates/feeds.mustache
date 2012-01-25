@@ -4,20 +4,20 @@
     <meta charset="utf-8"/>
     <meta lang="{{lang}}"/>
     <title>Digital Media Projects</title>
-    <link rel="stylesheet" href="public/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="/public/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/public/css/style.css">
   </head>
   <body>
 
-    <div class="navbar navbar-fixed">
+    <div class="navbar">
       <div class="navbar-inner">
       <div class="container">
+        <img src="/public/images/group.png" class="brand"/>
         <ul class="nav">
-          <li class="active">
-          <a href="#">All</a>
-          </li>
-          <li><a href="#">Link</a></li>
-          <li><a href="#">Link</a></li>
+          <li><a href="/feeds/all">All</a></li>
+          <li><a href="/feeds/planetjs">Planet.js</a></li>
+          <li><a href="/feeds/community">Community</a></li>
+          <li><a href="/feeds/ben">Ben</a></li>
         </ul>
       </div>
       </div>
@@ -29,23 +29,29 @@
       <p class="blurb">A look at the final year projects of Digital Media students.</p>
 
       <div class="row">
-        <div class="span8">          
-          {{#resource}}
-            <h3>
-              <a href="{{#data}} {{link}} {{/data}}">{{#data}} {{title}} {{/data}}</a>
-            </h3>
-            <time>{{date}}</time> </br>
-            <span class="aggregation">{{aggregation}}</span> &mdash;
-            {{#data}}
-              <cite><a href="{{source_link}}">{{source_link}}</a></cite>
-              {{{text_full}}}
-            {{/data}}
-            <hr>
-          {{/resource}}
-
+        <div class="span8">   
+          <article>       
+            {{#resource}}
+              <h3>
+                <a href="{{#data}} {{link}} {{/data}}">{{#data}} {{title}} {{/data}}</a>
+              </h3>
+              <time>{{date}}</time>
+                </br>
+              Feed &rarr; <a href="/feeds/{{aggregation}}">{{aggregation}}</a>
+                </br>
+              Source &rarr; <cite><a href="{{source_link}}">{{source_link}}</a></cite>
+                </br></br>
+              {{#data}}
+                <article>
+                {{{text_full}}}
+              {{/data}}
+              <hr>
+            {{/resource}}
+          </article>
         </div>
         <div class="span4">
 
+          <h3>Tags</h3>
           <h3>Archive</h3>
           <ul>
             {{#resource}}
