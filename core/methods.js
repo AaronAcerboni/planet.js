@@ -94,16 +94,22 @@ function feeds(response, verb, type, tokens) {
 
 // Public assets handler
 
-function public(response, type, path){
-  console.log("here");
-  fs.readFile("/planet.js/" + path, 'utf-8', function(e, data){
-    
+function public(response, path){
+  var read = null,
+      type = null;
+
+  if(path.search('images') > 0){
+    type = 'binary';
+  } else {
+    read = 'utf-8';
+  }
+
+  fs.readFile("/planet.js" + path, read, function(e, data){
     if(e){
       resourceNotFound(response, path);
     } else {
       OK(response, data, type);
     }
-
   });
 
 }
