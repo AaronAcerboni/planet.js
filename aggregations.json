@@ -18,7 +18,7 @@
     "feeds" : [
       {
         "resources" : {"url" : "http://feeds.gawker.com/gizmodo/full"},
-        "activity" : {"type" : "poller", "time" : 680000},
+        "activity" : {"type" : "poller", "time" : 6800000 },
         "process" : "planetjs.rss"
       }
     ]
@@ -28,12 +28,12 @@
     "feeds" : [
       {
         "resources" : { "url" : "http://planetjs.tumblr.com/rss" },
-        "activity" : {"type" : "poller", "time" : 680000 },
+        "activity" : {"type" : "poller", "time" : 6800000 },
         "process" : "planetjs.rss"
       },
       {
         "resources" : { "url" : "http://planetjsresearch.tumblr.com/rss" },
-        "activity" : {"type" : "poller", "time" : 680000 },
+        "activity" : {"type" : "poller", "time" : 6800000 },
         "process" : "planetjs.rss"
       }
     ]
