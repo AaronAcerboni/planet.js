@@ -8,8 +8,8 @@
           "userpass" : "helloplanet",
           "follow" : [418151670, 6253282]
         },
-        "activity" : {"type" : "subscriber"},
-        "process" : "planetjs.twitter_tweets"
+        "runner" : {"type" : "subscriber"},
+        "processes" : ["planetjs.twitter_tweets", "planetjs.addTags"]
       }
     ]
   },
@@ -18,13 +18,13 @@
     "feeds" : [
       {
         "resources" : { "url" : "http://planetjs.tumblr.com/rss" },
-        "activity" : {"type" : "poller", "time" : 6800000 },
-        "process" : "planetjs.rss"
+        "runner" : {"type" : "poller", "time" : 68000000 },
+        "processes" : ["planetjs.rss", "planetjs.addTags"]
       },
       {
         "resources" : { "url" : "http://planetjsresearch.tumblr.com/rss" },
-        "activity" : {"type" : "poller", "time" : 6800000 },
-        "process" : "planetjs.rss"
+        "runner" : {"type" : "poller", "time" : 68000000 },
+        "processes" : ["planetjs.rss", "planetjs.addTags"]
       }
     ]
   }
