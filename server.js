@@ -6,9 +6,9 @@ var init       = require('/planet.js/core/init'),
     http       = require('http');
 
 // ### Server initialization
-// Used to start activities.
+// Used to start runners.
 
-init.startActivities("/planet.js/aggregations.json");
+init.startRunners("/planet.js/aggregations.json");
 
 // ### HTTP listening loop
 // Utilizes the router module to route http requests
