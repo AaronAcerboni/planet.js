@@ -4,14 +4,13 @@
 */
 
 var Fetcher = require("/planet.js/core/fetch").Fetcher,
-    Parser = require("/planet.js/core/parser").Parser;
+    Parser  = require("/planet.js/core/parser").Parser,
+    next    = null;
 
-var store;
-
-function main(resources, callback) {
-  store = callback;
+function main(options, nextProcess) {
+  next = nextProcess;
   var fetcher = new Fetcher();
-  fetcher.get(resources.url, parseRSStoJSON);
+  fetcher.get(options.resources.url, parseRSStoJSON);
 }
 
 // Parse RSS xml to JSON
@@ -50,8 +49,8 @@ function mapRSStoCommon(json) {
     });
 
   };
-
-  store(entries);
+  
+  next(entries);
 }
 
 exports.main = main;
