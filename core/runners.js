@@ -22,6 +22,7 @@ function Runner(options, aggregation) {
         if(final) finalCallback = final;
 
         if(currentProcess + 1 > that.processes.length) {
+            currentProcess = 0;
             storer.store(that, data, finalCallback);
         } else {
             currentProcess++;
