@@ -1,7 +1,7 @@
 // A module containing functions needed for the server to start.
 
-var Activities = require("/planet.js/core/activities"),
-    fs         = require("fs");
+var runners = require("/planet.js/core/runners"),
+    fs      = require("fs");
 
 // ### startActivties
 // > Starts up [activities](Activities.html) based on what aggregations are defined
@@ -24,12 +24,7 @@ function startActivities(aggLocation) {
         var agg = all[i];
         for(j in agg.feeds){
           var feed = agg.feeds[j];
-          switch(feed.activity.type){
-            case "poller" :
-              Activities.startPoller(feed, agg.name); break;
-            case "subscriber" :
-              Activities.startSubscriber(feed, agg.name);
-          }
+          runners.start[feed.runner.type](feed, agg.name);
         }
       }
   });
