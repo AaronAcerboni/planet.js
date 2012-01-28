@@ -13,11 +13,9 @@ var db      = require("mongojs").connect("test", ["feeds"]),
 // > - `callback`
 
 function storeData(process, data, callback){
-
   // If there are multiple entries (array) ...
   if(typeof data.length == "number"){
     for (var i = 0; i < data.length; i++) {
-
       // create full entry object
       var entry = getSchema();
       _.extend(entry, data[i]);
@@ -69,7 +67,6 @@ function duplicateCheck(entry, callback){
 
 function insertIntoDB(entry) {
   db.feeds.save(entry);
-
 }
 
 // ##getSchema
