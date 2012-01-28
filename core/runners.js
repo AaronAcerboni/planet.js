@@ -26,7 +26,7 @@ function Runner(options, aggregation) {
             storer.store(that, data, finalCallback);
         } else {
             currentProcess++;
-            that.processes[currentProcess-1](data, that.process);
+            new that.processes[currentProcess-1](data, that.process);
         }
 
     }
