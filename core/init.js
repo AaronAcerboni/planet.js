@@ -3,14 +3,7 @@
 var runners = require("/planet.js/core/runners"),
     fs      = require("fs");
 
-// ### startActivties
-// > Starts up [activities](Activities.html) based on what aggregations are defined
-// > in `aggregations.json`.
-// >  
-// > Parameters :
-// >  
-// > - `aggLocation` : Location of `aggregations.json` file (optional)
-function startActivities(aggLocation) {
+function startRunners(aggLocation) {
 
   if(aggLocation != undefined)
     var aggregations = aggLocation;
@@ -31,4 +24,4 @@ function startActivities(aggLocation) {
 
 }
 
-exports.startActivities = startActivities;
+exports.startRunners = startRunners;
