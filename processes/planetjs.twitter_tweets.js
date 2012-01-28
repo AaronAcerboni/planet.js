@@ -7,24 +7,20 @@ var Twitter = require('twitter-node').TwitterNode
     store   = null,
     tw      = null;
 
-function main(resources, callback) {
+function main(options, callback) {
 
   store = callback;
 
   tw = new Twitter({
-    user : resources.username,
-    password : resources.userpass,
-    follow : resources.follow
-  });
-
-  listen();
-}
-
-function listen(){
-  tw.addListener('Error', function(e){
-    console.log("process:" + e.message );
+    user : options.resources.username,
+    password : options.resources.userpass,
+    follow : options.resources.follow
+  })
+  .addListener('Error', function(e){
+    console.log("process: twitter error : " + e.message);
   })
   .addListener('tweet', function(tweet){
+    console.log("process: Grabbed a tweet!")
     mapTweetToCommon(tweet);
   })
   .stream();
@@ -53,8 +49,6 @@ function mapTweetToCommon(tweet){
   } else {
     entry.data.location = null;
   }
-
-  console.log("process: Grabbed Tweet")
 
   store(entry);
 }
