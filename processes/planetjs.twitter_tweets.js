@@ -4,12 +4,12 @@
 */
 
 var Twitter = require('twitter-node').TwitterNode
-    store   = null,
+    next    = null,
     tw      = null;
 
-function main(options, callback) {
+function main(options, nextProcess) {
 
-  store = callback;
+  next = nextProcess;
 
   tw = new Twitter({
     user : options.resources.username,
@@ -50,7 +50,8 @@ function mapTweetToCommon(tweet){
     entry.data.location = null;
   }
 
-  store(entry);
+  console.log(tweet);
+  next(entry);
 }
 
 exports.main = main;
