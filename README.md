@@ -25,21 +25,20 @@ or `localhost:8888/feeds/[aggregationname]/[year]/[month]`
 
 ###Versions and Dependencies###
 
-**Working**  
-- Node v0.4.12 (reccomended but not vital)  
-- Node v0.4.9  
-- MongoDB v2.0.2  
+- Node v0.6.6 (also 4.12)
+- MongoDB v2.0.2 
 
-**More or less working**  
-- Node v0.6.1 (crashes only sometimes - will transition to this)
-
-**Provided modules**
+**Core modules**
 
 * [mongojs](https://github.com/gett/mongojs) v0.2.6
-* [mustache](https://github.com/janl/mustache.js/) v0.3.1-dev 
 * [underscore](http://documentcloud.github.com/underscore/) v1.2.1
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) v0.1.11
-* [jasmine-node](https://github.com/pivotal/jasmine) v1.0.12
+
+**Processing / Template modules**  
+
+* [mustache](https://github.com/janl/mustache.js/) v0.3.1-dev 
+* [twitter-node](https://github.com/technoweenie/twitter-node)
+* [pos](https://github.com/fortnightlabs/pos-js)
 
 
 ##API Docs##
