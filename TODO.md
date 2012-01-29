@@ -13,13 +13,9 @@ should hopefully increase compatability with pre-existing software.
 
 ### General
 
-- Transition planet.js to the latest Node version
-
-- Revise names for describing "Activities" and "Processes".
-
 - Use consistent naming conventions for variables throughout planet.js.
 
-- Detect gathered information if not new before it goes to the Store module.
+- Detect gathered information if not new before it goes to the Store module and reads db.
 
 - Explore instances were underscore is used and consider Ecma 5th functions (forEach) instead.
 
@@ -27,11 +23,9 @@ should hopefully increase compatability with pre-existing software.
 
 - Routed URLs should probably be case insensitive.
 
-### Activities
+### Runners
 
-- Give `Poller` and `Subscriber` activites a common parent object.
-
-- Provide an Activity for listeners (thing which need callback/pingback urls).
+- Provide a runner for listeners (thing which need callback/pingback urls).
 
 ### Processing
 
