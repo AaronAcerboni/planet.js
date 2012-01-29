@@ -162,5 +162,7 @@ function error(response, path) {
 
 // Interface
 
+exports.resourceNotFound = resourceNotFound;
+
 exports.feeds = feeds;
 exports.public = public;
