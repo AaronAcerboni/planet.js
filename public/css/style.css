@@ -12,6 +12,14 @@ h2, h3 {
 	color:#999999;
 }
 
+.span4 ul li {
+  margin-bottom: 1em;
+}
+
+a[href="#top"]{
+  float:right;
+}
+
 hr {
   margin: 40px 0 40px 0;
 }
