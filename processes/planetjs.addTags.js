@@ -1,7 +1,18 @@
 var pos = require('pos');
 
-function main(data, callback){    
-  callback(data);
+function main(feeds, callback){
+  if(feeds.length){
+    for(var i = 0; i < feeds.length; i++){
+      (new Tagging()).getPopularWords(feeds[i].data.text_full, function(nouns){
+        feeds[i].data.tags = nouns;
+      });
+    }
+  } else {
+      (new Tagging()).getPopularWords(feeds.data.text_full, function(nouns){
+        feeds.data.tags = nouns;
+      });
+  }
+  callback(feeds);
 }
 
 function Tagging(){
@@ -20,13 +31,13 @@ function Tagging(){
     }
 
     for (var i = tags.length - 1; i >= 0; i--) {
-      // if(tags[i][1].match("^N.*$")){
-      if(tags[i][1].match("^NNS|NNP$")){
+      if(tags[i][1].match("^N.*$")){
+      // if(tags[i][1].match("^NNS|NNP$")){
         nouns.push(tags[i][0]);
       }
     };
 
-    callback(nouns);
+    unique(nouns, callback);
   };
 
   this.getURLs = function(string, callback){
@@ -45,8 +56,21 @@ function Tagging(){
       }
     };
 
-    callback(urls);
+    unique(nouns, callback);
   };
+
+  function unique(origin, fn){
+    var a = [],
+        l = origin.length;
+        for(var i=0; i<l; i++) {
+          for(var j=i+1; j<l; j++) {
+            if (origin[i] === origin[j])
+              j = ++i;
+          }
+          a.push(origin[i]);
+        }
+    fn(a);
+  }
 
 }
 
