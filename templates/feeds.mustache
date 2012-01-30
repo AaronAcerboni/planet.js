@@ -9,7 +9,7 @@
   </head>
   <body>
 
-    <div class="navbar">
+    <div class="navbar" id="top">
       <div class="navbar-inner">
       <div class="container">
         <img src="/public/images/group.png" class="brand"/>
@@ -29,9 +29,9 @@
 
       <div class="row">
         <div class="span8">   
-          <article>       
             {{#resource}}
-              <h3>
+            <article>       
+              <h3 id="{{date}}">
                 <a href="{{#data}} {{link}} {{/data}}">{{#data}} {{title}} {{/data}}</a>
               </h3>
               <time>{{date}}</time>
@@ -41,26 +41,45 @@
               Source &rarr; <cite><a href="{{source_link}}">{{source_link}}</a></cite>
                 </br></br>
               {{#data}}
-                <article>
                 {{{text_full}}}
               {{/data}}
+              </br>
+              <a href="#top">Top &uarr;</a>
               <hr>
+            </article>
             {{/resource}}
-          </article>
         </div>
         <div class="span4">
 
-          <h3>Tags</h3>
+          <h3>Popular words</h3>
           <h3>Archive</h3>
           <ul>
             {{#resource}}
-            <li> {{date}} &mdash; {{#data}} {{title}} {{/data}}</li>
+            <li> <a href="#{{date}}">{{#data}} {{title}} {{/data}}</a> </br> <time>{{date}}</time> </li>
             {{/resource}}
           </ul>
 
         </div>  
       </div>
     </div>
+
+    <script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
+
+    <!-- Script files for making the date format nice to look at -->
+    <script type="text/javascript">
+
+      jQuery('.span4 ul li time').each(function(i, el){
+
+        var time = new Date(jQuery(el).text()),
+            text = time.getDate()     + " / " +
+                   (time.getMonth()+1)+ " / " +
+                   time.getFullYear();
+
+        jQuery(el).text(text);
+
+      });
+
+    </script>
 
   </body>
 </html>
