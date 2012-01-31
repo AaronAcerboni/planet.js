@@ -50,8 +50,8 @@
             {{/resource}}
         </div>
         <div class="span4">
-
-          <h3>Popular words</h3>
+          <div id="popular-words">
+          </div>
           <h3>Archive</h3>
           <ul>
             {{#resource}}
@@ -63,10 +63,15 @@
       </div>
     </div>
 
-    <script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
+    <div id="data-tags">{{#resource}}{{#data}}{{tags}}{{/data}}{{/resource}}</div>
 
-    <!-- Script files for making the date format nice to look at -->
+    <script type="text/javascript" src="/public/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/public/js/blacklist.js"></script>
+
+    <!-- Script files for making the date format nice to look at and calculating the most popular tags -->
     <script type="text/javascript">
+
+      // pretty time
 
       jQuery('.span4 ul li time').each(function(i, el){
 
@@ -78,6 +83,86 @@
         jQuery(el).text(text);
 
       });
+
+      // popular words
+
+      // Copyright 2007 - 2009 Tavs Dokkedahl
+      // Contact: http://www.jslab.dk/contact.php
+
+      Array.prototype.unique =
+        function() {
+          var a = [];
+          var l = this.length;
+          for(var i=0; i<l; i++) {
+            for(var j=i+1; j<l; j++) {
+              // If this[i] is found later in the array
+              if (this[i] === this[j])
+                j = ++i;
+            }
+            a.push(this[i]);
+          }
+        return a;
+      };
+
+      // stackoverflow.com/questions/6565333/using-javascript-to-find-most-common-words-in-string
+      // (modified)
+      
+      var wordCounts      = {},
+          tagsMix         = $("#data-tags").text().split(","),
+          tags            = [],
+          popularityRange = [],
+          popTags         = [];
+
+      // Ignore case
+
+      for (var i = 0; i < tagsMix.length; i++) {
+        tags.push(tagsMix[i].toLowerCase());
+      };
+
+      // Remove junk tags
+      for (var i = 0; i < BLACKLIST.length; i++) {
+        for (var n = 0; n < tags.length; n++) {
+          if(BLACKLIST[i] == tags[n]){
+            tags[n] = "!JUNK";
+          }
+        };
+      };
+
+      for(var i = 0; i < tags.length; i++){
+        if(tags[i] != "!JUNK"){
+          if(!wordCounts[tags[i]]) wordCounts[tags[i]] = 0;
+          wordCounts[tags[i]]++;
+        }
+      }
+
+
+      for(var prop in wordCounts){
+        popularityRange.push(wordCounts[prop]);
+      }
+
+      popularityRange = popularityRange.unique().sort(function(a, b){return b - a});
+      popularityRange = popularityRange.splice(0, popularityRange.length / 1.5);
+
+      for(var prop in wordCounts){
+        for (var i = 0; i < popularityRange.length; i++) {
+          if(wordCounts[prop] == popularityRange[i]){
+            popTags.push(prop);
+          }
+        };
+      }
+
+      // Display
+
+      var target = jQuery('#popular-words'),
+          text   = "";
+
+      target.html("<h3>Popular words</h3>");
+
+      jQuery.each(popTags, function(i, val){
+        text += val + ", ";
+      });
+      
+      target.append("<p>" + text.substr(0, text.length-2) + "</p>");
 
     </script>
 
