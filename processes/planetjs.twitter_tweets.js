@@ -32,8 +32,8 @@ function mapTweetToCommon(tweet){
   // Explore : Twitter's rich meta data in relation to the planet.js schema
   
   entry.date = new Date(tweet.created_at);
-  entry.source_link = "http://twitter.com";
-  entry.source_name = "Twitter";
+  entry.source_link = "http://twitter.com/#!/" + tweet.user.screen_name;
+  entry.source_name = "@" + tweet.user.screen_name + "on Twitter";
 
   entry.data = {
     title : "@" + tweet.user.screen_name + " says",
@@ -50,7 +50,6 @@ function mapTweetToCommon(tweet){
     entry.data.location = null;
   }
 
-  console.log(tweet);
   next(entry);
 }
 
