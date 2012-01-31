@@ -1,6 +1,8 @@
 var storer  = require("/planet.js/core/store");
 
 function Runner(options, aggregation) {
+    var that         = this;
+
     this.options     = options;
     this.id          = aggregation + '/' + JSON.stringify(options.resources);
     this.aggregation = aggregation;
@@ -11,9 +13,10 @@ function Runner(options, aggregation) {
           this.processes.push( require('/planet.js/processes/' + options.processes[i]).main );
       };
     
-    var that           = this,
-        currentProcess = 0,
-        finalCallback  = null;
+    this.currentProcess = 0;
+
+    var that            = this,
+        finalCallback   = null;
 
     this.process = function(data, final) {
         var data = data;
@@ -21,12 +24,12 @@ function Runner(options, aggregation) {
         if(!data) data = options;
         if(final) finalCallback = final;
 
-        if(currentProcess + 1 > that.processes.length) {
-            currentProcess = 0;
+        if(that.currentProcess + 1 > that.processes.length) {
+            that.currentProcess = 0;
             storer.store(that, data, finalCallback);
         } else {
-            currentProcess++;
-            new that.processes[currentProcess-1](data, that.process);
+            that.currentProcess++;
+            new that.processes[that.currentProcess-1](data, that.process);
         }
 
     }
@@ -60,7 +63,12 @@ function Subscriber() {
     var that = this;
 
     this.start = function(){
-        that.prototype.process();
+        that.prototype.process(null, function(){
+            // final callback hack for setting the currentProcess
+            // so tweets can be stored not just on the first one
+            // --- should revise!!
+            that.prototype.currentProcess = 1;
+        });
     };
 }
 
