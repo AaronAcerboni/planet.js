@@ -23,3 +23,7 @@ a[href="#top"]{
 hr {
   margin: 40px 0 40px 0;
 }
+
+#data-tags {
+	display: none;
+}
