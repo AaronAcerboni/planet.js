@@ -23,27 +23,27 @@
     </div>
 
     <div class="container">
-      
+
       <h1>Digital Media Projects</h1>
       <p class="blurb">A look at the final year projects of Digital Media students.</p>
 
       <div class="row">
-        <div class="span8">   
+        <div class="span8">
             {{#resource}}
-            <article>       
+            <article>
               <h3 id="{{date}}">
                 <a href="{{#data}} {{link}} {{/data}}">{{#data}} {{title}} {{/data}}</a>
               </h3>
               <time>{{date}}</time>
-                </br>
+                <br>
               Feed &rarr; <a href="/feeds/{{aggregation}}">{{aggregation}}</a>
-                </br>
+                <br>
               Source &rarr; <cite><a href="{{source_link}}">{{source_link}}</a></cite>
-                </br></br>
+                <br><br>
               {{#data}}
                 {{{text_full}}}
               {{/data}}
-              </br>
+              <br>
               <a href="#top">Top &uarr;</a>
               <hr>
             </article>
@@ -55,11 +55,11 @@
           <h3>Archive</h3>
           <ul>
             {{#resource}}
-            <li> <a href="#{{date}}">{{#data}} {{title}} {{/data}}</a> </br> <time>{{date}}</time> </li>
+            <li> <a href="#{{date}}">{{#data}} {{title}} {{/data}}</a> <br> <time>{{date}}</time> </li>
             {{/resource}}
           </ul>
 
-        </div>  
+        </div>
       </div>
     </div>
 
