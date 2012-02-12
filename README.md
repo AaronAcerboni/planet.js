@@ -4,29 +4,27 @@ Planet.js is a JavaScript data aggregator in the spirit of Planet software. It a
 
 `node server.js`
 
-Currently planet.js can aggregate data and has a simple URL router setup. 
+Currently planet.js can aggregate data and has a simple URL router setup.
 
-eg. `localhost:8888/`  
+eg. `localhost:8888/`
 
 or `localhost:8888/feeds`
-  
-or `localhost:8888/feeds/all/[year][month]`  
 
-or `localhost:8888/feeds/[aggregationname]/[year]/[month]`  
+or `localhost:8888/feeds/all/[year][month]`
+
+or `localhost:8888/feeds/[aggregationname]/[year]/[month]`
 
 ###Setup###
 
-- **Think about your testing location.** All require statements are written to look for `"/planet.js"`. So stick a `planet.js` directory in your root if you want to get up and running quickly. 
-
 - **Setup your MongoDB database.** By default planet.js looks for the `test` database. That is referenced in `core/store.js` & `core/router.js`.
 
-- **Prepare your aggregations.** By default the `aggregations.json` config looks at the planet.js research & development blogs, gawker for RSS and listens out for tweets using twitter account planetjstest. 
+- **Prepare your aggregations.** By default the `aggregations.json` config looks at the planet.js research & development blogs for RSS and listens out for tweets using twitter account planetjstest.
 
 
 ###Versions and Dependencies###
 
 - Node v0.6.9 (also 4.12)
-- MongoDB v2.0.2 
+- MongoDB v2.0.2
 
 **Core modules**
 
@@ -34,9 +32,9 @@ or `localhost:8888/feeds/[aggregationname]/[year]/[month]`
 * [underscore](http://documentcloud.github.com/underscore/) v1.2.1
 * [xml2js](https://github.com/Leonidas-from-XIV/node-xml2js) v0.1.11
 
-**Processing / Template modules**  
+**Processing / Template modules**
 
-* [mustache](https://github.com/janl/mustache.js/) v0.3.1-dev 
+* [mustache](https://github.com/janl/mustache.js/) v0.3.1-dev
 * [twitter-node](https://github.com/technoweenie/twitter-node)
 * [pos](https://github.com/fortnightlabs/pos-js)
 
@@ -47,7 +45,7 @@ or `localhost:8888/feeds/[aggregationname]/[year]/[month]`
 
 ##Project Aim##
 
-The magic of planet.js is the ability to synchronise a variety of data ranging from the standard RSS to any old web service. 
+The magic of planet.js is the ability to synchronise a variety of data ranging from the standard RSS to any old web service.
 
 Versatility is a philosophy planet.js wants to abide by. This means developing an open environment for allowing for various ways of getting hold of data, various ways of manipulating it and various ways of outputting it.
 
