@@ -3,7 +3,7 @@
   Built with buglabs' node-xml2json parser https://github.com/buglabs/node-xml2json
 */
 
-var xml2js = require('/planet.js/node_modules/xml2js');
+var xml2js = require('../node_modules/xml2js');
 
 
 function parse(data, callback){

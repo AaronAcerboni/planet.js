@@ -1,4 +1,4 @@
-var methods = require('/planet.js/core/methods');
+var methods = require('./methods');
 
 
 function route(request, response){

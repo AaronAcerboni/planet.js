@@ -1,6 +1,6 @@
 // A module containing functions needed for the server to start.
 
-var runners = require("/planet.js/core/runners"),
+var runners = require("./runners"),
     fs      = require("fs");
 
 function startRunners(aggLocation) {

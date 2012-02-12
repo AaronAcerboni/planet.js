@@ -5,7 +5,7 @@
 // 
 // - XML > JSON
 
-var xml2json = require('/planet.js/parsers/xml-to-json');
+var xml2json = require('../parsers/xml-to-json');
 
 function Parser() {
 

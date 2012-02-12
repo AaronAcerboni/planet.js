@@ -1,4 +1,4 @@
-var storer  = require("/planet.js/core/store");
+var storer  = require("./store");
 
 function Runner(options, aggregation) {
     var that         = this;

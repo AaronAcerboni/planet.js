@@ -9,8 +9,8 @@
 // If your Process module is acting as a Subscriber then you will be responsible for establishing
 // your connection from within here.
 
-var Fetcher = require('/planet.js/core/fetch'),
-    Parser  = require('/planet.js/core/parser'),
+var Fetcher = require('../core/fetch'),
+    Parser  = require('../core/parser'),
     _       = require('underscore');
 
 // ## Getting started

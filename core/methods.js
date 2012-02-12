@@ -1,6 +1,6 @@
 var mongojs = require("mongojs"),
-    Parser  = require("/planet.js/core/parser").Parser,
-    build   = require("/planet.js/templates/build"),
+    Parser  = require("./parser").Parser,
+    build   = require("../templates/build"),
     fs      = require("fs");
 
 
