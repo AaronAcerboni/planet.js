@@ -158,9 +158,17 @@
 
       target.html("<h3>Popular words</h3>");
 
-      jQuery.each(popTags, function(i, val){
-        text += val + ", ";
-      });
+      if(popTags.length > 0){
+        jQuery.each(popTags, function(i, val){
+          text += val + ", ";
+        });
+      } else {
+        jQuery.each(tags, function(i, val){
+          if(val != "!JUNK"){
+            text += val + ", ";
+          }
+        });
+      }
 
       target.append("<p>" + text.substr(0, text.length-2) + "</p>");
 
