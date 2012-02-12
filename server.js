@@ -8,7 +8,7 @@ var init       = require('./core/init'),
 // ### Server initialization
 // Used to start runners.
 
-init.startRunners("aggregations.json");
+init.startRunners("./aggregations.json");
 
 // ### HTTP listening loop
 // Utilizes the router module to route http requests
