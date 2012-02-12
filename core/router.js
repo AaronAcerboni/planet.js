@@ -1,4 +1,4 @@
-var methods = require('/planet.js/core/methods');
+var methods = require('./methods');
 
 
 function route(request, response){
@@ -8,7 +8,7 @@ function route(request, response){
       resource = tokens[0];
 
   if(resource == "public"){
-    
+
     methods["public"](response, request.url);
 
   } else if(request.url.match("^/$")){

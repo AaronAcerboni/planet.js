@@ -1,4 +1,4 @@
-var storer  = require("/planet.js/core/store");
+var storer  = require("./store");
 
 function Runner(options, aggregation) {
     var that         = this;
@@ -10,9 +10,9 @@ function Runner(options, aggregation) {
     this.processes   = [];
 
       for (var i = 0; i < options.processes.length; i++) {
-          this.processes.push( require('/planet.js/processes/' + options.processes[i]).main );
+          this.processes.push( require('../processes/' + options.processes[i]).main );
       };
-    
+
     this.currentProcess = 0;
 
     var that            = this,
@@ -73,18 +73,18 @@ function Subscriber() {
 }
 
 function Pingbacker() {
-    
+
 }
 
 exports.start = {
     "poller" : function(options, aggregation) {
-        var poller = new Poller();            
-                
+        var poller = new Poller();
+
         poller.prototype = new Runner(options, aggregation);
 
         poller.start();
     },
-    "subscriber" : function(options, aggregation) { 
+    "subscriber" : function(options, aggregation) {
         var subscr = new Subscriber();
 
         subscr.prototype = new Runner(options, aggregation);
@@ -93,7 +93,7 @@ exports.start = {
     },
     "pingbacker" : function(options, aggregation) {
         var pingba = new Pingbacker();
-      
+
         pingba.prototype = new Runner(options, aggregation);
 
         pingba.start();

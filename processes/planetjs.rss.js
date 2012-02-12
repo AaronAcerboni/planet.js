@@ -3,8 +3,8 @@
   to the storage schema.
 */
 
-var Fetcher = require("/planet.js/core/fetch").Fetcher,
-    Parser  = require("/planet.js/core/parser").Parser
+var Fetcher = require("../core/fetch").Fetcher,
+    Parser  = require("../core/parser").Parser
 
 function main(options, nextProcess) {
   var fetcher = new Fetcher();
@@ -44,10 +44,10 @@ function main(options, nextProcess) {
       });
 
     };
-    
+
     nextProcess(entries);
   }
-  
+
 }
-  
+
 exports.main = main;

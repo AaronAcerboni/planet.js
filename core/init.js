@@ -1,6 +1,6 @@
 // A module containing functions needed for the server to start.
 
-var runners = require("/planet.js/core/runners"),
+var runners = require("./runners"),
     fs      = require("fs");
 
 function startRunners(aggLocation) {
@@ -8,7 +8,7 @@ function startRunners(aggLocation) {
   if(aggLocation != undefined)
     var aggregations = aggLocation;
   else
-    var aggregations = "/planet.js/aggregations.json";
+    var aggregations = "../aggregations.json";
 
   fs.readFile(aggLocation, function(e, data){
       var all = JSON.parse(data);
