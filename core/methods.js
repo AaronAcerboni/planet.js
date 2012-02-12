@@ -17,13 +17,13 @@ methods.get = function(response, type, resource, parameters){
       resourceNotFound(response, resource)
 
     } else if (type == "text/html" || type == undefined){
-      
+
       build.html(resource, docs, function(html){
         OK(response, html, "text/html");
       })
 
     } else {
-      
+
       (new Parser()).parse(docs, "application/json", type, function(data){
         if(data){
           OK(response, data, type);
@@ -66,7 +66,7 @@ function feeds(response, verb, type, tokens) {
 
   if(aggregation){
     if(aggregation != "all"){
-      parameters.aggregation = aggregation;      
+      parameters.aggregation = aggregation;
     }
   }
 
@@ -108,7 +108,7 @@ function public(response, path) {
     }
   }
 
-  fs.readFile('/planet.js' + path, read, function(e, data){
+  fs.readFile('../' + path, read, function(e, data){
     if(e){
       if(e.errno == 34){
         resourceNotFound(response, path);
@@ -118,7 +118,7 @@ function public(response, path) {
     } else {
       OK(response, data, type);
     }
-  }); 
+  });
 
 }
 

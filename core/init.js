@@ -8,7 +8,7 @@ function startRunners(aggLocation) {
   if(aggLocation != undefined)
     var aggregations = aggLocation;
   else
-    var aggregations = "/planet.js/aggregations.json";
+    var aggregations = "../aggregations.json";
 
   fs.readFile(aggLocation, function(e, data){
       var all = JSON.parse(data);
