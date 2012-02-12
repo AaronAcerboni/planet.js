@@ -2,10 +2,11 @@ var fs       = require("fs"),
     mustache = require("mustache");
 
 function html(resource, data, callback){
-  fs.readFile('template/' +resource + '.mustache', 'utf-8', function(e, template){
+  fs.readFile('templates/' +resource + '.mustache', 'utf-8', function(e, template){
     var view = {};
     view["resourceName"] = resource;
     view["resource"] = data;
+    console.log(e);
     callback(mustache.to_html(template, view));
   });
 }
