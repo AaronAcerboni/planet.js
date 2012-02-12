@@ -108,7 +108,7 @@ function public(response, path) {
     }
   }
 
-  fs.readFile('../' + path, read, function(e, data){
+  fs.readFile(path.substr(1), read, function(e, data){
     if(e){
       if(e.errno == 34){
         resourceNotFound(response, path);
