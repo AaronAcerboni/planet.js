@@ -3,12 +3,12 @@ var fs       = require("fs"),
 
 function html(resource, data, callback){
 
-  fs.readFile("/planet.js/templates/" + resource + ".mustache", 'utf-8', function(e, template){
+  fs.readFile("templates/" + resource + ".mustache", 'utf-8', function(e, template){
 
     var view = {};
     view["resourceName"] = resource;
     view["resource"] = data;
-    
+
     callback(mustache.to_html(template, view));
 
   });

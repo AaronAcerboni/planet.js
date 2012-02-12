@@ -1,5 +1,5 @@
 var mongojs = require("mongojs"),
-    Parser  = require("../core/parser").Parser,
+    Parser  = require("./parser").Parser,
     build   = require("../templates/build"),
     fs      = require("fs");
 
