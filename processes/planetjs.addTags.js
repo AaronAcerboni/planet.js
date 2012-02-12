@@ -31,8 +31,9 @@ function Tagging(){
     }
 
     for (var i = tags.length - 1; i >= 0; i--) {
-      if(tags[i][1].match("^N.*$")){
+      // if(tags[i][1].match("^N.*$")){
       // if(tags[i][1].match("^NNS|NNP$")){
+      if(tags[i][1].match("^NNP$")){
         nouns.push(tags[i][0]);
       }
     };
