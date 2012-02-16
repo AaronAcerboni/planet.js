@@ -3,11 +3,11 @@
   Built with Leonidas-from-XIV's node-xml2js https://github.com/Leonidas-from-XIV/node-xml2js/
 */
 
-var xml2js = require('../node_modules/xml2js');
+var Parser = require('../node_modules/xml2js').Parser;
 
 function parse(data, callback){
-  (new xml2js.Parser()).parseString( data, function(e, result){
-    if (e) throw e;
+  var parser = new Parser();
+  parser.parseString(data, function(e, result){
     callback(result);
   });
 }
