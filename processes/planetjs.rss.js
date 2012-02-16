@@ -11,7 +11,7 @@ function main(options, nextProcess) {
 
   fetcher.get(options.resources.url, parseRSStoJSON);
 
-  function parseRSStoJSON(err, data) {
+  function parseRSStoJSON(data) {
     (new Parser).parse(data, "application/rss+xml", "application/json", mapRSStoCommon);
   }
 
