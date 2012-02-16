@@ -5,7 +5,6 @@
 
 var xml2js = require('../node_modules/xml2js');
 
-
 function parse(data, callback){
   (new xml2js.Parser()).parseString( data, function(e, result){
     if (e) throw e;
