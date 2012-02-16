@@ -8,6 +8,7 @@ var Parser = require('../node_modules/xml2js').Parser;
 function parse(data, callback){
   var parser = new Parser();
   parser.parseString(data, function(e, result){
+    if(e) console.log('Error found on xml2js parse : \n' + e.message);
     callback(result);
   });
 }
