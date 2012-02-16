@@ -1,46 +1,22 @@
 // Module for retrieving data. Currently supports :
 //
-// - HTTP
+// - HTTP via request library
 
-var http  = require('http'),
-    _     = require('underscore');
+var request = require('request');
 
 function Fetcher() {
 
   this.get = function(url, callback){
 
-    var urlParts = url.split('/'),
-        start = 3,
-        path = '',
-        httpOptions = {};
-
-    if(url.indexOf('http') == -1){ // if url does not start with http
-      start = 1;
-    }
-
-    for(var i = start; i < urlParts.length; i++){
-      path += '/' + urlParts[i];
-    }
-
-    httpOptions.host = urlParts[start-1];
-    httpOptions.port = 80;
-    httpOptions.path = path;
-
-    http.get(httpOptions, function(res){
-
-      var raw = '';
-      res.setEncoding('utf8');
-
-      res.on('data', function(chunk){
-        raw += chunk;
-      });
-      res.on('end', function(){
-        callback(null, raw);
-      });
+    request(url, function (error, response, body) {
+      if (!error) {
+        console.log(body);
+        callback(body);
+      } else {
+        console.log('HTTP error in core/fetch');
+      }
     })
-    .on('error', function(error){
-      callback(error);
-    });
+
   }
 
 }
