@@ -4,11 +4,11 @@ var runners = require("./runners"),
     fs      = require("fs");
 
 function startRunners(aggLocation) {
-
-  if(aggLocation != undefined)
-    var aggregations = aggLocation;
+  var aggregations = "";
+  if(aggLocation)
+    aggregations = aggLocation;
   else
-    var aggregations = "../aggregations.json";
+    aggregations = "../aggregations.json";
 
   fs.readFile(aggLocation, function(e, data){
       var all = JSON.parse(data);
