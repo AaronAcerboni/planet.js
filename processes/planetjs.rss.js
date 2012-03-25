@@ -19,6 +19,7 @@ function main(options, nextProcess) {
     var channelLink = json.channel.link,
         channelTitle = json.channel.title,
         channelImg = null,
+        itemDate = null,
         entries = [];
 
     if(json.channel.image){
@@ -27,8 +28,15 @@ function main(options, nextProcess) {
 
     for (var i = 0; i < json.channel.item.length; i++) {
 
+      // Add date cautiously
+      if(json.channel.item[i].pubDate){
+        itemDate = new Date(json.channel.item[i].pubDate);
+      } else {
+        itemDate = 'Unknown';
+      }
+
       entries.push({
-        date : new Date(json.channel.item[i].pubDate),
+        date : itemDate,
         source_name : channelTitle,
         source_link : channelLink,
         data : {
@@ -42,9 +50,16 @@ function main(options, nextProcess) {
           location : null
         }
       });
-
     };
 
+    // Apply the latest build date to the latest entry. This is to
+    // ensure that if a feed doesn't publish dates for all articles
+    // then by continous collection, this data would eventually build
+    // up a correctly dated aggregation one item at a time.
+
+    if(json.channel.lastBuildDate){
+      entries[0].date = new Date(json.channel.lastBuildDate);
+    }
     nextProcess(entries);
   }
 
