@@ -52,13 +52,15 @@ function main(options, nextProcess) {
       });
     };
 
-    // Apply the latest build date to the latest entry. This is to
-    // ensure that if a feed doesn't publish dates for all articles
-    // then by continous collection, this data would eventually build
-    // up a correctly dated aggregation one item at a time.
-
-    if(json.channel.lastBuildDate){
-      entries[0].date = new Date(json.channel.lastBuildDate);
+    // Apply the latest build date to the latest entry if its unknown.
+    // This is to ensure that if a feed doesn't publish dates for all
+    // articles then, by continous collection, this data would eventually
+    // build up a correctly dated aggregation one item at a time.
+    // Past items will still remain with Unknown dates however.
+    if(entries[0].date == "Unknown"){
+      if(json.channel.lastBuildDate){
+        entries[0].date = new Date(json.channel.lastBuildDate);
+      }
     }
     nextProcess(entries);
   }
