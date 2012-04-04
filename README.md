@@ -10,7 +10,7 @@ eg. `localhost:8888/`
 
 or `localhost:8888/feeds`
 
-or `localhost:8888/feeds/all/[year][month]`
+or `localhost:8888/feeds/all/[year]/[month]`
 
 or `localhost:8888/feeds/[aggregationname]/[year]/[month]`
 
