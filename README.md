@@ -55,9 +55,7 @@ Possible use cases are for community sites, subject interests, sticking your blo
 
 See [TODO](https://github.com/AaronAcerboni/planet.js/blob/master/TODO.md)
 
-##Other links##
+##Links##
 * [http://planetjs.tumblr.com/](http://planetjs.tumblr.com) &mdash; Development blog
 
 * [http://planetjsresearch.tumblr.com/](http://planetjsresearch.tumblr.com) &mdash; Research blog
-
-* [Github page](http://aaronacerboni.github.com/planet.js/)
