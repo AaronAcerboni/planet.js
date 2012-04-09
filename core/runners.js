@@ -77,25 +77,19 @@ function Pingbacker() {
 }
 
 exports.start = {
-    "poller" : function(options, aggregation) {
+    poller: function(options, aggregation) {
         var poller = new Poller();
-
         poller.prototype = new Runner(options, aggregation);
-
         poller.start();
     },
-    "subscriber" : function(options, aggregation) {
+    subscriber: function(options, aggregation) {
         var subscr = new Subscriber();
-
         subscr.prototype = new Runner(options, aggregation);
-
         subscr.start();
     },
-    "pingbacker" : function(options, aggregation) {
+    pingbacker: function(options, aggregation) {
         var pingba = new Pingbacker();
-
         pingba.prototype = new Runner(options, aggregation);
-
         pingba.start();
     }
 };
