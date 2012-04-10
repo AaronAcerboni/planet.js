@@ -16,7 +16,7 @@ or `localhost:8888/feeds/[aggregationname]/[year]/[month]`
 
 ###Setup###
 
-- **Setup your MongoDB database.** By default planet.js looks for the `test` database. That is referenced in `core/store.js` & `core/router.js`.
+- **Setup your MongoDB database.** By default planet.js looks for the `test` database. That is referenced in `core/store.js` & `core/methods.js`.
 
 - **Prepare your aggregations.** By default the `aggregations.json` config looks at the planet.js research & development blogs for RSS and listens out for tweets using twitter account planetjstest.
 
