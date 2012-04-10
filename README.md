@@ -38,11 +38,6 @@ or `localhost:8888/feeds/[aggregationname]/[year]/[month]`
 * [twitter-node](https://github.com/technoweenie/twitter-node)
 * [pos](https://github.com/fortnightlabs/pos-js)
 
-
-##API Docs##
-
-[Planet.js API Documentation](http://aaronacerboni.github.com/planet.js/docs/)
-
 ##Project Aim##
 
 The magic of planet.js is the ability to synchronise a variety of data ranging from the standard RSS to any old web service.
