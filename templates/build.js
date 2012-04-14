@@ -6,7 +6,6 @@ function html(resource, data, callback){
     var view = {};
     view["resourceName"] = resource;
     view["resource"] = data;
-    console.log(e);
     callback(mustache.to_html(template, view));
   });
 }
