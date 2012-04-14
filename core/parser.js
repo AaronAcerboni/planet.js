@@ -10,19 +10,19 @@ var xml2json = require('../parsers/xml-to-json');
 function Parser() {
 
   this.parse = function(data, type, to, callback) {
-
     switch(type + " > " + to){
       case "text/xml > application/json" :
       case "application/rss+xml > application/json" :
       case "application/xml > application/json" :
         xml2json.parse(data, callback);
         break;
-
-      default :
-        callback(null);
+      case "application/json > application/json" :
+        callback(JSON.stringify(data));
         break;
+      default :
+        console.log('unable to parse: ' + type + ' to ' + to);
+        callback(null);
     }
-
   };
 
 }
