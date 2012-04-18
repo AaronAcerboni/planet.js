@@ -1,40 +1,20 @@
 # TODO
 
-## High priority
+- Reimplement server component with a node framework like Express
+- Detect gathered information if not new before it goes to the Store module and reads db.  
 
-### General
+- Write unit tests
+- Automate npm package
+- Automate gh pages
 
-- HTML templating. Layout currently can't handle large images.
+## Processes
 
-- Change the planet.js standard schema to be a superset of the Google Feed API schema. This
-should hopefully increase compatability with pre-existing software.
-
-## Low priority
-
-### General
-
-- Use consistent naming conventions for variables throughout planet.js.
-
-- Detect gathered information if not new before it goes to the Store module and reads db.
-
-- Explore instances were underscore is used and consider Ecma 5th functions (forEach) instead.
-
-### Router
-
-- Routed URLs should probably be case insensitive.
-
+- Reimplement RSS parsing with node-feedparser. Supports atom too!
+- 
 ### Runners
 
 - Provide a runner for listeners (thing which need callback/pingback urls).
 
-### Processing
+## Use case HTML specific
 
-- Processing modules for flickr, hAtom & Atom.
-
-### Other
-
-- Keep API Docs updated.
-
-- Write unit tests.
-
-- Write up planet.js as npm package.
+- HTML templating. Layout currently can't handle large images.
