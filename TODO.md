@@ -10,7 +10,7 @@
 ## Processes
 
 - Reimplement RSS parsing with node-feedparser. Supports atom too!
-- 
+
 ### Runners
 
 - Provide a runner for listeners (thing which need callback/pingback urls).
