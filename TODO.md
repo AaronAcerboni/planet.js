@@ -1,4 +1,4 @@
-# TODO
+## TODO
 
 - Reimplement server component with a node framework like Express
 - Detect gathered information if not new before it goes to the Store module and reads db.  
@@ -7,7 +7,7 @@
 - Automate npm package
 - Automate gh pages
 
-## Processes
+### Processes
 
 - Reimplement RSS parsing with node-feedparser. Supports atom too!
 
@@ -15,6 +15,6 @@
 
 - Provide a runner for listeners (thing which need callback/pingback urls).
 
-## Use case HTML specific
+### Use case HTML specific
 
 - HTML templating. Layout currently can't handle large images.
