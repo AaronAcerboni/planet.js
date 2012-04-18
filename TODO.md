@@ -1,7 +1,8 @@
 ## TODO
 
 - Reimplement server component with a node framework like Express
-- Detect gathered information if not new before it goes to the Store module and reads db.  
+- Consider using own API for storing
+- Detect gathered information if not new before it goes to the Store module and reads db. 
 
 - Write unit tests
 - Automate npm package
