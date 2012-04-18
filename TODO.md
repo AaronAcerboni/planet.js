@@ -11,6 +11,7 @@
 ### Processes
 
 - Reimplement RSS parsing with node-feedparser. Supports atom too!
+- Improve tagging process algorithm
 
 ### Runners
 
