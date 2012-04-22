@@ -18,13 +18,13 @@
     "feeds" : [
       {
         "resources" : { "url" : "http://planetjs.tumblr.com/rss" },
-        "runner" : {"type" : "poller", "time" : 68000000 },
-        "processes" : ["planetjs.rss", "planetjs.addTags"]
+        "runner" : {"type" : "poller", "time" : 300000 },
+        "processes" : ["planetjs.rssatom", "planetjs.addTags"]
       },
       {
         "resources" : { "url" : "http://planetjsresearch.tumblr.com/rss" },
-        "runner" : {"type" : "poller", "time" : 68000000 },
-        "processes" : ["planetjs.rss", "planetjs.addTags"]
+        "runner" : {"type" : "poller", "time" : 300000 },
+        "processes" : ["planetjs.rssatom", "planetjs.addTags"]
       }
     ]
   }
