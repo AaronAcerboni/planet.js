@@ -5,9 +5,9 @@ var db      = require("mongojs").connect("test", ["feeds"]),
 
 // ##storeData
 // > Stores data collected by an [activity](Activies.html)'s associated process into a MongoDB database.
-// > 
-// > Parameter : 
-// > 
+// >
+// > Parameter :
+// >
 // > - `data` : the data which was processed in the form of an Entry schema.
 // > - `activity` : the `activity_id` responsible for creating that data.
 // > - `callback`
@@ -36,16 +36,15 @@ function storeData(process, data, callback){
   }
 
   // Storing procedure completed
-  callback();
 }
 
 // ##duplicateCheck
 // > This function checks to see if the entry is already in the database. A duplicate is found using
 // > its `activity_id` and its `date`.
-// >  
+// >
 // > Parameter :
-// >  
-// > - entry : A schema appropriate object ready to be stored in the database. 
+// >
+// > - entry : A schema appropriate object ready to be stored in the database.
 // > - callback
 
 function duplicateCheck(entry, callback){
@@ -60,9 +59,9 @@ function duplicateCheck(entry, callback){
 
 // ##insertIntoDB
 // > This function stores the entry into the database.
-// >  
+// >
 // > Parameter :
-// >  
+// >
 // > - entry : A schema conforming object ready to be stored in the database.
 
 function insertIntoDB(entry) {
