@@ -1,45 +1,36 @@
-var storer  = require("./store");
+var storer  = require('./store'),
+    base64  = require('b64');
 
 function Runner(options, aggregation) {
-    var that         = this;
+    var composite    = aggregation + JSON.stringify(options.resources),
+    that             = this,
+    i                = -1;
 
     this.options     = options;
-    this.id          = aggregation + '/' + JSON.stringify(options.resources);
+    this.id          = base64.encode(composite);
     this.aggregation = aggregation;
     this.resources   = options.resources;
-    this.processes   = [];
+    this.processes   = options.processes.map(function (item) {
+        return require('../processes/' + item);
+    });
 
-      for (var i = 0; i < options.processes.length; i++) {
-          this.processes.push( require('../processes/' + options.processes[i]).main );
-      };
-
-    this.currentProcess = 0;
-
-    var that            = this,
-        finalCallback   = null;
-
-    this.process = function(data, final) {
-        var data = data;
-
-        if(!data) data = options;
-        if(final) finalCallback = final;
-
-        if(that.currentProcess + 1 > that.processes.length) {
-            that.currentProcess = 0;
-            storer.store(that, data, finalCallback);
+    this.process = function(data) {
+        if(i === that.processes.length-1 && data){
+            storer.store(that, data);
+            i = -1;
+        } else if(i === -1){
+            i++;
+            new that.processes[i].main(that.options, that.process);
         } else {
-            that.currentProcess++;
-            new that.processes[that.currentProcess-1](data, that.process);
+            i++;
+            new that.processes[i].main(data, that.process);
         }
-
-    }
+    };
 
 }
 
 function Poller() {
-    var that  = this,
-        ready = true;
-
+    var that  = this;
 
     this.start = function(){
         setInterval(function(){
@@ -48,14 +39,8 @@ function Poller() {
     };
 
     function poll() {
-        if(ready){
-            ready = false;
-            that.prototype.process(null, function(){
-                ready = true;
-            });
-        }
+        that.prototype.process(null);
     };
-
 
 }
 
@@ -63,16 +48,8 @@ function Subscriber() {
     var that = this;
 
     this.start = function(){
-        that.prototype.process(null, function(){
-            // final callback hack for setting the currentProcess
-            // so tweets can be stored not just on the first one
-            // --- should revise!!
-            that.prototype.currentProcess = 1;
-        });
+        that.prototype.process();
     };
-}
-
-function Pingbacker() {
 
 }
 
