@@ -1,3 +1,5 @@
+# Not for general consumption. Move on for now.
+
 Planet.js is a JavaScript data aggregator in the spirit of Planet software. It aims to be a server environment for creating and managing sites which are data driven.
 
 ##Getting started##
